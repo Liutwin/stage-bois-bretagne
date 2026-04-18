@@ -1,4 +1,4 @@
-FROM denoland/deno:2.0.0
+FROM denoland/deno:2.7.12
 WORKDIR /app
 COPY . .
 RUN deno cache src/main.ts
