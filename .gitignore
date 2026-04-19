@@ -1,7 +1,9 @@
 *.sqlite
 *.sqlite-journal
 .DS_Store
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+!backend/.vscode/settings.json
 *.log
 .env
 *.Identifier
