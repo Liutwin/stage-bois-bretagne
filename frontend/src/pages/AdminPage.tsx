@@ -62,7 +62,7 @@ export function AdminPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) {
     const { name, value, type } = e.target;
-    setFields((prev) => ({
+    setFields((prev: SessionPayload) => ({
       ...prev,
       [name]:
         type === 'checkbox'

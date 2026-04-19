@@ -73,7 +73,7 @@ export function Navbar() {
                 <NavLink
                   to={to}
                   end={to === '/'}
-                  className={({ isActive }) =>
+                  className={({ isActive }: { isActive: boolean }) =>
                     `${styles.navLink} ${isActive ? styles.active : ''}`
                   }
                 >
@@ -111,7 +111,7 @@ export function Navbar() {
               <NavLink
                 to={to}
                 end={to === '/'}
-                className={({ isActive }) =>
+                className={({ isActive }: { isActive: boolean }) =>
                   `${styles.mobileLink} ${isActive ? styles.active : ''}`
                 }
                 onClick={() => setMenuOpen(false)}

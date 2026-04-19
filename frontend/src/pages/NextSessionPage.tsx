@@ -40,7 +40,7 @@ export function NextSessionPage() {
   /** Met à jour un champ du formulaire par son nom. */
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev: RegistrationFormData) => ({ ...prev, [name]: value }));
   }
 
   /**

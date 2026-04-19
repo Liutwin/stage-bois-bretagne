@@ -52,7 +52,7 @@ export function useSession(): UseSessionResult {
     setError(null);
 
     fetchNextSession()
-      .then((data) => {
+      .then((data: Session | null) => {
         if (!cancelled) setSession(data);
       })
       .catch((err: unknown) => {
