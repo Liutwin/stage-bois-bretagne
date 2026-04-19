@@ -1,0 +1,188 @@
+.page {
+  background: var(--color-cream);
+  min-height: 60vh;
+}
+
+.inner {
+  max-width: 820px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 4rem) var(--section-padding-x);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  margin-top: 0.5rem;
+}
+
+.block h2 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  margin-bottom: 0.75rem;
+}
+
+.block p {
+  font-size: 14.5px;
+  color: var(--color-muted);
+  line-height: 1.8;
+}
+
+.placeholder {
+  font-style: italic;
+  color: var(--color-amber) !important;
+  opacity: 0.7;
+  background: var(--color-linen);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-amber-light);
+}
+
+.note {
+  font-size: 13px !important;
+  margin-top: 0.75rem;
+}
+
+.link {
+  color: var(--color-amber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Listes */
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.list li {
+  font-size: 14px;
+  color: var(--color-muted);
+  padding-left: 1.25rem;
+  position: relative;
+  line-height: 1.7;
+}
+
+.list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-amber);
+  font-size: 12px;
+}
+
+.orderedList {
+  list-style: none;
+  counter-reset: steps;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.orderedList li {
+  counter-increment: steps;
+  font-size: 14px;
+  color: var(--color-muted);
+  padding-left: 2rem;
+  position: relative;
+  line-height: 1.7;
+}
+
+.orderedList li::before {
+  content: counter(steps) '.';
+  position: absolute;
+  left: 0;
+  color: var(--color-amber);
+  font-weight: 700;
+  font-family: var(--font-serif);
+}
+
+/* Tableau tarifs */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-block: 1rem;
+}
+
+.table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--color-amber-light);
+}
+
+.table td {
+  padding: 10px 12px;
+  color: var(--color-muted);
+  border-bottom: 0.5px solid var(--color-shadow);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Profil formatrice */
+.profileGrid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.portraitLarge {
+  background: var(--color-shadow);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  aspect-ratio: 3 / 4;
+  max-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-family: var(--font-sans);
+}
+
+.subtitle {
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-amber) !important;
+  margin-bottom: 1.25rem;
+}
+
+.quote {
+  border-left: 2.5px solid var(--color-amber);
+  padding: 0.75rem 1.1rem;
+  background: var(--color-white-warm);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--color-dark-wood);
+  line-height: 1.6;
+  margin-block: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .profileGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portraitLarge {
+    aspect-ratio: 16 / 7;
+    max-height: 180px;
+  }
+}

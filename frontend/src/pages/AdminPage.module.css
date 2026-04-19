@@ -1,0 +1,177 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-linen);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) var(--section-padding-x);
+}
+
+.card {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 4px 32px var(--color-shadow);
+  overflow: hidden;
+}
+
+/* ── En-tête ──────────────────────────────────────────────────────────────── */
+.header {
+  background: var(--color-dark-wood);
+  padding: 1.5rem 2rem;
+  color: var(--color-amber-light);
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-amber);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.header h1 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-amber-light);
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  font-size: 13px;
+  color: rgba(240, 210, 160, 0.65);
+  line-height: 1.65;
+}
+
+/* ── Formulaire ───────────────────────────────────────────────────────────── */
+.form {
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.field input {
+  border: 1px solid rgba(122, 100, 80, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-cream);
+  transition: border-color var(--transition-fast);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--color-amber);
+}
+
+.dateRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Case à cocher */
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 10px 14px;
+  background: var(--color-linen);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-shadow);
+}
+
+.checkboxRow input[type='checkbox'] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-amber);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Messages */
+.errorMsg {
+  font-size: 13px;
+  color: #a02010;
+  background: rgba(160, 32, 16, 0.07);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+.successMsg {
+  font-size: 13px;
+  color: #2a6e2a;
+  background: rgba(42, 110, 42, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+/* Bouton sauvegarde */
+.saveBtn {
+  background: var(--color-amber);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  margin-top: 0.25rem;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: var(--color-dark-wood);
+}
+
+.saveBtn:active {
+  transform: translateY(1px);
+}
+
+.saveBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Skeleton */
+.skeleton {
+  width: 100%;
+  max-width: 520px;
+  height: 420px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, var(--color-linen) 25%, var(--color-white-warm) 50%, var(--color-linen) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

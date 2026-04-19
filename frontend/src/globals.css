@@ -1,0 +1,202 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   globals.css
+   Tokens de design, reset et styles de base pour Stage Bois Bretagne.
+   Palette : tons bois chauds (crème, ocre, brun) — cohérente avec la maquette.
+───────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap');
+
+/* ── Tokens ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Fond principal crème */
+  --color-cream: #F6F1E8;
+  /* Fond lin légèrement plus soutenu */
+  --color-linen: #EDE7D8;
+  /* Blanc cassé pour les cartes */
+  --color-white-warm: #FFFDF8;
+  /* Texte courant brun profond */
+  --color-text: #2C1F12;
+  /* Texte secondaire / labels */
+  --color-muted: #7A6450;
+  /* Accent ambre / ocre */
+  --color-amber: #B8760A;
+  /* Amber clair pour badges */
+  --color-amber-light: #F5D9A0;
+  /* Brun foncé pour titres et header */
+  --color-dark-wood: #3D2210;
+  /* Ombre douce */
+  --color-shadow: rgba(90, 55, 20, 0.12);
+
+  /* Typographie */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Lato', system-ui, sans-serif;
+
+  /* Espacements */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Rayons */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+
+  /* Largeur max du contenu */
+  --max-width: 1200px;
+  --section-padding-x: clamp(1.25rem, 5vw, 4rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-cream: #1C1510;
+    --color-linen: #231A12;
+    --color-white-warm: #241C14;
+    --color-text: #F0E5D5;
+    --color-muted: #A8917A;
+    --color-amber: #EF9F27;
+    --color-amber-light: #4A2E08;
+    --color-dark-wood: #F0D8BB;
+    --color-shadow: rgba(200, 150, 80, 0.15);
+  }
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #1a0e06;
+  background-image: url('images//wood-bg.png');
+  background-size: 680px 400px; /* tuile qui se répète */
+  background-repeat: repeat;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ── Utilitaires partagés ──────────────────────────────────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Le site est centré à 1200 px max.
+   Les sections peuvent avoir un background pleine largeur DANS leur propre
+   élément, mais tout le contenu est naturellement borné par #root. */
+#root {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  background: var(--color-cream);
+  box-shadow: 0 0 0 1px var(--color-shadow);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    transform var(--transition-fast);
+  border: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--color-amber);
+  color: var(--color-white-warm);
+}
+
+.btn-primary:hover {
+  background: var(--color-dark-wood);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-amber);
+  border: 1.5px solid var(--color-amber);
+}
+
+.btn-outline:hover {
+  background: var(--color-amber);
+  color: var(--color-white-warm);
+}
+
+/* Labels de section */
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  margin-bottom: var(--space-2);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  line-height: 1.2;
+  margin-bottom: var(--space-8);
+}

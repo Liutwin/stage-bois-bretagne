@@ -1,0 +1,134 @@
+.card {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-base);
+}
+
+.card:not(.empty):hover {
+  box-shadow: 0 4px 24px var(--color-shadow);
+}
+
+/* ── Vide ─────────────────────────────────────────────────────────────── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-10) var(--space-8);
+  text-align: center;
+  background: var(--color-linen);
+}
+
+.emptyIcon {
+  font-size: 24px;
+  color: var(--color-amber);
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.link {
+  color: var(--color-amber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Bandeau date ─────────────────────────────────────────────────────── */
+.dateBar {
+  background: var(--color-amber);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.dateRange {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* ── Badges ───────────────────────────────────────────────────────────── */
+.badge {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.badgeOk {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.badgeFull {
+  background: rgba(120, 40, 20, 0.85);
+  color: #fde8e0;
+}
+
+/* ── Corps ────────────────────────────────────────────────────────────── */
+.body {
+  padding: 16px 18px 12px;
+}
+
+.theme {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  margin-bottom: var(--space-2);
+}
+
+.dateFull {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.details strong {
+  color: var(--color-text);
+}
+
+/* ── CTA ──────────────────────────────────────────────────────────────── */
+.cta {
+  padding: 0 18px 16px;
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* ── Variante full ────────────────────────────────────────────────────── */
+.full {
+  max-width: 560px;
+}
+
+.full .body {
+  padding: 20px 22px 14px;
+}
+
+.full .theme {
+  font-size: 21px;
+}
+
+.full .cta {
+  padding: 4px 22px 22px;
+}
