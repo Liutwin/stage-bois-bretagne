@@ -3,7 +3,6 @@
 .DS_Store
 .vscode/*
 !.vscode/extensions.json
-!backend/.vscode/settings.json
 *.log
 .env
 *.Identifier
