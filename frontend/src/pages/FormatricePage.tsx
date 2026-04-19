@@ -4,6 +4,7 @@
  */
 
 import styles from './StaticPage.module.css';
+import annickPhoto from '../assets/annick.jpg';
 
 /**
  * Page "La formatrice" — biographie et références d'Annick Le Goasteller.
@@ -19,12 +20,8 @@ export function FormatricePage() {
 
         <div className={styles.content}>
           <div className={styles.profileGrid}>
-            <div className={styles.portraitLarge} aria-hidden="true">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-                <circle cx="28" cy="22" r="12" fill="currentColor" opacity="0.3" />
-                <path d="M4 54 C4 40 52 40 52 54" fill="currentColor" opacity="0.3" />
-              </svg>
-              <span>Portrait d'Annick</span>
+            <div className={styles.portraitLarge}>
+              <img src={annickPhoto} alt="Annick" />
             </div>
 
             <div>
@@ -44,7 +41,7 @@ export function FormatricePage() {
                 <h2>Références</h2>
                 <blockquote className={styles.quote}>
                   Elle réalise les décors des harpes celtiques pour les prestigieuses
-                  harpes CAMAC — Stivell, Aziliz, Janet.
+                  harpes CAMAC Stivell et Aziliz.
                 </blockquote>
                 <p>
                   Annick participe à de nombreux salons, expose en boutiques et galeries,

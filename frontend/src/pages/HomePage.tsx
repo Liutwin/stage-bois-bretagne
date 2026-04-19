@@ -132,7 +132,7 @@ export function HomePage() {
           </p>
           <blockquote className={styles.quote}>
             Elle réalise les décors des harpes celtiques pour les prestigieuses harpes
-            CAMAC — Stivell, Aziliz, Janet.
+            CAMAC Stivell et Aziliz.
           </blockquote>
           <p>
             Sa pédagogie, fondée sur la pratique immédiate et le partage sans retenue,

@@ -85,10 +85,12 @@ html {
 }
 
 body {
-  background-color: #1a0e06;
-  background-image: url('images//wood-bg.png');
-  background-size: 680px 400px; /* tuile qui se répète */
-  background-repeat: repeat;
+  background-color: #2d1a0a;
+  background-image: url('images/wood-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: 15px;
@@ -138,7 +140,9 @@ ol {
   max-width: var(--max-width);
   margin-inline: auto;
   background: var(--color-cream);
-  box-shadow: 0 0 0 1px var(--color-shadow);
+  box-shadow:
+    -8px 0 20px rgba(0, 0, 0, 0.5),
+    8px 0 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Boutons */
