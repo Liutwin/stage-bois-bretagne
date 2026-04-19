@@ -44,6 +44,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+	  
       - name: Copy docker-compose.yml
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -64,7 +66,7 @@ jobs:
           envs: GITHUB_TOKEN,GITHUB_ACTOR,PROJECT_PATH
           script: |
             echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-            cd PROJECT_PATH
+            cd $PROJECT_PATH
             docker compose pull
-            docker compose up –d
+            docker compose up -d
 
