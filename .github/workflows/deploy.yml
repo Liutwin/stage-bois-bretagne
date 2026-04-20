@@ -77,16 +77,16 @@ jobs:
         if: success()
         uses: dawidd6/action-send-mail@v3
         with:
-        server_address: ssl0.ovh.net
-        server_port: 465
-        secure: true
-        username: ${{ secrets.MAIL_USER }}
-        password: ${{ secrets.MAIL_PASSWORD }}
-        from: Liutwin <${{ secrets.MAIL_USER }}>
-        to: ${{ secrets.CLIENT_EMAIL }}
-        subject: "Mise à jour du site déployée ✓"
-        html_body: |
-          <p>Bonjour,</p>
-          <p>Une nouvelle version du site <a href="http://preview.stageboisbretagne.com">stageboisbretagne.com</a> a été déployée avec succès.</p>
-          <p><strong>Modification :</strong> ${{ github.event.head_commit.message }}</p>
-          <p>Cordialement,<br>Liutwin</p>
+          server_address: ssl0.ovh.net
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: Liutwin <${{ secrets.MAIL_USER }}>
+          to: ${{ secrets.CLIENT_EMAIL }}
+          subject: "Mise à jour du site déployée ✓"
+          html_body: |
+            <p>Bonjour,</p>
+            <p>Une nouvelle version du site <a href="http://preview.stageboisbretagne.com">stageboisbretagne.com</a> a été déployée avec succès.</p>
+            <p><strong>Modification :</strong> ${{ github.event.head_commit.message }}</p>
+            <p>Cordialement,<br>Liutwin</p>
