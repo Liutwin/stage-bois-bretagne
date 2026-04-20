@@ -21,13 +21,22 @@
   font-size: 18px;
   font-weight: 500;
   color: var(--color-dark-wood);
-  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.block:first-child h2 {
+  margin-top: 0;
 }
 
 .block p {
   font-size: 14.5px;
   color: var(--color-muted);
   line-height: 1.8;
+}
+
+.block p + p {
+  margin-top: 0.75rem;
 }
 
 .placeholder {
@@ -134,21 +143,76 @@
 .profileGrid {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-rows: repeat(3, auto);
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  row-gap: 0.75rem;
   align-items: start;
 }
 
+.profileGrid > .block > h2 {
+  margin-top: 1;
+}
+
+/* Desktop : photos dans une colonne flex indépendante couvrant les 3 lignes */
+.portraits {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Desktop : sections texte forcées en col 2 */
+@media (min-width: 601px) {
+  .profileGrid > :not(.portraits) {
+    grid-column: 2;
+  }
+}
+
 .portraitLarge {
+  border: 0.5px solid var(--color-shadow);
   border-radius: var(--radius-md);
   overflow: hidden;
-  max-height: 280px;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+}
+
+.portraitWide {
+  aspect-ratio: 4 / 3;
 }
 
 .portraitLarge img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
   display: block;
+  transition: transform 0.2s ease;
+}
+
+.portraitLarge:hover img {
+  transform: scale(1.03);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: zoom-out;
+  padding: 1.5rem;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
@@ -173,12 +237,71 @@
   margin-block: 0.75rem;
 }
 
+/* Références avec photo */
+.refGrid {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.refPhoto {
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--color-shadow);
+  overflow: hidden;
+}
+
+.refPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Vidéo responsive */
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--color-shadow);
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 @media (max-width: 600px) {
   .profileGrid {
     grid-template-columns: 1fr;
   }
 
-  .portraitLarge {
-    max-height: 180px;
+  /* Photos : wrapper transparent, enfants remis dans le flux */
+  .portraits {
+    display: contents;
   }
+
+  .portraitLarge {
+    max-height: 360px;
+  }
+
+  .portraitWide {
+    aspect-ratio: 4 / 3;
+    max-height: none;
+  }
+
+  /* Ordre mobile : annick(1) text(2) sculpture(3) références(4) camac(5) pédagogie(6) ambiance(7) */
+  .mob1 { order: 1; }
+  .mob2 { order: 2; }
+  .mob3 { order: 3; }
+  .mob4 { order: 4; }
+  .mob5 { order: 5; }
+  .mob6 { order: 6; }
+  .mob7 { order: 7; }
 }

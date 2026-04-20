@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from './Navbar.module.css';
+import styles from '../styles/Navbar.module.css';
 
 /**
  * Entrée de navigation.

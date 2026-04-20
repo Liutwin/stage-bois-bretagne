@@ -4,7 +4,7 @@
  */
 
 import type { Session } from '@/types/session';
-import styles from './SessionCard.module.css';
+import styles from '../styles/SessionCard.module.css';
 
 /**
  * Props du composant {@link SessionCard}.

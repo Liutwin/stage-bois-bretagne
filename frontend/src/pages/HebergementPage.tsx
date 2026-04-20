@@ -4,7 +4,7 @@
  * Contenu statique — liste à compléter par la cliente.
  */
 
-import styles from './StaticPage.module.css';
+import styles from '../styles/StaticPage.module.css';
 
 /**
  * Page "Hébergement / Repas".

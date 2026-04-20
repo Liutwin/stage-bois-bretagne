@@ -4,7 +4,7 @@
  * Contenu statique — à compléter avec les textes et photos fournis par la cliente.
  */
 
-import styles from './StaticPage.module.css';
+import styles from '../styles/StaticPage.module.css';
 
 /**
  * Page "Le stage" — description du programme et des méthodes pédagogiques.

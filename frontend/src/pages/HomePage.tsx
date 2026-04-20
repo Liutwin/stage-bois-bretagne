@@ -12,7 +12,8 @@
 import { Link } from 'react-router-dom';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
-import styles from './HomePage.module.css';
+import styles from '../styles/HomePage.module.css';
+import annickPhoto from '../assets/annick.jpg';
 
 /**
  * Page d'accueil publique.
@@ -114,12 +115,8 @@ export function HomePage() {
 
       {/* ── Formatrice ────────────────────────────────────────────────────── */}
       <section className={styles.formatrice}>
-        <div className={styles.portrait} aria-hidden="true">
-          <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-            <circle cx="26" cy="20" r="11" fill="currentColor" opacity="0.3" />
-            <path d="M4 50 C4 37 48 37 48 50" fill="currentColor" opacity="0.3" />
-          </svg>
-          <span>Portrait d'Annick</span>
+        <div className={styles.portrait}>
+          <img src={annickPhoto} alt="Portrait d'Annick" />
         </div>
 
         <div className={styles.bio}>

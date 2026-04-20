@@ -11,6 +11,9 @@ export default defineConfig({
     },
   },
   server: {
+    host: true,
+    port: 5173,
+    allowedHosts: ["localhost", "liutwin-pc"],
     proxy: {
       '/api': {
         target: 'http://localhost:8001',

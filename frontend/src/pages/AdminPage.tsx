@@ -14,7 +14,7 @@
 import { useState, useEffect } from 'react';
 import { fetchNextSession, updateSession } from '@/utils/api';
 import type { Session, SessionPayload } from '@/types/session';
-import styles from './AdminPage.module.css';
+import styles from '../styles/AdminPage.module.css';
 
 /**
  * Page d'administration du prochain stage.

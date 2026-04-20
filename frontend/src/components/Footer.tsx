@@ -4,7 +4,7 @@
  */
 
 import { NavLink } from 'react-router-dom';
-import styles from './Footer.module.css';
+import styles from '../styles/Footer.module.css';
 
 /**
  * Pied de page commun à toutes les pages publiques.

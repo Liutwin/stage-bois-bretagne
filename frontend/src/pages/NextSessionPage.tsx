@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
 import { generateRegistrationPdf, type RegistrationFormData } from '@/utils/pdf';
-import styles from './NextSessionPage.module.css';
+import styles from '../styles/NextSessionPage.module.css';
 
 /**
  * Page publique dédiée au prochain stage.

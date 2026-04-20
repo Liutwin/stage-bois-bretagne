@@ -5,7 +5,7 @@
  */
 
 import { Link } from 'react-router-dom';
-import styles from './StaticPage.module.css';
+import styles from '../styles/StaticPage.module.css';
 
 /**
  * Page "Tarifs & Inscriptions" — grille tarifaire et rappel de la procédure.

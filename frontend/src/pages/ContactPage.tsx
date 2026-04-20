@@ -5,7 +5,7 @@
 
 import { useState } from 'react';
 import { sendContactMessage } from '@/utils/api';
-import styles from './ContactPage.module.css';
+import styles from '../styles/ContactPage.module.css';
 
 /**
  * Page de contact publique.
