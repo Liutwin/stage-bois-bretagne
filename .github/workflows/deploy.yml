@@ -75,14 +75,18 @@ jobs:
 
       - name: Notify client
         if: success()
-        run: |
-          curl -s --request POST \
-            --url https://api.brevo.com/v3/smtp/email \
-            --header "api-key: ${{ secrets.BREVO_API_KEY }}" \
-            --header "Content-Type: application/json" \
-            --data '{
-              "sender": { "name": "Liutwin", "email": "contact@stageboisbretagne.com" },
-              "to": [{ "email": "${{ secrets.CLIENT_EMAIL }}", "name": "Madame Le Bras" }],
-              "subject": "Mise à jour du site deployée ✓",
-              "htmlContent": "<p>Bonjour,</p><p>Une nouvelle version du site <a href=\"https://stageboisbretagne.com\">stageboisbretagne.com</a> a été déployée avec succès.</p><p><strong>Modification :</strong> ${{ github.event.head_commit.message }}</p><p>Cordialement,<br>Liutwin</p>"
-            }'
+        uses: dawidd6/action-send-mail@v3
+        with:
+        server_address: ssl0.ovh.net
+        server_port: 465
+        secure: true
+        username: ${{ secrets.MAIL_USER }}
+        password: ${{ secrets.MAIL_PASSWORD }}
+        from: Liutwin <${{ secrets.MAIL_USER }}>
+        to: ${{ secrets.CLIENT_EMAIL }}
+        subject: "Mise à jour du site déployée ✓"
+        html_body: |
+          <p>Bonjour,</p>
+          <p>Une nouvelle version du site <a href="http://preview.stageboisbretagne.com">stageboisbretagne.com</a> a été déployée avec succès.</p>
+          <p><strong>Modification :</strong> ${{ github.event.head_commit.message }}</p>
+          <p>Cordialement,<br>Liutwin</p>
