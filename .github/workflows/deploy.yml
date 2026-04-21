@@ -80,13 +80,23 @@ jobs:
           server_address: ssl0.ovh.net
           server_port: 465
           secure: true
-          username: ${{ secrets.MAIL_USER }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          from: Liutwin <${{ secrets.MAIL_USER }}>
+          username: ${{ secrets.DEPLOY_MAIL_USER }}
+          password: ${{ secrets.DEPLOY_MAIL_PASSWORD }}
+          from: Liutwin (Notification) <${{ secrets.WEBMASTER_EMAIL }}>
+          reply_to: ${{ secrets.WEBMASTER_EMAIL }}
           to: ${{ secrets.CLIENT_EMAIL }}
           subject: "Mise à jour du site déployée ✓"
           html_body: |
-            <p>Bonjour,</p>
-            <p>Une nouvelle version du site <a href="http://preview.stageboisbretagne.com">stageboisbretagne.com</a> a été déployée avec succès.</p>
-            <p><strong>Modification :</strong> ${{ github.event.head_commit.message }}</p>
-            <p>Cordialement,<br>Liutwin</p>
+            <div style="font-family: sans-serif; color: #333; line-height: 1.6;">
+              <p>Bonjour,</p>
+              <p>Une nouvelle version du site <a href="https://preview.stageboisbretagne.com" style="color: #007bff; text-decoration: none; font-weight: bold;">stageboisbretagne.com</a> vient d'être déployée.</p>
+              <div style="background-color: #f8f9fa; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0;">
+                <strong>Note de version :</strong><br>
+                <em>"${{ github.event.head_commit.message }}"</em>
+              </div>
+              <p><strong>Liutwin</strong></p>
+              <hr style="border: 0; border-top: 1px solid #eee; margin-top: 30px;">
+              <p style="font-size: 0.85em; color: #777; font-style: italic;">
+                Ceci est un message automatique généré par le pipeline de déploiement.<br>
+              </p>
+            </div>
