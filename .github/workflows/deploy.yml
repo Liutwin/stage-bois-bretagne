@@ -82,7 +82,7 @@ jobs:
           secure: true
           username: ${{ secrets.DEPLOY_MAIL_USER }}
           password: ${{ secrets.DEPLOY_MAIL_PASSWORD }}
-          from: Liutwin (Notification) <${{ secrets.WEBMASTER_EMAIL }}>
+          from: Liutwin (Notification) <${{ secrets.DEPLOY_MAIL_USER }}>
           reply_to: ${{ secrets.WEBMASTER_EMAIL }}
           to: ${{ secrets.CLIENT_EMAIL }}
           subject: "Mise à jour du site déployée ✓"
