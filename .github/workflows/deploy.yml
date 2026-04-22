@@ -94,7 +94,7 @@ jobs:
                 <strong>Note de version :</strong><br>
                 <em>"${{ github.event.head_commit.message }}"</em>
               </div>
-              <p><strong>Liutwin</strong></p>
+              <p>Liutwin</p>
               <hr style="border: 0; border-top: 1px solid #eee; margin-top: 30px;">
               <p style="font-size: 0.85em; color: #777; font-style: italic;">
                 Ceci est un message automatique généré par le pipeline de déploiement.<br>

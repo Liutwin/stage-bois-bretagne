@@ -43,7 +43,7 @@ export function FormatricePage() {
             </div>
 
             <div className={styles.mob2}>
-              <p className={styles.subtitle}>Artisane &amp; Formatrice · Trébrivan, Bretagne</p>
+              <p className={styles.subtitle}>Le bois, la mer et l’âme celtique</p>
               <section className={styles.block}>
                 <h2>Parcours</h2>
                 <p>

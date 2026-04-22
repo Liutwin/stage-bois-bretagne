@@ -19,6 +19,8 @@ import { HebergementPage } from '@/pages/HebergementPage';
 import { FormatricePage } from '@/pages/FormatricePage';
 import { PartenairesPage } from '@/pages/PartenairesPage';
 import { ContactPage } from '@/pages/ContactPage';
+import { MentionsLegalesPage } from '@/pages/MentionsLegalesPage';
+import { PolitiqueConfidentialitePage } from '@/pages/PolitiqueConfidentialitePage';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Element #root introuvable dans le DOM.');
@@ -36,6 +38,8 @@ createRoot(root).render(
         <Route path="/formatrice" element={<FormatricePage />} />
         <Route path="/partenaires" element={<PartenairesPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+        <Route path="/politique-de-confidentialite" element={<PolitiqueConfidentialitePage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

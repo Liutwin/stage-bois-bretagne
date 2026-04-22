@@ -12,8 +12,8 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
-  margin-top: 0.5rem;
+  gap: 1.5rem;
+  margin-top: 0.25rem;
 }
 
 .block h2 {
@@ -21,8 +21,8 @@
   font-size: 18px;
   font-weight: 500;
   color: var(--color-dark-wood);
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .block:first-child h2 {

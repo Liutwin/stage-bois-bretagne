@@ -83,6 +83,10 @@ export function Footer() {
 
       <div className={styles.bottom}>
         <span>© {year} Stage Bois Bretagne · Annick Le Goasteller</span>
+        <span className={styles.bottomLinks}>
+          <NavLink to="/mentions-legales" className={styles.footerLink}>Mentions légales</NavLink>
+          <NavLink to="/politique-de-confidentialite" className={styles.footerLink}>Politique de confidentialité</NavLink>
+        </span>
         <span>Trébrivan, Côtes d'Armor</span>
       </div>
     </footer>

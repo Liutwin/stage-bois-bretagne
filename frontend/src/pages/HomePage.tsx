@@ -9,11 +9,21 @@
  * - Présentation courte de la formatrice
  */
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
 import styles from '../styles/HomePage.module.css';
 import annickPhoto from '../assets/annick.jpg';
+import chantournagePhoto from '../assets/chantournage.jpg';
+import collagePhoto from '../assets/collage.jpg';
+import poncagePhoto from '../assets/poncage.jpg';
+
+const ATELIER_SLIDES = [
+  { src: chantournagePhoto, alt: 'Travail de chantournage à l\'atelier' },
+  { src: collagePhoto,      alt: 'Collage à l\'atelier' },
+  { src: poncagePhoto,      alt: 'Ponçage à l\'atelier' },
+];
 
 /**
  * Page d'accueil publique.
@@ -22,6 +32,14 @@ import annickPhoto from '../assets/annick.jpg';
  */
 export function HomePage() {
   const { session, loading } = useSession();
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide(i => (i + 1) % ATELIER_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <main>
@@ -50,15 +68,27 @@ export function HomePage() {
         </div>
 
         <div className={styles.heroVisual}>
-          {/* Placeholder — à remplacer par une vraie photo de l'atelier */}
-          <div className={styles.heroPlaceholder}>
-            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-hidden="true">
-              <rect x="10" y="32" width="52" height="9" rx="3" fill="currentColor" opacity="0.4" />
-              <rect x="27" y="10" width="9" height="52" rx="3" fill="currentColor" opacity="0.4" />
-              <circle cx="36" cy="36" r="7" fill="currentColor" opacity="0.5" />
-              <path d="M18 18 L54 54 M54 18 L18 54" stroke="currentColor" strokeWidth="2.5" opacity="0.25" />
-            </svg>
-            <span>Photo de l'atelier</span>
+          <div className={styles.carousel} aria-label="Photos de l'atelier">
+            {ATELIER_SLIDES.map((slide, i) => (
+              <div
+                key={slide.src}
+                className={`${styles.carouselSlide}${i === activeSlide ? ` ${styles.carouselSlideActive}` : ''}`}
+                aria-hidden={i !== activeSlide}
+              >
+                <img src={slide.src} alt={slide.alt} />
+              </div>
+            ))}
+            <div className={styles.carouselDots}>
+              {ATELIER_SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  className={`${styles.carouselDot}${i === activeSlide ? ` ${styles.carouselDotActive}` : ''}`}
+                  onClick={() => setActiveSlide(i)}
+                  aria-label={`Photo ${i + 1}`}
+                  aria-current={i === activeSlide}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
