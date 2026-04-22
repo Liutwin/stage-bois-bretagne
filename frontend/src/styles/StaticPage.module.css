@@ -4,8 +4,6 @@
 }
 
 .inner {
-  max-width: 820px;
-  margin-inline: auto;
   padding: clamp(2rem, 5vw, 4rem) var(--section-padding-x);
 }
 
@@ -142,7 +140,7 @@
 /* Profil formatrice */
 .profileGrid {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 260px 1fr;
   grid-template-rows: repeat(3, auto);
   column-gap: clamp(1.5rem, 4vw, 3.5rem);
   row-gap: 0.75rem;
@@ -157,9 +155,12 @@
 .portraits {
   grid-column: 1;
   grid-row: 1 / -1;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.75rem;
+  padding-bottom: 1.5rem;
 }
 
 /* Desktop : sections texte forcées en col 2 */
@@ -167,6 +168,48 @@
   .profileGrid > :not(.portraits) {
     grid-column: 2;
   }
+}
+
+/* Hébergement — layout 2 colonnes avec photo qui s'étire sur 3 lignes */
+.hebergGrid {
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  row-gap: 1rem;
+  align-items: start;
+}
+
+.hebergPhoto {
+  grid-column: 1;
+  grid-row: 1 / 5;
+  align-self: start;
+  aspect-ratio: 4 / 3;
+  margin-top: 0.5rem;
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.hebergPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.hebergPhoto:hover img {
+  transform: scale(1.02);
+}
+
+.hebergRight {
+  grid-column: 2;
+}
+
+.hebergPlaceholder {
+  grid-column: 1;
+  grid-row: 6;
 }
 
 .portraitLarge {
@@ -192,6 +235,85 @@
 
 .portraitLarge:hover img {
   transform: scale(1.03);
+}
+
+/* Carrousel photos formatrice */
+.portraitCarousel {
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  cursor: pointer;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carouselSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.carouselSlideActive {
+  opacity: 1;
+}
+
+.carouselSlide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carouselDots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  z-index: 2;
+}
+
+.carouselDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.carouselDot:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.carouselDotActive {
+  background: #fff;
+  transform: scale(1.2);
+}
+
+/* Placeholder carrousel — espace réservé pour futures photos */
+.carouselPlaceholder {
+  border: 1.5px dashed var(--color-shadow);
+  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-muted);
+  opacity: 0.5;
+  user-select: none;
 }
 
 /* Lightbox */
@@ -296,12 +418,33 @@
     max-height: none;
   }
 
-  /* Ordre mobile : annick(1) text(2) sculpture(3) références(4) camac(5) pédagogie(6) ambiance(7) */
+  /* Ordre mobile : annick(1) parcours(2) carousel(3) références(4) pédagogie(6) */
   .mob1 { order: 1; }
   .mob2 { order: 2; }
   .mob3 { order: 3; }
   .mob4 { order: 4; }
-  .mob5 { order: 5; }
-  .mob6 { order: 6; }
-  .mob7 { order: 7; }
+  .mob6 { order: 5; }
+
+  /* Hébergement mobile */
+  .hebergGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hebergPhoto {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  .hebergPlaceholder {
+    grid-row: auto;
+  }
+
+  .hebergRight {
+    grid-column: 1;
+  }
+
+  .hebergPlaceholder {
+    grid-column: 1;
+  }
 }
