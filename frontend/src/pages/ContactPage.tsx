@@ -150,10 +150,11 @@ export function ContactPage() {
                 22340 Trébrivan
               </li>
               <li>
-                <a href="tel:0296297197">02 96 29 71 97</a>
+                <a href="tel:0296297197">02 96 29 71 97</a> &nbsp;/ &nbsp;
+                <a href="tel:0673823610">06 73 82 36 10</a>
               </li>
               <li>
-                <a href="mailto:contact@stageboisbretagne.com">
+                <a href="mailto:@stageboisbretagne.com">
                   contact@stageboisbretagne.com
                 </a>
               </li>

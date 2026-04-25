@@ -27,7 +27,10 @@ export function MentionsLegalesPage() {
 
           <section className={styles.block}>
             <h2>Conception et développement</h2>
-            <p>Liutwin Piernet</p>
+            <p>
+              Liutwin Piernet<br />
+              E-mail : <a href="mailto:webmaster@stageboisbretagne.com">webmaster@stageboisbretagne.com</a>
+            </p>
           </section>
 
           <section className={styles.block}>

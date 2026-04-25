@@ -4,9 +4,15 @@
  * Monte le routeur React et enregistre les feuilles de style globales.
  */
 
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import '@/globals.css';
 
 import { Navbar } from '@/components/Navbar';
@@ -17,7 +23,6 @@ import { NextSessionPage } from '@/pages/NextSessionPage';
 import { TarifsPage } from '@/pages/TarifsPage';
 import { HebergementPage } from '@/pages/HebergementPage';
 import { FormatricePage } from '@/pages/FormatricePage';
-import { PartenairesPage } from '@/pages/PartenairesPage';
 import { ContactPage } from '@/pages/ContactPage';
 import { MentionsLegalesPage } from '@/pages/MentionsLegalesPage';
 import { PolitiqueConfidentialitePage } from '@/pages/PolitiqueConfidentialitePage';
@@ -28,6 +33,7 @@ if (!root) throw new Error('Element #root introuvable dans le DOM.');
 createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -36,7 +42,6 @@ createRoot(root).render(
         <Route path="/tarifs" element={<TarifsPage />} />
         <Route path="/hebergement" element={<HebergementPage />} />
         <Route path="/formatrice" element={<FormatricePage />} />
-        <Route path="/partenaires" element={<PartenairesPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
         <Route path="/politique-de-confidentialite" element={<PolitiqueConfidentialitePage />} />

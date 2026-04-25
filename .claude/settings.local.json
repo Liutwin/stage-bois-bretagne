@@ -11,7 +11,7 @@
       "Bash(mv frontend/src/components/*.module.css frontend/src/styles/)",
       "Bash(mv frontend/src/pages/*.module.css frontend/src/styles/)",
       "Bash(sed -i \"s|from '\\\\./\\\\\\(.*\\\\.module\\\\.css\\\\\\)'|from '../styles/\\\\1'|g\" frontend/src/components/Navbar.tsx frontend/src/components/SessionCard.tsx frontend/src/components/Footer.tsx)",
-      "Bash(sed -i \"s|from '\\\\./\\\\\\(.*\\\\.module\\\\.css\\\\\\)'|from '../styles/\\\\1'|g\" frontend/src/pages/HebergementPage.tsx frontend/src/pages/PartenairesPage.tsx frontend/src/pages/FormatricePage.tsx frontend/src/pages/NextSessionPage.tsx frontend/src/pages/StagePage.tsx frontend/src/pages/HomePage.tsx frontend/src/pages/TarifsPage.tsx frontend/src/pages/AdminPage.tsx frontend/src/pages/ContactPage.tsx)",
+      "Bash(sed -i \"s|from '\\\\./\\\\\\(.*\\\\.module\\\\.css\\\\\\)'|from '../styles/\\\\1'|g\" frontend/src/pages/HebergementPage.tsx frontend/src/pages/FormatricePage.tsx frontend/src/pages/NextSessionPage.tsx frontend/src/pages/StagePage.tsx frontend/src/pages/HomePage.tsx frontend/src/pages/TarifsPage.tsx frontend/src/pages/AdminPage.tsx frontend/src/pages/ContactPage.tsx)",
       "Read(///wsl.localhost/Ubuntu/home/**)",
       "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/**)",
       "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/**)",

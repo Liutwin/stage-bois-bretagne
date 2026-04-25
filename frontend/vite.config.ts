@@ -13,10 +13,10 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
-    allowedHosts: ["localhost", "liutwin-pc"],
+    allowedHosts: ["localhost", "Liutwin-PC", "Liutwin-asus"],
     proxy: {
       '/api': {
-        target: 'http://localhost:8001',
+        target: 'http://localhost:8000',
         changeOrigin: true,
       },
     },

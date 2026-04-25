@@ -43,7 +43,6 @@ export function Footer() {
               ['Tarifs & Inscriptions', '/tarifs'],
               ['Hébergement / Repas', '/hebergement'],
               ['La formatrice', '/formatrice'],
-              ['Partenaires', '/partenaires'],
               ['Contact', '/contact'],
             ].map(([label, to]) => (
               <li key={to}>
@@ -70,7 +69,7 @@ export function Footer() {
           </p>
           <p className={styles.social}>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=Annick+Le+Goasteller+Trébrivan"
+              href="https://www.google.com/maps/search/?api=1&query=Stage+Bois+Trébrivan"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.footerLink}
@@ -87,7 +86,7 @@ export function Footer() {
           <NavLink to="/mentions-legales" className={styles.footerLink}>Mentions légales</NavLink>
           <NavLink to="/politique-de-confidentialite" className={styles.footerLink}>Politique de confidentialité</NavLink>
         </span>
-        <span>Trébrivan, Côtes d'Armor</span>
+        <span>Site produit par Liutwin Piernet</span>
       </div>
     </footer>
   );
