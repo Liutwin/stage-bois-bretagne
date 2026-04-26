@@ -22,6 +22,7 @@ function toSession(row: SessionRow): Session {
     spotsAvailable: row.spots_available,
     totalSpots: row.total_spots,
     isVisible: row.is_visible === 1,
+    description: row.description ?? '',
   };
 }
 
@@ -34,6 +35,20 @@ function toSession(row: SessionRow): Session {
 export function getVisibleSession(): Session | null {
   const row = db
     .prepare("SELECT * FROM sessions WHERE is_visible = 1 ORDER BY id DESC LIMIT 1")
+    .get() as SessionRow | undefined;
+  return row ? toSession(row) : null;
+}
+
+/**
+ * Récupère la session la plus récente quelle que soit sa visibilité.
+ * Utilisé pour exposer les informations annexes (prochaines dates potentielles)
+ * même quand aucun stage n'est publié.
+ *
+ * @returns La dernière session, ou `null` si aucune n'existe.
+ */
+export function getLatestSession(): Session | null {
+  const row = db
+    .prepare("SELECT * FROM sessions ORDER BY id DESC LIMIT 1")
     .get() as SessionRow | undefined;
   return row ? toSession(row) : null;
 }
@@ -57,7 +72,7 @@ export function upsertSession(payload: SessionPayload): Session {
   if (existing) {
     db.prepare(
       `UPDATE sessions
-       SET theme=?, start_date=?, end_date=?, spots_available=?, total_spots=?, is_visible=?
+       SET theme=?, start_date=?, end_date=?, spots_available=?, total_spots=?, is_visible=?, description=?
        WHERE id=?`,
     ).run(
       payload.theme,
@@ -66,14 +81,15 @@ export function upsertSession(payload: SessionPayload): Session {
       payload.spotsAvailable,
       payload.totalSpots,
       payload.isVisible ? 1 : 0,
+      payload.description ?? '',
       existing.id,
     );
     return { id: existing.id, ...payload };
   }
 
   const result = db.prepare(
-    `INSERT INTO sessions (theme, start_date, end_date, spots_available, total_spots, is_visible)
-     VALUES (?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO sessions (theme, start_date, end_date, spots_available, total_spots, is_visible, description)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
   ).run(
     payload.theme,
     payload.startDate,
@@ -81,6 +97,7 @@ export function upsertSession(payload: SessionPayload): Session {
     payload.spotsAvailable,
     payload.totalSpots,
     payload.isVisible ? 1 : 0,
+    payload.description ?? '',
   );
   return { id: Number(result.lastInsertRowid), ...payload };
 }

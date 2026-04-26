@@ -27,6 +27,10 @@ export interface RegistrationFormData {
   city: string;
   /** Niveau du stagiaire : débutant, intermédiaire ou confirmé. */
   level: 'débutant' | 'intermédiaire' | 'confirmé';
+  /** Date de naissance (facultatif). */
+  dateOfBirth?: string;
+  /** Profession (facultatif). */
+  profession?: string;
   /** Commentaire ou demande particulière (facultatif). */
   comment?: string;
 }
@@ -125,6 +129,8 @@ export function generateRegistrationPdf(
   const fields: [string, string][] = [
     ['Prénom', registrant.firstName],
     ['Nom', registrant.lastName],
+    ['Date de naissance', registrant.dateOfBirth ?? ''],
+    ['Profession', registrant.profession ?? ''],
     ['Email', registrant.email],
     ['Téléphone', registrant.phone],
     ['Adresse', registrant.address],

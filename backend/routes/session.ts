@@ -11,7 +11,7 @@
  */
 
 import { Router } from "@oak/oak";
-import { getVisibleSession, upsertSession } from "../services/session.ts";
+import { getVisibleSession, getLatestSession, upsertSession } from "../services/session.ts";
 import type { SessionPayload } from "../model/interfaces.ts";
 
 const router = new Router({ prefix: "/api" });
@@ -24,7 +24,13 @@ const router = new Router({ prefix: "/api" });
  */
 router.get("/session", (ctx) => {
   const session = getVisibleSession();
-  ctx.response.body = { ok: true, ...(session ? { data: session } : {}) };
+  const latest = getLatestSession();
+  const potentialDates = latest?.description || null;
+  ctx.response.body = {
+    ok: true,
+    ...(session ? { data: session } : {}),
+    ...(potentialDates ? { potentialDates } : {}),
+  };
 });
 
 /**
@@ -47,7 +53,7 @@ router.put("/admin/session", async (ctx) => {
     return;
   }
 
-  const { theme, startDate, endDate, spotsAvailable, totalSpots, isVisible } =
+  const { theme, startDate, endDate, spotsAvailable, totalSpots, isVisible, description } =
     body as Partial<SessionPayload>;
 
   if (
@@ -63,7 +69,7 @@ router.put("/admin/session", async (ctx) => {
     return;
   }
 
-  const session = upsertSession({ theme, startDate, endDate, spotsAvailable, totalSpots, isVisible });
+  const session = upsertSession({ theme, startDate, endDate, spotsAvailable, totalSpots, isVisible, description: description ?? '' });
   ctx.response.body = { ok: true, data: session };
 });
 

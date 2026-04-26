@@ -39,6 +39,7 @@ export function AdminPage() {
     spotsAvailable: 0,
     totalSpots: 4,
     isVisible: true,
+    description: '',
   });
 
   // Charge les données actuelles
@@ -59,7 +60,7 @@ export function AdminPage() {
 
   /** Met à jour un champ du formulaire. */
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) {
     const { name, value, type } = e.target;
     setFields((prev: SessionPayload) => ({
@@ -189,6 +190,22 @@ export function AdminPage() {
                     onChange={handleChange}
                   />
                 </div>
+              </div>
+
+              {/* Prochaines dates potentielles */}
+              <div className={styles.field}>
+                <label htmlFor="description">Prochaines dates potentielles</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows={3}
+                  maxLength={300}
+                  value={fields.description}
+                  onChange={handleChange}
+                  placeholder="Ex : D'autres dates sont envisagées courant automne 2025, en cours de planification…"
+                  className={styles.textarea}
+                />
+                <span className={styles.charCount}>{fields.description.length} / 300</span>
               </div>
             </>
           )}

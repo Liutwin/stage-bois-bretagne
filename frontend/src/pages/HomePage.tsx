@@ -48,8 +48,8 @@ export function HomePage() {
         <div className={styles.heroText}>
           <div className={styles.heroAccent} />
           <h1 className={styles.heroTitle}>
-            L'art de la<br />
-            <em>scie à chantourner</em><br />
+            Stage de<br />
+            <em>chantournage</em><br />
             en Bretagne
           </h1>
           <p className={styles.heroDesc}>
@@ -105,15 +105,14 @@ export function HomePage() {
         <div className={styles.pillar}>
           <h3>Organisation</h3>
           <p>
-            Maximum 4 stagiaires par session pour s'adapter à tous les niveaux,
-            des débutants complets aux pratiquants confirmés.
+            Maximum 3 stagiaires par session.
           </p>
         </div>
         <div className={styles.pillar}>
           <h3>Créations</h3>
           <p>
-            Puzzles, jouets, mobiles, marquèterie, dentelle de bois, découpes 3D…
-            laissez libre cours à votre imagination.
+            Mobiles, puzzles, découpes de précision,
+            et plus selon la vitesse de progression du groupe.
           </p>
         </div>
       </section>
@@ -126,7 +125,7 @@ export function HomePage() {
             <h2 className="section-title">Prochain stage</h2>
             <p className={styles.nextSessionDesc}>
               Annick organise 1 à 3 sessions par an. Les places sont limitées
-              à 4 personnes — n'attendez pas pour réserver la vôtre.
+              à 3 personnes — n'attendez pas pour réserver la vôtre.
             </p>
             <Link to="/prochain-stage" className={styles.moreLink}>
               Voir toutes les informations →

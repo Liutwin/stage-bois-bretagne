@@ -18,7 +18,13 @@
       "Read(//home/liutwin/stage-bois-bretagne/frontend/src/pages/**)",
       "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/pages/**)",
       "Read(//home/liutwin/stage-bois-bretagne/frontend/src/styles/**)",
-      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/styles/**)"
+      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/styles/**)",
+      "Read(//home/liutwin/stage-bois-bretagne/**)",
+      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/**)",
+      "Read(//c/Users/Liutwin/**)",
+      "Read(//home/liutwin/stage-bois-bretagne/frontend/src/**)",
+      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/backend/**)",
+      "Bash(tree -L 3 -I \"node_modules\" //wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src)"
     ],
     "additionalDirectories": [
       "\\home\\liutwin\\stage-bois-bretagne\\frontend\\src\\pages",

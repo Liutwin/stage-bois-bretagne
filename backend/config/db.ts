@@ -30,8 +30,14 @@ db.exec(`
     end_date        TEXT    NOT NULL,
     spots_available INTEGER NOT NULL DEFAULT 4,
     total_spots     INTEGER NOT NULL DEFAULT 4,
-    is_visible      INTEGER NOT NULL DEFAULT 0
+    is_visible      INTEGER NOT NULL DEFAULT 0,
+    description     TEXT    NOT NULL DEFAULT ''
   )
 `);
+
+// Migration pour les bases existantes (silencieuse si la colonne existe déjà)
+try {
+  db.exec(`ALTER TABLE sessions ADD COLUMN description TEXT NOT NULL DEFAULT ''`);
+} catch (_) { /* colonne déjà présente */ }
 
 console.log(`[DB] SQLite connecté : ${DB_PATH}`);

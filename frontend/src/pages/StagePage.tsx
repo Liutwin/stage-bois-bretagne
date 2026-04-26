@@ -33,22 +33,10 @@ export function StagePage() {
             <h2>Programme type</h2>
             <ul className={styles.list}>
               <li>Découverte du matériel et des règles de sécurité</li>
-              <li>Sélection des essences de bois adaptées</li>
               <li>Transfert et fixation des gabarits</li>
               <li>Découpe guidée pas à pas</li>
               <li>Finitions : ponçage, peinture, vernis</li>
               <li>Réalisation d'un projet personnel encadré</li>
-            </ul>
-          </section>
-
-          <section className={styles.block}>
-            <h2>Organisation</h2>
-            <ul className={styles.list}>
-              <li>Maximum 4 stagiaires par session</li>
-              <li>Tous niveaux acceptés — débutants bienvenus</li>
-              <li>Durée : 2 à 3 jours selon le programme</li>
-              <li>Matériel fourni (bois, lames, gabarits)</li>
-              <li>Cadre champêtre à Trébrivan, Côtes d'Armor</li>
             </ul>
           </section>
         </div>

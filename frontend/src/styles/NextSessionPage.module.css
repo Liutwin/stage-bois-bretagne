@@ -16,7 +16,6 @@
   font-size: 14.5px;
   color: var(--color-muted);
   line-height: 1.8;
-  max-width: 580px;
 }
 
 .cardArea {
@@ -36,6 +35,31 @@
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* ── Prochaines dates ─────────────────────────────────────────────────────── */
+.upcomingDates {
+  background: var(--color-linen);
+  border-left: 3px solid var(--color-amber);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.25rem;
+  align-self: flex-start;
+  max-width: 560px;
+}
+
+.upcomingLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  margin-bottom: 0.35rem;
+}
+
+.upcomingText {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.7;
 }
 
 /* ── Procédure ────────────────────────────────────────────────────────────── */

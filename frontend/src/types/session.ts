@@ -34,6 +34,8 @@ export interface Session {
   totalSpots: number;
   /** Indique si la session est affichée sur le site public. */
   isVisible: boolean;
+  /** Court texte de présentation du stage (facultatif). */
+  description: string;
 }
 
 /**

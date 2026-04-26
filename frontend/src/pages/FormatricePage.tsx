@@ -8,12 +8,10 @@ import styles from '../styles/StaticPage.module.css';
 import annickPhoto from '../assets/annick.jpg';
 import annickSculpturePhoto from '../assets/annick-sculpture.jpg';
 import annickCamacPhoto from '../assets/annick-et-camac.jpg';
-import ambiancePhoto from '../assets/ambiance-stage.jpg';
 
 const GALLERY_SLIDES = [
   { src: annickSculpturePhoto, alt: 'Sculpture en bois par Annick' },
   { src: annickCamacPhoto,     alt: 'Annick avec une harpe CAMAC' },
-  { src: ambiancePhoto,        alt: 'Ambiance d\'un stage de chantournage' },
 ];
 
 export function FormatricePage() {

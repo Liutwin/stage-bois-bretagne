@@ -24,6 +24,7 @@ import { TarifsPage } from '@/pages/TarifsPage';
 import { HebergementPage } from '@/pages/HebergementPage';
 import { FormatricePage } from '@/pages/FormatricePage';
 import { ContactPage } from '@/pages/ContactPage';
+import { PressePage } from '@/pages/PressePage';
 import { MentionsLegalesPage } from '@/pages/MentionsLegalesPage';
 import { PolitiqueConfidentialitePage } from '@/pages/PolitiqueConfidentialitePage';
 
@@ -43,6 +44,7 @@ createRoot(root).render(
         <Route path="/hebergement" element={<HebergementPage />} />
         <Route path="/formatrice" element={<FormatricePage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/presse" element={<PressePage />} />
         <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
         <Route path="/politique-de-confidentialite" element={<PolitiqueConfidentialitePage />} />
       </Routes>

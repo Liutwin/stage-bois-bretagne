@@ -26,6 +26,8 @@ export function NextSessionPage() {
   const [formData, setFormData] = useState<RegistrationFormData>({
     firstName: '',
     lastName: '',
+    dateOfBirth: '',
+    profession: '',
     email: '',
     phone: '',
     address: '',
@@ -69,7 +71,7 @@ export function NextSessionPage() {
           <p className="section-label">Disponibilités</p>
           <h1 className="section-title">Prochain stage</h1>
           <p className={styles.intro}>
-            Annick organise 1 à 3 sessions par an, avec un maximum de 4 stagiaires.
+            L'atelier organise de 2 à 3 sessions par an, avec un maximum de 3 stagiaires.
             Consultez les disponibilités ci-dessous et manifestez votre intérêt
             via le formulaire — la formatrice vous recontactera rapidement.
           </p>
@@ -84,9 +86,17 @@ export function NextSessionPage() {
           )}
         </div>
 
+        {/* Prochaines dates potentielles */}
+        {!loading && session?.description && (
+          <div className={styles.upcomingDates}>
+            <p className={styles.upcomingLabel}>Prochaines dates envisagées</p>
+            <p className={styles.upcomingText}>{session.description}</p>
+          </div>
+        )}
+
         {/* Procédure d'inscription */}
         <section className={styles.procedure}>
-          <h2>Procédure d'inscription</h2>
+          <h2>Modalités d'inscription</h2>
           <ol className={styles.steps}>
             <li>
               <span className={styles.stepNum}>1</span>
@@ -107,7 +117,7 @@ export function NextSessionPage() {
               <div>
                 <strong>Téléchargez le bulletin d'inscription</strong> en PDF,
                 imprimez-le, complétez-le et renvoyez-le accompagné d'un chèque
-                d'acompte (30 %) par courrier postal.
+                d'acompte (70 €) par courrier postal.
               </div>
             </li>
             <li>
@@ -152,6 +162,30 @@ export function NextSessionPage() {
                   onChange={handleChange}
                   autoComplete="family-name"
                   required
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="dateOfBirth">Date de naissance</label>
+                <input
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  type="date"
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  autoComplete="bday"
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="profession">Profession</label>
+                <input
+                  id="profession"
+                  name="profession"
+                  type="text"
+                  value={formData.profession}
+                  onChange={handleChange}
+                  autoComplete="organization-title"
                 />
               </div>
 
@@ -215,15 +249,6 @@ export function NextSessionPage() {
                 />
               </div>
 
-              <div className={styles.field}>
-                <label htmlFor="level">Niveau</label>
-                <select id="level" name="level" value={formData.level} onChange={handleChange}>
-                  <option value="débutant">Débutant(e)</option>
-                  <option value="intermédiaire">Intermédiaire</option>
-                  <option value="confirmé">Confirmé(e)</option>
-                </select>
-              </div>
-
               <div className={`${styles.field} ${styles.fullWidth}`}>
                 <label htmlFor="comment">Commentaire / demande particulière</label>
                 <textarea
@@ -246,7 +271,7 @@ export function NextSessionPage() {
               </button>
               <p className={styles.pdfNote}>
                 Imprimez ce bulletin, complétez-le et envoyez-le avec votre
-                chèque d'acompte à : <strong>Annick Le Goasteller, 3 Kermoal,
+                chèque d'acompte à : <br /> <strong>Annick Le Goasteller, 3 Kermoal,
                 22340 Trébrivan</strong>.
               </p>
             </div>

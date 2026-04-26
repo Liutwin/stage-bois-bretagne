@@ -21,22 +21,11 @@ export function HebergementPage() {
             {/* ── Sur place ─────────────────────────────────────────────── */}
             <section className={`${styles.block} ${styles.hebergRight}`}>
               <h2>Hébergement sur place</h2>
-              <p>L'atelier dispose de deux hébergements directement sur place.</p>
-            </section>
-
-            <section className={`${styles.block} ${styles.hebergRight}`}>
-              <h2>Gîte — deux chambres</h2>
               <p>
-                Cuisine et sanitaires en commun.<br />
-                <strong>100 €</strong> le forfait 4 nuits par chambre — 20 € la nuit supplémentaire.
-              </p>
-            </section>
+                Dans un bungallow comprenant une chambre avec une kitchette entièrement équipée,<br />
+                des sanitaires et une terrasse, draps et serviettes fournis.<br />
+                Minimum 2 nuits. Forfait de 90 € les deux premières nuits, 40 € la nuit supplémentaire.< br />
 
-            <section className={`${styles.block} ${styles.hebergRight}`}>
-              <h2>Bungalow — une chambre</h2>
-              <p>
-                Kitchenette et sanitaires privatifs.<br />
-                <strong>140 €</strong> le forfait 4 nuits — 25 € la nuit supplémentaire.
               </p>
             </section>
 
@@ -65,15 +54,8 @@ export function HebergementPage() {
                 <li>
                   <strong>Chambres — Mme Andrée Bluteau</strong> (600 m)<br />
                   <a href="tel:0607087645">06 07 08 76 45</a>
-                  {' · '}
-                  <a href="http://chez-dedee-trebrivan.fr" target="_blank" rel="noopener noreferrer">
-                    chez-dedee-trebrivan.fr
-                  </a>
                 </li>
               </ul>
-              <p className={styles.note}>
-                Une liste complémentaire d'hébergements est envoyée sur demande à l'inscription.
-              </p>
             </section>
 
             {/* ── Repas ─────────────────────────────────────────────────── */}
@@ -81,7 +63,7 @@ export function HebergementPage() {
               <h2>Repas</h2>
               <p>La pause déjeuner se fait au choix de chacun :</p>
               <ul className={styles.list}>
-                <li>Deux restaurants à 5 km — menus autour de 12 €</li>
+                <li>Deux restaurants à 5 km — menus autour de 14 €</li>
                 <li>Restauration rapide à Carhaix (10 km)</li>
                 <li>Pique-nique possible au jardin aux beaux jours</li>
               </ul>

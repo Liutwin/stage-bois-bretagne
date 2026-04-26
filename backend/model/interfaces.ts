@@ -34,6 +34,8 @@ export interface Session {
   totalSpots: number;
   /** Indique si le stage est affiché sur le site public. */
   isVisible: boolean;
+  /** Court texte de présentation du stage (facultatif). */
+  description: string;
 }
 
 /**
@@ -95,4 +97,5 @@ export interface SessionRow {
   total_spots: number;
   /** Stocké en `0`/`1` en SQLite ; converti en `boolean` par {@link Session}. */
   is_visible: number;
+  description: string;
 }

@@ -25,6 +25,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Tarifs', to: '/tarifs' },
   { label: 'Hébergement', to: '/hebergement' },
   { label: 'La formatrice', to: '/formatrice' },
+  { label: 'La presse', to: '/presse' },
   { label: 'Contact', to: '/contact' },
 ];
 

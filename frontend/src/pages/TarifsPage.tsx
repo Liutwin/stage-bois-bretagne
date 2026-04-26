@@ -36,35 +36,24 @@ export function TarifsPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Stage initiation</td>
-                  <td>2 jours</td>
-                  <td>À définir</td>
-                </tr>
-                <tr>
-                  <td>Stage perfectionnement</td>
-                  <td>3 jours</td>
-                  <td>À définir</td>
+                  <td>Stage d'initiation</td>
+                  <td>12 heures (sur 2 jours)</td>
+                  <td>230 €</td>
                 </tr>
               </tbody>
             </table>
 
             <p className={styles.note}>
-              Le tarif comprend l'encadrement et les matériaux de base.
-              Hébergement et repas non inclus — voir{' '}
-              <Link to="/hebergement" className={styles.link}>la page hébergement</Link>.
+              Le tarif comprend l'encadrement, les matériaux de base, et un poste de travail individuel.< br />
+              Les repas et l'hébergement ne sont pas inclus — voir la page{' '}
+              <Link to="/hebergement" className={styles.link}>Hébergement & Repas</Link> pour plus de détails.
             </p>
           </section>
 
-          <section className={styles.block}>
-            <h2>Procédure d'inscription</h2>
-            <ol className={styles.orderedList}>
-              <li>Consultez les disponibilités sur la page <Link to="/prochain-stage" className={styles.link}>Prochain stage</Link>.</li>
-              <li>Téléchargez et imprimez le bulletin d'inscription.</li>
-              <li>Retournez le bulletin complété avec un chèque d'acompte (30 %) par courrier postal à :<br /><strong>Annick Le Goasteller, 3 Kermoal, 22340 Trébrivan</strong></li>
-              <li>Votre inscription est confirmée à réception du courrier.</li>
-              <li>Le solde est réglé à votre arrivée.</li>
-            </ol>
-          </section>
+          <p className={styles.note}>
+            Pour vous inscrire, consultez les disponibilités et suivez la procédure détaillée sur la page{' '}
+            <Link to="/prochain-stage" className={styles.link}>Prochain stage</Link>.
+          </p>
         </div>
       </div>
     </main>

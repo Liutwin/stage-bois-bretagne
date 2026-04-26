@@ -86,6 +86,31 @@
   border-color: var(--color-amber);
 }
 
+.textarea {
+  border: 1px solid rgba(122, 100, 80, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-cream);
+  transition: border-color var(--transition-fast);
+  resize: vertical;
+  min-height: 72px;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-amber);
+}
+
+.charCount {
+  font-size: 11px;
+  color: var(--color-muted);
+  text-align: right;
+  margin-top: 2px;
+}
+
 .dateRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
