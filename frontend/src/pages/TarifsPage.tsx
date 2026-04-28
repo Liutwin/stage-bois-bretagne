@@ -6,6 +6,7 @@
 
 import { Link } from 'react-router-dom';
 import styles from '../styles/StaticPage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 /**
  * Page "Tarifs & Inscriptions" — grille tarifaire et rappel de la procédure.
@@ -15,6 +16,11 @@ import styles from '../styles/StaticPage.module.css';
 export function TarifsPage() {
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Tarifs & Inscriptions — Stage Bois Bretagne"
+        description="Tarifs du stage de chantournage et modalités d'inscription. Formules avec ou sans hébergement sur place à Trébrivan."
+        path="/tarifs"
+      />
       <div className={styles.inner}>
         <p className="section-label">Tarifs & Inscriptions</p>
         <h1 className="section-title">Tarifs</h1>

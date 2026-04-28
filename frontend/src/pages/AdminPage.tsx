@@ -1,32 +1,63 @@
-/**
- * @file pages/AdminPage.tsx
- * @description Interface d'administration minimaliste pour la mise à jour du prochain stage.
- *
- * Cette page est servie sous `/admin` et protégée par HTTP Basic Auth configuré dans Nginx.
- * Elle permet à la propriétaire de mettre à jour les trois champs du prochain stage sans
- * aucune compétence technique.
- *
- * @remarks
- * La protection applicative est assurée côté Nginx — aucun mécanisme d'authentification
- * supplémentaire n'est implémenté dans cette interface.
- */
-
 import { useState, useEffect } from 'react';
-import { fetchNextSession, updateSession } from '@/utils/api';
+import { fetchNextSession, updateSession, verifyAdminPassword, getAdminToken, setAdminToken, clearAdminToken } from '@/utils/api';
 import type { Session, SessionPayload } from '@/types/session';
 import styles from '../styles/AdminPage.module.css';
 
-/**
- * Page d'administration du prochain stage.
- *
- * Fonctionnalités :
- * - Chargement des données actuelles au montage
- * - Formulaire de mise à jour : thème, date de début, date de fin, places disponibles, visibilité
- * - Retour visuel en cas de succès ou d'erreur
- *
- * @returns Élément `<main>` de la page d'administration.
- */
+function LoginScreen({ onLogin }: { onLogin: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      await verifyAdminPassword(password);
+      setAdminToken(password);
+      onLogin();
+    } catch {
+      setError('Mot de passe incorrect.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className={styles.page}>
+      <div className={styles.card}>
+        <header className={styles.header}>
+          <div className={styles.logo}>Stage Bois Bretagne</div>
+          <h1>Accès administration</h1>
+          <p>Entrez le mot de passe pour accéder à l'interface.</p>
+        </header>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.field}>
+            <label htmlFor="password">Mot de passe</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              autoFocus
+              autoComplete="current-password"
+              required
+            />
+          </div>
+          {error && <p className={styles.errorMsg}>{error}</p>}
+          <button className={styles.saveBtn} type="submit" disabled={loading || !password}>
+            {loading ? 'Vérification…' : 'Se connecter'}
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
+
 export function AdminPage() {
+  const [authenticated, setAuthenticated] = useState<boolean>(
+    () => !!getAdminToken(),
+  );
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -42,8 +73,11 @@ export function AdminPage() {
     description: '',
   });
 
-  // Charge les données actuelles
   useEffect(() => {
+    if (!authenticated) {
+      setLoading(false);
+      return;
+    }
     fetchNextSession()
       .then((session: Session | null) => {
         if (session) {
@@ -56,9 +90,8 @@ export function AdminPage() {
         setError(err instanceof Error ? err.message : 'Impossible de charger les données.');
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [authenticated]);
 
-  /** Met à jour un champ du formulaire. */
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) {
@@ -74,7 +107,11 @@ export function AdminPage() {
     }));
   }
 
-  /** Envoie la mise à jour au backend. */
+  function handleLogout() {
+    clearAdminToken();
+    setAuthenticated(false);
+  }
+
   async function handleSave() {
     setSaving(true);
     setSuccess(false);
@@ -84,10 +121,20 @@ export function AdminPage() {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 4000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde.');
+      const msg = err instanceof Error ? err.message : 'Erreur lors de la sauvegarde.';
+      if (msg.includes('401') || msg.toLowerCase().includes('autorisé')) {
+        clearAdminToken();
+        setAuthenticated(false);
+        return;
+      }
+      setError(msg);
     } finally {
       setSaving(false);
     }
+  }
+
+  if (!authenticated) {
+    return <LoginScreen onLogin={() => { setAuthenticated(true); setLoading(true); }} />;
   }
 
   if (loading) {
@@ -101,7 +148,6 @@ export function AdminPage() {
   return (
     <main className={styles.page}>
       <div className={styles.card}>
-        {/* En-tête */}
         <header className={styles.header}>
           <div className={styles.logo}>Stage Bois Bretagne</div>
           <h1>Mise à jour du prochain stage</h1>
@@ -112,9 +158,7 @@ export function AdminPage() {
           </p>
         </header>
 
-        {/* Formulaire */}
         <div className={styles.form}>
-          {/* Visibilité */}
           <label className={styles.checkboxRow}>
             <input
               type="checkbox"
@@ -127,7 +171,6 @@ export function AdminPage() {
 
           {fields.isVisible && (
             <>
-              {/* Thème */}
               <div className={styles.field}>
                 <label htmlFor="theme">Thème / intitulé du stage</label>
                 <input
@@ -140,7 +183,6 @@ export function AdminPage() {
                 />
               </div>
 
-              {/* Dates */}
               <div className={styles.dateRow}>
                 <div className={styles.field}>
                   <label htmlFor="startDate">Date de début</label>
@@ -164,7 +206,6 @@ export function AdminPage() {
                 </div>
               </div>
 
-              {/* Places */}
               <div className={styles.dateRow}>
                 <div className={styles.field}>
                   <label htmlFor="spotsAvailable">Places disponibles</label>
@@ -192,7 +233,6 @@ export function AdminPage() {
                 </div>
               </div>
 
-              {/* Prochaines dates potentielles */}
               <div className={styles.field}>
                 <label htmlFor="description">Prochaines dates potentielles</label>
                 <textarea
@@ -210,7 +250,6 @@ export function AdminPage() {
             </>
           )}
 
-          {/* Retours */}
           {error && <p className={styles.errorMsg}>{error}</p>}
           {success && (
             <p className={styles.successMsg}>
@@ -218,13 +257,20 @@ export function AdminPage() {
             </p>
           )}
 
-          {/* Action */}
           <button
             className={styles.saveBtn}
             onClick={handleSave}
             disabled={saving}
           >
             {saving ? 'Enregistrement…' : 'Enregistrer'}
+          </button>
+
+          <button
+            className={styles.logoutBtn}
+            onClick={handleLogout}
+            type="button"
+          >
+            Se déconnecter
           </button>
         </div>
       </div>

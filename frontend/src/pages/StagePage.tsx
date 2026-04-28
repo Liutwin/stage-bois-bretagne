@@ -5,6 +5,7 @@
  */
 
 import styles from '../styles/StaticPage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 /**
  * Page "Le stage" — description du programme et des méthodes pédagogiques.
@@ -14,6 +15,11 @@ import styles from '../styles/StaticPage.module.css';
 export function StagePage() {
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Le stage de chantournage — Stage Bois Bretagne"
+        description="Découvrez le programme du stage : techniques de chantournage, matériel fourni et déroulement des journées à Trébrivan (22)."
+        path="/stage"
+      />
       <div className={styles.inner}>
         <p className="section-label">Programme</p>
         <h1 className="section-title">Le stage de chantournage</h1>

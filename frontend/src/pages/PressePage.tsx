@@ -5,6 +5,7 @@
 
 import styles from '../styles/StaticPage.module.css';
 import pressStyles from '../styles/PressePage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 /**
  * Page "La presse" — revue de presse et articles consacrés au stage.
@@ -14,6 +15,11 @@ import pressStyles from '../styles/PressePage.module.css';
 export function PressePage() {
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="La presse — Stage Bois Bretagne"
+        description="Articles et mentions de Stage Bois Bretagne dans les médias locaux et régionaux de Bretagne."
+        path="/presse"
+      />
       <div className={styles.inner}>
         <p className="section-label">Médias</p>
         <h1 className="section-title">La presse en parle</h1>

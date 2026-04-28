@@ -8,6 +8,7 @@ import styles from '../styles/StaticPage.module.css';
 import annickPhoto from '../assets/annick.jpg';
 import annickSculpturePhoto from '../assets/annick-sculpture.jpg';
 import annickCamacPhoto from '../assets/annick-et-camac.jpg';
+import { PageSEO } from '@/components/PageSEO';
 
 const GALLERY_SLIDES = [
   { src: annickSculpturePhoto, alt: 'Sculpture en bois par Annick' },
@@ -27,6 +28,11 @@ export function FormatricePage() {
 
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Annick Le Goasteller, formatrice — Stage Bois Bretagne"
+        description="Découvrez le parcours d'Annick Le Goasteller, artisane sculptrice et formatrice en chantournage en Centre Bretagne."
+        path="/formatrice"
+      />
       <div className={styles.inner}>
         <p className="section-label">Votre formatrice</p>
         <h1 className="section-title">Annick Le Goasteller</h1>

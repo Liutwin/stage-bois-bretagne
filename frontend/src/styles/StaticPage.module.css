@@ -257,11 +257,13 @@
   position: absolute;
   inset: 0;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.8s ease;
 }
 
 .carouselSlideActive {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .carouselSlide img {

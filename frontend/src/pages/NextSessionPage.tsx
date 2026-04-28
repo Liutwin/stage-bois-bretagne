@@ -9,6 +9,7 @@ import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
 import { generateRegistrationPdf, type RegistrationFormData } from '@/utils/pdf';
 import styles from '../styles/NextSessionPage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 /**
  * Page publique dédiée au prochain stage.
@@ -65,6 +66,11 @@ export function NextSessionPage() {
 
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Prochain stage — Stage Bois Bretagne"
+        description="Dates et informations du prochain stage de chantournage à Trébrivan. Places limitées, inscription sur bulletin."
+        path="/prochain-stage"
+      />
       <div className={styles.inner}>
         {/* En-tête */}
         <div className={styles.header}>

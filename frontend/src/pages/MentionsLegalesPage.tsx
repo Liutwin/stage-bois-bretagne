@@ -1,8 +1,14 @@
 import styles from '../styles/StaticPage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 export function MentionsLegalesPage() {
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Mentions légales — Stage Bois Bretagne"
+        description="Mentions légales du site Stage Bois Bretagne — Annick Le Goasteller, 3 Kermoal, 22340 Trébrivan."
+        path="/mentions-legales"
+      />
       <div className={styles.inner}>
         <p className="section-label">Informations légales</p>
         <h1 className="section-title">Mentions légales</h1>

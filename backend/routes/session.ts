@@ -12,6 +12,7 @@
 
 import { Router } from "@oak/oak";
 import { getVisibleSession, getLatestSession, upsertSession } from "../services/session.ts";
+import { adminAuthMiddleware } from "../middleware/auth.ts";
 import type { SessionPayload } from "../model/interfaces.ts";
 
 const router = new Router({ prefix: "/api" });
@@ -34,6 +35,17 @@ router.get("/session", (ctx) => {
 });
 
 /**
+ * `GET /api/admin/verify`
+ *
+ * Vérifie que le token Bearer fourni est valide.
+ * - `200` – Token valide.
+ * - `401` – Token absent ou incorrect.
+ */
+router.get("/admin/verify", adminAuthMiddleware, (ctx) => {
+  ctx.response.body = { ok: true };
+});
+
+/**
  * `PUT /api/admin/session`
  *
  * Crée ou met à jour la session de stage (upsert).
@@ -42,8 +54,9 @@ router.get("/session", (ctx) => {
  * Réponses possibles :
  * - `200` – Session mise à jour, retourne la session complète avec son `id`.
  * - `400` – Corps JSON invalide ou champs manquants/mal typés.
+ * - `401` – Token d'authentification absent ou incorrect.
  */
-router.put("/admin/session", async (ctx) => {
+router.put("/admin/session", adminAuthMiddleware, async (ctx) => {
   let body: Record<string, unknown>;
   try {
     body = await ctx.request.body.json();

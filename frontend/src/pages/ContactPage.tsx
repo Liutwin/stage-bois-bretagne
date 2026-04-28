@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { sendContactMessage } from '@/utils/api';
+import { PageSEO } from '@/components/PageSEO';
 import styles from '../styles/ContactPage.module.css';
 
 /**
@@ -51,6 +52,11 @@ export function ContactPage() {
 
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Contact — Stage Bois Bretagne"
+        description="Contactez Annick Le Goasteller pour tout renseignement sur les stages de chantournage à Trébrivan (Côtes-d'Armor)."
+        path="/contact"
+      />
       <div className={styles.inner}>
         {/* En-tête */}
         <div className={styles.header}>

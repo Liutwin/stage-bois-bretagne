@@ -9,6 +9,20 @@ import type { ApiResponse, Session, SessionPayload } from '@/types/session';
 /** URL de base de l'API. En développement, Vite proxifie vers `http://localhost:8001`. */
 const API_BASE = '/api';
 
+const ADMIN_TOKEN_KEY = 'admin_token';
+
+export function getAdminToken(): string {
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY) ?? '';
+}
+
+export function setAdminToken(token: string): void {
+  sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+}
+
+export function clearAdminToken(): void {
+  sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+}
+
 /**
  * Récupère les données du prochain stage affiché sur le site public.
  *
@@ -40,10 +54,26 @@ export async function fetchNextSession(): Promise<Session | null> {
  * @returns La session mise à jour.
  * @throws {Error} En cas d'erreur réseau, de réponse HTTP non-OK ou de rejet métier.
  */
+/**
+ * Vérifie que le mot de passe admin est correct auprès du backend.
+ * @throws {Error} Si le mot de passe est incorrect ou en cas d'erreur réseau.
+ */
+export async function verifyAdminPassword(password: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/admin/verify`, {
+    headers: { 'Authorization': `Bearer ${password}` },
+  });
+  if (!res.ok) {
+    throw new Error('Mot de passe incorrect.');
+  }
+}
+
 export async function updateSession(payload: SessionPayload): Promise<Session> {
   const res = await fetch(`${API_BASE}/admin/session`, {
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAdminToken()}`,
+    },
     body: JSON.stringify(payload),
   });
   if (!res.ok) {

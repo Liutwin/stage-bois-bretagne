@@ -1,8 +1,14 @@
 import styles from '../styles/StaticPage.module.css';
+import { PageSEO } from '@/components/PageSEO';
 
 export function PolitiqueConfidentialitePage() {
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Politique de confidentialité — Stage Bois Bretagne"
+        description="Politique de confidentialité et traitement des données personnelles du site Stage Bois Bretagne."
+        path="/politique-de-confidentialite"
+      />
       <div className={styles.inner}>
         <p className="section-label">Données personnelles</p>
         <h1 className="section-title">Politique de confidentialité</h1>

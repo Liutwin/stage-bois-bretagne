@@ -86,7 +86,7 @@ export function Footer() {
           <NavLink to="/mentions-legales" className={styles.footerLink}>Mentions légales</NavLink>
           <NavLink to="/politique-de-confidentialite" className={styles.footerLink}>Politique de confidentialité</NavLink>
         </span>
-        <span>Site produit par Liutwin Piernet</span>
+        <span>Site réalisé par Liutwin Piernet</span>
       </div>
     </footer>
   );

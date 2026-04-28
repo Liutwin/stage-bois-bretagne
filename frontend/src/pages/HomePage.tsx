@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
+import { PageSEO } from '@/components/PageSEO';
 import styles from '../styles/HomePage.module.css';
 import annickPhoto from '../assets/annick.jpg';
 import chantournagePhoto from '../assets/chantournage.jpg';
@@ -43,6 +44,11 @@ export function HomePage() {
 
   return (
     <main>
+      <PageSEO
+        title="Stage Bois Bretagne — Chantournage Centre Bretagne"
+        description="Stages de chantournage à Trébrivan, Centre Bretagne. Petits groupes, tous niveaux. Animé par Annick Le Goasteller."
+        path="/"
+      />
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section className={styles.hero}>
         <div className={styles.heroText}>

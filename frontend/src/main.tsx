@@ -7,6 +7,7 @@
 import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -33,6 +34,7 @@ if (!root) throw new Error('Element #root introuvable dans le DOM.');
 
 createRoot(root).render(
   <StrictMode>
+    <HelmetProvider>
     <BrowserRouter>
       <ScrollToTop />
       <Navbar />
@@ -50,5 +52,6 @@ createRoot(root).render(
       </Routes>
       <Footer />
     </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>,
 );

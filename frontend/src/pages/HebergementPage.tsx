@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import styles from '../styles/StaticPage.module.css';
 import gitePhoto from '../assets/gite.jpg';
+import { PageSEO } from '@/components/PageSEO';
 
 export function HebergementPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
 
   return (
     <main className={styles.page}>
+      <PageSEO
+        title="Hébergement & Repas — Stage Bois Bretagne"
+        description="Options d'hébergement et de restauration pour les participants au stage de chantournage à Trébrivan (Côtes-d'Armor)."
+        path="/hebergement"
+      />
       <div className={styles.inner}>
         <p className="section-label">Pratique</p>
         <h1 className="section-title">Hébergement &amp; Repas</h1>
