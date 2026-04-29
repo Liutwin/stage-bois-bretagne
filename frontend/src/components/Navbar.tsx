@@ -21,11 +21,11 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: 'Accueil', to: '/' },
   { label: 'Le stage', to: '/stage' },
-  { label: 'Prochain stage', to: '/prochain-stage' },
   { label: 'Tarifs', to: '/tarifs' },
+  { label: 'S\'inscrire', to: '/inscription' },
   { label: 'Hébergement', to: '/hebergement' },
   { label: 'La formatrice', to: '/formatrice' },
-  { label: 'La presse', to: '/presse' },
+  { label: 'La presse en parle', to: '/presse' },
   { label: 'Contact', to: '/contact' },
 ];
 

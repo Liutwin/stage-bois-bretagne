@@ -189,6 +189,7 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
+  position: relative;
 }
 
 .hebergPhoto img {
@@ -218,6 +219,14 @@
   overflow: hidden;
   aspect-ratio: 3 / 4;
   cursor: pointer;
+}
+
+.portraitStatic {
+  cursor: default;
+}
+
+.portraitStatic:hover img {
+  transform: none;
 }
 
 .portraitWide {

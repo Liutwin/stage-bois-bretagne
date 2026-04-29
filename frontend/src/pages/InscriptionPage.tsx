@@ -1,6 +1,6 @@
 /**
- * @file pages/NextSessionPage.tsx
- * @description Page "Prochain stage" — affiche la session active avec
+ * @file pages/InscriptionPage.tsx
+ * @description Page "Inscription" — affiche la session active avec
  * l'accès au bulletin d'inscription PDF et le formulaire de contact.
  */
 
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
 import { generateRegistrationPdf, type RegistrationFormData } from '@/utils/pdf';
-import styles from '../styles/NextSessionPage.module.css';
+import styles from '../styles/InscriptionPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
 
 /**
@@ -21,7 +21,7 @@ import { PageSEO } from '@/components/PageSEO';
  *
  * @returns Élément `<main>` de la page prochain stage.
  */
-export function NextSessionPage() {
+export function InscriptionPage() {
   const { session, loading } = useSession();
 
   const [formData, setFormData] = useState<RegistrationFormData>({
@@ -67,15 +67,15 @@ export function NextSessionPage() {
   return (
     <main className={styles.page}>
       <PageSEO
-        title="Prochain stage — Stage Bois Bretagne"
+        title="Inscription — Stage Bois Bretagne"
         description="Dates et informations du prochain stage de chantournage à Trébrivan. Places limitées, inscription sur bulletin."
-        path="/prochain-stage"
+        path="/inscription"
       />
       <div className={styles.inner}>
         {/* En-tête */}
         <div className={styles.header}>
           <p className="section-label">Disponibilités</p>
-          <h1 className="section-title">Prochain stage</h1>
+          <h1 className="section-title">Inscription</h1>
           <p className={styles.intro}>
             L'atelier organise de 2 à 3 sessions par an, avec un maximum de 3 stagiaires.
             Consultez les disponibilités ci-dessous et manifestez votre intérêt

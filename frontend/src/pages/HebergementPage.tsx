@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/StaticPage.module.css';
-import gitePhoto from '../assets/gite.jpg';
+import bungalowPhoto from '../assets/bungalow.jpg';
+import chambrePhoto from '../assets/chambre.jpg';
 import { PageSEO } from '@/components/PageSEO';
+
+const HEBERGEMENT_SLIDES = [
+  { src: bungalowPhoto, alt: 'Le bungalow' },
+  { src: chambrePhoto,  alt: 'La chambre' },
+];
 
 export function HebergementPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide(i => (i + 1) % HEBERGEMENT_SLIDES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <main className={styles.page}>
@@ -20,24 +34,41 @@ export function HebergementPage() {
         <div className={styles.content}>
           <div className={styles.hebergGrid}>
 
-            <div className={styles.hebergPhoto} onClick={() => setLightbox(gitePhoto)}>
-              <img src={gitePhoto} alt="Le gîte" />
+            <div className={styles.hebergPhoto}>
+              <div className={styles.carousel}>
+                {HEBERGEMENT_SLIDES.map((slide, i) => (
+                  <div
+                    key={slide.src}
+                    className={`${styles.carouselSlide}${i === activeSlide ? ` ${styles.carouselSlideActive}` : ''}`}
+                    onClick={() => setLightbox(slide.src)}
+                    aria-hidden={i !== activeSlide}
+                  >
+                    <img src={slide.src} alt={slide.alt} />
+                  </div>
+                ))}
+                <div className={styles.carouselDots}>
+                  {HEBERGEMENT_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`${styles.carouselDot}${i === activeSlide ? ` ${styles.carouselDotActive}` : ''}`}
+                      onClick={e => { e.stopPropagation(); setActiveSlide(i); }}
+                      aria-label={`Photo ${i + 1}`}
+                      aria-current={i === activeSlide}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* ── Sur place ─────────────────────────────────────────────── */}
             <section className={`${styles.block} ${styles.hebergRight}`}>
               <h2>Hébergement sur place</h2>
               <p>
-                Dans un bungallow comprenant une chambre avec une kitchette entièrement équipée,<br />
+                Dans un bungalow comprenant une chambre avec une kitchenette équipée,<br />
                 des sanitaires et une terrasse, draps et serviettes fournis.<br />
                 Minimum 2 nuits. Forfait de 90 € les deux premières nuits, 40 € la nuit supplémentaire.< br />
-
               </p>
             </section>
-
-            <div className={`${styles.carouselPlaceholder} ${styles.hebergPlaceholder}`}>
-              Photos à venir
-            </div>
 
             <section className={`${styles.block} ${styles.hebergRight}`}>
               <p className={styles.note}>

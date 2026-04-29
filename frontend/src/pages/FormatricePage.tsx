@@ -41,7 +41,7 @@ export function FormatricePage() {
           <div className={styles.profileGrid}>
 
             <div className={styles.portraits}>
-              <div className={`${styles.portraitLarge} ${styles.mob1}`} onClick={() => setLightbox(annickPhoto)}>
+              <div className={`${styles.portraitLarge} ${styles.portraitStatic} ${styles.mob1}`}>
                 <img src={annickPhoto} alt="Annick" />
               </div>
 
@@ -104,18 +104,6 @@ export function FormatricePage() {
                   Transmettre est devenu également une part passionnante de mon métier. Depuis près de vingt ans, j’accueille en Bretagne des stagiaires venus de toute la France, mais aussi de Belgique, d'Allemagne, de Suisse, pour partager l’art du chantournage, la patience du geste et le plaisir de créer de ses mains.
                 </p>
               </section>
-            </div>
-          </div>
-
-          <div className={styles.block}>
-            <h2>En vidéo</h2>
-            <div className={styles.videoWrapper}>
-              <iframe
-                src="https://www.youtube.com/embed/BGkxX_3Wuic"
-                title="Annick Le Goasteller — chantournage"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
             </div>
           </div>
         </div>

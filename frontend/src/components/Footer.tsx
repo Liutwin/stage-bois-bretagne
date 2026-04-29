@@ -39,8 +39,8 @@ export function Footer() {
           <ul className={styles.linkList}>
             {[
               ['Le stage', '/stage'],
-              ['Prochain stage', '/prochain-stage'],
-              ['Tarifs & Inscriptions', '/tarifs'],
+              ['Tarifs', '/tarifs'],
+              ['S\'inscrire', '/inscription'],
               ['Hébergement / Repas', '/hebergement'],
               ['La formatrice', '/formatrice'],
               ['Contact', '/contact'],

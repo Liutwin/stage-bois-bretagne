@@ -47,19 +47,19 @@ export function PressePage() {
               </p>
             </article>
 
-            {/* Article 2 — placeholder */}
-            <article className={pressStyles.card}>
-              <div className={pressStyles.cardMeta}>
-                <span className={pressStyles.source}>Ouest-France</span>
-                <span className={pressStyles.date}>À venir</span>
-              </div>
-              <h2 className={pressStyles.cardTitle}>Titre de l'article</h2>
-              <p className={`${styles.block} ${styles.placeholder}`}>
-                Extrait ou résumé de l'article à renseigner.
-              </p>
-            </article>
-
           </div>
+
+          {/* Vidéo reportage */}
+          <section className={styles.block}>
+            <div className={styles.videoWrapper}>
+              <iframe
+                src="https://www.youtube.com/embed/BGkxX_3Wuic"
+                title="Annick Le Goasteller — chantournage"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </section>
         </div>
       </div>
     </main>

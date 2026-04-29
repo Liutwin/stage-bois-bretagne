@@ -59,13 +59,13 @@ export function HomePage() {
             en Bretagne
           </h1>
           <p className={styles.heroDesc}>
-            Stages d'initiation et de perfectionnement au chantournage,
-            dans un cadre champêtre au cœur de la Bretagne.
-            Petits groupes, ambiance conviviale.
+            Stages d'initiation au chantournage,
+            dans un environnement champêtre au cœur de la Bretagne,<br />
+            en petits groupes et dans une ambiance conviviale<br /> et chaleureuse.
           </p>
           <div className={styles.btnRow}>
-            <Link to="/prochain-stage" className="btn btn-primary">
-              Voir le prochain stage
+            <Link to="/inscription" className="btn btn-primary">
+              S'inscrire
             </Link>
             <Link to="/stage" className="btn btn-outline">
               En savoir plus
@@ -123,18 +123,17 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Prochain stage ─────────────────────────────────────────────────── */}
+      {/* ── Inscription ─────────────────────────────────────────────────── */}
       <section className={styles.nextSession}>
         <div className={styles.nextSessionInner}>
           <div>
             <p className="section-label">Disponibilités</p>
             <h2 className="section-title">Prochain stage</h2>
             <p className={styles.nextSessionDesc}>
-              Annick organise 1 à 3 sessions par an. Les places sont limitées
-              à 3 personnes — n'attendez pas pour réserver la vôtre.
+              Annick organise 2 à 4 sessions par an. Les places sont limitées à 3 personnes — n'attendez pas pour réserver la vôtre.
             </p>
-            <Link to="/prochain-stage" className={styles.moreLink}>
-              Voir toutes les informations →
+            <Link to="/inscription" className={styles.moreLink}>
+              S'inscrire →
             </Link>
           </div>
 
@@ -164,7 +163,7 @@ export function HomePage() {
           </p>
           <blockquote className={styles.quote}>
             Elle réalise les décors des harpes celtiques pour les prestigieuses harpes
-            CAMAC Stivell et Aziliz.
+            CAMAC sur les séries Stivell, Aziliz et Janet.
           </blockquote>
           <p>
             Sa pédagogie, fondée sur la pratique immédiate et le partage sans retenue,

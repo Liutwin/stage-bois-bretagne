@@ -26,24 +26,31 @@ export function StagePage() {
 
         <div className={styles.content}>
           <section className={styles.block}>
-            <h2>Découvrir le chantournage</h2>
+            <h2>« Chantournage », mais qu'est-ce donc ?</h2>
             <p>
-              Le chantournage est l'art de découper des formes sinueuses dans le bois
-              à l'aide d'une scie à chantourner. Technique accessible dès le plus jeune
-              âge, elle permet de réaliser des créations allant du simple jouet aux
-              découpes tridimensionnelles les plus élaborées.
+              C'est une technique de découpe fine du bois réalisée à la scie à chantourner, cette merveilleuse machine aux étonnantes possibilités ! 
+              Elle permet de créer des formes délicates, ajourées et très précises. A vous les puzzles et toutes sortes de jouets, les objets décoratifs,
+              les bijoux, les découpes tridimensionnelles, les pièces artisanales uniques, qui n'auront qu'une seule limite : votre imagination ! 
+
             </p>
           </section>
 
           <section className={styles.block}>
             <h2>Programme type</h2>
             <ul className={styles.list}>
-              <li>Découverte du matériel et des règles de sécurité</li>
-              <li>Transfert et fixation des gabarits</li>
+              <li>Découverte du matériel</li>
+              <li>Préparation des gabarits</li>
               <li>Découpe guidée pas à pas</li>
-              <li>Finitions : ponçage, peinture, vernis</li>
-              <li>Réalisation d'un projet personnel encadré</li>
+              <li>Fabrication d'un mobile sur placage fin</li>
+              <li>Réalisation d'un puzzle en bois massif, de la conception à la découpe</li>
+              <li>Création d'une pièce décorative ajourée en bois massif</li>
+              <li>Rencontre avec les principales essences de bois de pays</li>
             </ul>
+          </section>
+          <section className={styles.block}>
+            <p>
+              <i>Chacun pourra choisir, pour chaque exercice, son modèle préféré parmi plusieurs propositions adaptées à tous les niveaux.</i>
+            </p>
           </section>
         </div>
       </div>

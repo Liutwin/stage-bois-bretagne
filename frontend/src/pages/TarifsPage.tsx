@@ -9,7 +9,7 @@ import styles from '../styles/StaticPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
 
 /**
- * Page "Tarifs & Inscriptions" — grille tarifaire et rappel de la procédure.
+ * Page "Tarifs" — grille tarifaire et rappel de la procédure.
  *
  * @returns Élément `<main>` de la page tarifs.
  */
@@ -17,20 +17,17 @@ export function TarifsPage() {
   return (
     <main className={styles.page}>
       <PageSEO
-        title="Tarifs & Inscriptions — Stage Bois Bretagne"
+        title="Tarifs — Stage Bois Bretagne"
         description="Tarifs du stage de chantournage et modalités d'inscription. Formules avec ou sans hébergement sur place à Trébrivan."
         path="/tarifs"
       />
       <div className={styles.inner}>
-        <p className="section-label">Tarifs & Inscriptions</p>
+        <p className="section-label">Tarifs</p>
         <h1 className="section-title">Tarifs</h1>
 
         <div className={styles.content}>
           <section className={styles.block}>
             <h2>Grille tarifaire</h2>
-            <p className={styles.placeholder}>
-              [Tarifs à compléter par la cliente — prix par session, options repas, etc.]
-            </p>
 
             <table className={styles.table}>
               <thead>
@@ -56,10 +53,12 @@ export function TarifsPage() {
             </p>
           </section>
 
-          <p className={styles.note}>
-            Pour vous inscrire, consultez les disponibilités et suivez la procédure détaillée sur la page{' '}
-            <Link to="/prochain-stage" className={styles.link}>Prochain stage</Link>.
-          </p>
+          <section className={styles.block}>
+            <p className={styles.note}>
+              Pour vous inscrire, consultez les disponibilités et suivez la procédure détaillée sur la page{' '}
+              <Link to="/inscription" className={styles.link}>Inscription</Link>.
+            </p>
+          </section>
         </div>
       </div>
     </main>
