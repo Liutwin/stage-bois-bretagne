@@ -58,7 +58,7 @@ export function InscriptionPage() {
     }
     setPdfLoading(true);
     try {
-      generateRegistrationPdf(session, formData);
+      await generateRegistrationPdf(session, formData);
     } finally {
       setPdfLoading(false);
     }

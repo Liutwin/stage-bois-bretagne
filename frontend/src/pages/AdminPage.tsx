@@ -1,14 +1,39 @@
+/**
+ * @file pages/AdminPage.tsx
+ * @description Page d'administration protégée par mot de passe.
+ * Permet de consulter et mettre à jour les informations du prochain stage.
+ */
+
 import { useState, useEffect } from 'react';
 import { fetchNextSession, updateSession, verifyAdminPassword, getAdminToken, setAdminToken, clearAdminToken } from '@/utils/api';
 import type { Session, SessionPayload } from '@/types/session';
 import styles from '../styles/AdminPage.module.css';
 
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
+/**
+ * Props du composant {@link LoginScreen}.
+ */
+interface LoginScreenProps {
+  /** Callback appelé après une authentification réussie. */
+  onLogin: () => void;
+}
+
+/**
+ * Écran de connexion affiché avant d'accéder au panneau d'administration.
+ * Vérifie le mot de passe via l'API et stocke le token en session si valide.
+ *
+ * @param props - {@link LoginScreenProps}
+ * @returns Formulaire de connexion centré.
+ */
+function LoginScreen({ onLogin }: LoginScreenProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  /**
+   * Soumet le formulaire de connexion et tente de vérifier le mot de passe.
+   * En cas de succès, stocke le token et appelle {@link LoginScreenProps.onLogin}.
+   */
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -54,6 +79,15 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
+/**
+ * Page d'administration du stage.
+ *
+ * Affiche d'abord {@link LoginScreen} si aucun token n'est présent.
+ * Une fois authentifié, charge la session actuelle et permet de la modifier
+ * (thème, dates, places, visibilité) puis de l'enregistrer via l'API.
+ *
+ * @returns Panneau d'administration ou écran de connexion.
+ */
 export function AdminPage() {
   const [authenticated, setAuthenticated] = useState<boolean>(
     () => !!getAdminToken(),
@@ -67,8 +101,8 @@ export function AdminPage() {
     theme: '',
     startDate: '',
     endDate: '',
-    spotsAvailable: 0,
-    totalSpots: 4,
+    spotsAvailable: 3,
+    totalSpots: 3,
     isVisible: true,
     description: '',
   });
@@ -92,6 +126,7 @@ export function AdminPage() {
       .finally(() => setLoading(false));
   }, [authenticated]);
 
+  /** Met à jour le champ correspondant dans `fields` selon le type de l'input (checkbox, number, text). */
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) {
@@ -107,11 +142,16 @@ export function AdminPage() {
     }));
   }
 
+  /** Efface le token d'administration et revient à l'écran de connexion. */
   function handleLogout() {
     clearAdminToken();
     setAuthenticated(false);
   }
 
+  /**
+   * Envoie les champs modifiés à l'API via {@link updateSession}.
+   * Déconnecte automatiquement l'utilisateur en cas de réponse 401.
+   */
   async function handleSave() {
     setSaving(true);
     setSuccess(false);

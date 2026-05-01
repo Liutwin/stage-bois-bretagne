@@ -1,3 +1,9 @@
+/**
+ * @file pages/HebergementPage.tsx
+ * @description Page "Hébergement & Repas" — présente les options d'hébergement
+ * sur place (bungalow) et à proximité, ainsi que les possibilités de restauration.
+ */
+
 import { useState, useEffect } from 'react';
 import styles from '../styles/StaticPage.module.css';
 import bungalowPhoto from '../assets/bungalow.jpg';
@@ -5,13 +11,30 @@ import chambrePhoto from '../assets/chambre.jpg';
 import piqueniquePhoto from '../assets/pique-nique.jpg';
 import { PageSEO } from '@/components/PageSEO';
 
+/** Photos du carrousel d'hébergement (bungalow et chambre). */
 const HEBERGEMENT_SLIDES = [
   { src: bungalowPhoto, alt: 'Le bungalow' },
   { src: chambrePhoto,  alt: 'La chambre' },
 ];
 
-type Lightbox = { src: string; slides: typeof HEBERGEMENT_SLIDES };
+/**
+ * État de la lightbox.
+ * - Avec `slides` : navigation entre plusieurs images possible.
+ * - Sans `slides` (`null`) : image unique, pas de navigation.
+ */
+type Lightbox =
+  | { src: string; slides: typeof HEBERGEMENT_SLIDES }
+  | { src: string; slides: null };
 
+/**
+ * Page "Hébergement & Repas".
+ *
+ * - Carrousel automatique des photos du bungalow (toutes les 3,5 s).
+ * - Lightbox accessible au clic sur n'importe quelle photo.
+ * - Contenu statique : hébergement sur place, à proximité et options repas.
+ *
+ * @returns Élément `<main>` de la page hébergement.
+ */
 export function HebergementPage() {
   const [lightbox, setLightbox] = useState<Lightbox | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -23,8 +46,14 @@ export function HebergementPage() {
     return () => clearInterval(timer);
   }, []);
 
+  /**
+   * Passe à l'image précédente (`-1`) ou suivante (`1`) dans la lightbox.
+   * Sans effet si la lightbox n'a pas de galerie associée.
+   *
+   * @param dir - Direction de navigation : `1` pour suivant, `-1` pour précédent.
+   */
   function navigate(dir: 1 | -1) {
-    if (!lightbox) return;
+    if (!lightbox?.slides) return;
     const idx = lightbox.slides.findIndex(s => s.src === lightbox.src);
     const next = (idx + dir + lightbox.slides.length) % lightbox.slides.length;
     setLightbox({ src: lightbox.slides[next].src, slides: lightbox.slides });
@@ -70,7 +99,11 @@ export function HebergementPage() {
               </div>
             </div>
 
-            <div className={styles.hebergPiqueNique}>
+            <div
+              className={styles.hebergPiqueNique}
+              onClick={() => setLightbox({ src: piqueniquePhoto, slides: null })}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={piqueniquePhoto} alt="Pique-nique au jardin" />
             </div>
 
@@ -126,17 +159,21 @@ export function HebergementPage() {
 
       {lightbox && (
         <div className={styles.lightbox} onClick={() => setLightbox(null)}>
-          <button
-            className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
-            onClick={e => { e.stopPropagation(); navigate(-1); }}
-            aria-label="Photo précédente"
-          >&#8249;</button>
+          {lightbox.slides && (
+            <button
+              className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
+              onClick={e => { e.stopPropagation(); navigate(-1); }}
+              aria-label="Photo précédente"
+            >&#8249;</button>
+          )}
           <img src={lightbox.src} alt="" />
-          <button
-            className={`${styles.lightboxNav} ${styles.lightboxNext}`}
-            onClick={e => { e.stopPropagation(); navigate(1); }}
-            aria-label="Photo suivante"
-          >&#8250;</button>
+          {lightbox.slides && (
+            <button
+              className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+              onClick={e => { e.stopPropagation(); navigate(1); }}
+              aria-label="Photo suivante"
+            >&#8250;</button>
+          )}
         </div>
       )}
     </main>

@@ -4,6 +4,7 @@
  * Contenu statique — à compléter avec les textes et photos fournis par la cliente.
  */
 
+import { useState } from 'react';
 import styles from '../styles/StaticPage.module.css';
 import stageStyles from '../styles/StagePage.module.css';
 import chantournage2Photo from '../assets/chantournage2.jpg';
@@ -15,6 +16,8 @@ import { PageSEO } from '@/components/PageSEO';
  * @returns Élément `<main>` de la page stage.
  */
 export function StagePage() {
+  const [lightbox, setLightbox] = useState(false);
+
   return (
     <main className={styles.page}>
       <PageSEO
@@ -36,7 +39,11 @@ export function StagePage() {
                 les bijoux, les découpes tridimensionnelles, les pièces artisanales uniques, qui n'auront qu'une seule limite : votre imagination !
               </p>
             </section>
-            <div className={stageStyles.introPhoto}>
+            <div
+              className={stageStyles.introPhoto}
+              onClick={() => setLightbox(true)}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={chantournage2Photo} alt="Travail de chantournage à l'atelier" />
             </div>
           </div>
@@ -60,6 +67,11 @@ export function StagePage() {
           </section>
         </div>
       </div>
+      {lightbox && (
+        <div className={styles.lightbox} onClick={() => setLightbox(false)}>
+          <img src={chantournage2Photo} alt="Travail de chantournage à l'atelier" />
+        </div>
+      )}
     </main>
   );
 }

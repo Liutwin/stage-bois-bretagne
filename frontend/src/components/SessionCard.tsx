@@ -118,7 +118,7 @@ export function SessionCard({ session, variant = 'compact' }: SessionCardProps) 
       {/* CTA */}
       {!isFull && (
         <div className={styles.cta}>
-          <a href="/tarifs" className="btn btn-primary">
+          <a href="/inscription" className="btn btn-primary">
             S'inscrire
           </a>
           {variant === 'full' && (

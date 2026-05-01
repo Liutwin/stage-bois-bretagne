@@ -1,6 +1,7 @@
 *.sqlite
 *.sqlite-journal
 .DS_Store
+.claude
 .vscode/*
 !.vscode/extensions.json
 *.log

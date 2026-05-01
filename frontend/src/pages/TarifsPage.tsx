@@ -23,7 +23,7 @@ export function TarifsPage() {
         path="/tarifs"
       />
       <div className={`${styles.inner} ${tarifsStyles.inner}`}>
-        <p className="section-label">Tarifs</p>
+        <p className="section-label">Nos formules</p>
         <h1 className="section-title">Tarifs</h1>
 
         <div className={styles.content}>
