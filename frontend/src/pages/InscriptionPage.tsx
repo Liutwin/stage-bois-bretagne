@@ -77,7 +77,8 @@ export function InscriptionPage() {
           <p className="section-label">Disponibilités</p>
           <h1 className="section-title">Inscription</h1>
           <p className={styles.intro}>
-            L'atelier organise de 2 à 3 sessions par an, avec un maximum de 3 stagiaires.
+            L'atelier organise de 2 à 4 sessions par an, avec un minimum de 2 stagiaires et un maximum de 3 stagiaires.<br />
+            (en deçà de 2 inscriptions, la session est annulée et l'acompte remboursé sans autre forme de dédit)<br />
             Consultez les disponibilités ci-dessous et manifestez votre intérêt
             via le formulaire — la formatrice vous recontactera rapidement.
           </p>

@@ -1,0 +1,24 @@
+.intro {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.introPhoto {
+  border-radius: var(--radius-md);
+  border: 0.5px solid var(--color-shadow);
+  overflow: hidden;
+}
+
+.introPhoto img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .intro {
+    grid-template-columns: 1fr;
+  }
+}

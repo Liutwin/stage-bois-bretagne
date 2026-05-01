@@ -95,7 +95,7 @@ export function HebergementPage() {
               <h2>Hébergements à proximité</h2>
               <ul className={styles.list}>
                 <li>
-                  <strong>Chambres &amp; gîtes — Mme Florance Rivoal</strong> (2 km)<br />
+                  <strong>Chambres &amp; gîtes — Mme Florence Rivoal</strong> (2 km)<br />
                   <a href="tel:0296366940">02 96 36 69 40</a>
                   {' · '}
                   <a href="http://chambre-trebrivan.over-blog.com" target="_blank" rel="noopener noreferrer">
@@ -103,7 +103,7 @@ export function HebergementPage() {
                   </a>
                 </li>
                 <li>
-                  <strong>Chambres — Mme Andrée Bluteau</strong> (600 m)<br />
+                  <strong>Chambres d'hôte — Mme Andrée Bluteau</strong> (600 m)<br />
                   <a href="tel:0607087645">06 07 08 76 45</a>
                 </li>
               </ul>

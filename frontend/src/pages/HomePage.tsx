@@ -16,14 +16,16 @@ import { useSession } from '@/hooks/useSession';
 import { PageSEO } from '@/components/PageSEO';
 import styles from '../styles/HomePage.module.css';
 import annickPhoto from '../assets/annick.jpg';
-import chantournagePhoto from '../assets/chantournage.jpg';
-import collagePhoto from '../assets/collage.jpg';
-import poncagePhoto from '../assets/poncage.jpg';
+import chantournagePhoto from '../assets/chantournage1.jpg';
+import creation1Photo from '../assets/creation1.jpg';
+import groupe1Photo from '../assets/groupe1.jpg';
+import atelierEcolePhoto from '../assets/atelier-ecole.jpg';
 
 const ATELIER_SLIDES = [
   { src: chantournagePhoto, alt: 'Travail de chantournage à l\'atelier' },
-  { src: collagePhoto,      alt: 'Collage à l\'atelier' },
-  { src: poncagePhoto,      alt: 'Ponçage à l\'atelier' },
+  { src: creation1Photo,    alt: 'Création en chantournage' },
+  { src: groupe1Photo,      alt: 'Groupe de stagiaires à l\'atelier' },
+  { src: atelierEcolePhoto, alt: 'L\'atelier école' },
 ];
 
 /**
@@ -141,7 +143,7 @@ export function HomePage() {
             <p className="section-label">Disponibilités</p>
             <h2 className="section-title">Prochain stage</h2>
             <p className={styles.nextSessionDesc}>
-              Annick organise 2 à 4 sessions par an. Les places sont limitées à 4 personnes — n'attendez pas pour réserver la vôtre.
+              Annick organise 2 à 4 sessions par an. Les places sont limitées à 3 personnes — n'attendez pas pour réserver la vôtre.
             </p>
             <Link to="/inscription" className={styles.moreLink}>
               S'inscrire →

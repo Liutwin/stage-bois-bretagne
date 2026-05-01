@@ -5,6 +5,8 @@
  */
 
 import styles from '../styles/StaticPage.module.css';
+import stageStyles from '../styles/StagePage.module.css';
+import chantournage2Photo from '../assets/chantournage2.jpg';
 import { PageSEO } from '@/components/PageSEO';
 
 /**
@@ -25,15 +27,19 @@ export function StagePage() {
         <h1 className="section-title">Le stage de chantournage</h1>
 
         <div className={styles.content}>
-          <section className={styles.block}>
-            <h2>« Chantournage », mais qu'est-ce donc ?</h2>
-            <p>
-              C'est une technique de découpe fine du bois réalisée à la scie à chantourner, cette merveilleuse machine aux étonnantes possibilités ! 
-              Elle permet de créer des formes délicates, ajourées et très précises. A vous les puzzles et toutes sortes de jouets, les objets décoratifs,
-              les bijoux, les découpes tridimensionnelles, les pièces artisanales uniques, qui n'auront qu'une seule limite : votre imagination ! 
-
-            </p>
-          </section>
+          <div className={stageStyles.intro}>
+            <section className={styles.block}>
+              <h2>« Chantournage », mais qu'est-ce donc ?</h2>
+              <p>
+                C'est une technique de découpe fine du bois réalisée à la scie à chantourner, cette merveilleuse machine aux étonnantes possibilités !
+                Elle permet de créer des formes délicates, ajourées et très précises. A vous les puzzles et toutes sortes de jouets, les objets décoratifs,
+                les bijoux, les découpes tridimensionnelles, les pièces artisanales uniques, qui n'auront qu'une seule limite : votre imagination !
+              </p>
+            </section>
+            <div className={stageStyles.introPhoto}>
+              <img src={chantournage2Photo} alt="Travail de chantournage à l'atelier" />
+            </div>
+          </div>
 
           <section className={styles.block}>
             <h2>Programme type</h2>

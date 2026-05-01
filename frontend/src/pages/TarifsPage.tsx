@@ -6,6 +6,7 @@
 
 import { Link } from 'react-router-dom';
 import styles from '../styles/StaticPage.module.css';
+import tarifsStyles from '../styles/TarifsPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
 
 /**
@@ -21,7 +22,7 @@ export function TarifsPage() {
         description="Tarifs du stage de chantournage et modalités d'inscription. Formules avec ou sans hébergement sur place à Trébrivan."
         path="/tarifs"
       />
-      <div className={styles.inner}>
+      <div className={`${styles.inner} ${tarifsStyles.inner}`}>
         <p className="section-label">Tarifs</p>
         <h1 className="section-title">Tarifs</h1>
 
@@ -40,7 +41,7 @@ export function TarifsPage() {
               <tbody>
                 <tr>
                   <td>Stage d'initiation</td>
-                  <td>12 heures (sur 2 jours)</td>
+                  <td>12 heures sur un week-end</td>
                   <td>230 €</td>
                 </tr>
               </tbody>
