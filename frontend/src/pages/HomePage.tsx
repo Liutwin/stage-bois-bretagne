@@ -31,9 +31,12 @@ const ATELIER_SLIDES = [
  *
  * @returns Élément `<main>` de la page d'accueil.
  */
+type Lightbox = { src: string; slides: typeof ATELIER_SLIDES };
+
 export function HomePage() {
   const { session, loading } = useSession();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [lightbox, setLightbox] = useState<Lightbox | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -41,6 +44,13 @@ export function HomePage() {
     }, 3500);
     return () => clearInterval(timer);
   }, []);
+
+  function navigate(dir: 1 | -1) {
+    if (!lightbox) return;
+    const idx = lightbox.slides.findIndex(s => s.src === lightbox.src);
+    const next = (idx + dir + lightbox.slides.length) % lightbox.slides.length;
+    setLightbox({ src: lightbox.slides[next].src, slides: lightbox.slides });
+  }
 
   return (
     <main>
@@ -80,6 +90,7 @@ export function HomePage() {
                 key={slide.src}
                 className={`${styles.carouselSlide}${i === activeSlide ? ` ${styles.carouselSlideActive}` : ''}`}
                 aria-hidden={i !== activeSlide}
+                onClick={() => setLightbox({ src: slide.src, slides: ATELIER_SLIDES })}
               >
                 <img src={slide.src} alt={slide.alt} />
               </div>
@@ -130,7 +141,7 @@ export function HomePage() {
             <p className="section-label">Disponibilités</p>
             <h2 className="section-title">Prochain stage</h2>
             <p className={styles.nextSessionDesc}>
-              Annick organise 2 à 4 sessions par an. Les places sont limitées à 3 personnes — n'attendez pas pour réserver la vôtre.
+              Annick organise 2 à 4 sessions par an. Les places sont limitées à 4 personnes — n'attendez pas pour réserver la vôtre.
             </p>
             <Link to="/inscription" className={styles.moreLink}>
               S'inscrire →
@@ -158,22 +169,31 @@ export function HomePage() {
           <h2 className={styles.bioName}>Annick Le Goasteller</h2>
           <p className={styles.bioTitle}>Artisane &amp; Formatrice</p>
           <p>
-            Annick participe à de nombreux salons, expose en boutiques et galeries,
-            et est régulièrement sollicitée pour la réalisation de trophées personnalisés.
+            Artisane d'art reconnue et créatrice pour les harpes celtiques CAMAC, Annick Le Goasteller partage sa passion du chantournage dans son atelier en Bretagne. 
           </p>
-          <blockquote className={styles.quote}>
-            Elle réalise les décors des harpes celtiques pour les prestigieuses harpes
-            CAMAC sur les séries Stivell, Aziliz et Janet.
-          </blockquote>
           <p>
-            Sa pédagogie, fondée sur la pratique immédiate et le partage sans retenue,
-            permet à chacun de progresser à son rythme dans une ambiance chaleureuse.
+            Une initiation accessible à tous, fondée sur la pratique et la transmission, pour progresser à son rythme dans une ambiance chaleureuse et repartir avec ses propres créations.
           </p>
           <Link to="/formatrice" className={styles.moreLink}>
             Découvrir son parcours →
           </Link>
         </div>
       </section>
+      {lightbox && (
+        <div className={styles.lightbox} onClick={() => setLightbox(null)}>
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
+            onClick={e => { e.stopPropagation(); navigate(-1); }}
+            aria-label="Photo précédente"
+          >&#8249;</button>
+          <img src={lightbox.src} alt="" />
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+            onClick={e => { e.stopPropagation(); navigate(1); }}
+            aria-label="Photo suivante"
+          >&#8250;</button>
+        </div>
+      )}
     </main>
   );
 }

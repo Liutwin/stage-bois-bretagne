@@ -181,7 +181,7 @@
 
 .hebergPhoto {
   grid-column: 1;
-  grid-row: 1 / 5;
+  grid-row: 1 / 4;
   align-self: start;
   aspect-ratio: 4 / 3;
   margin-top: 0.5rem;
@@ -206,6 +206,22 @@
 
 .hebergRight {
   grid-column: 2;
+}
+
+.hebergPiqueNique {
+  grid-column: 1;
+  grid-row: 4;
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.hebergPiqueNique img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .hebergPlaceholder {
@@ -348,6 +364,35 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 2;
+  padding: 0;
+  user-select: none;
+}
+
+.lightboxNav:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.lightboxPrev { left: 1.5rem; }
+.lightboxNext { right: 1.5rem; }
+
 .subtitle {
   font-size: 12px !important;
   font-weight: 700;
@@ -442,6 +487,12 @@
   }
 
   .hebergPhoto {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  .hebergPiqueNique {
     grid-column: 1;
     grid-row: auto;
     margin-top: 0;

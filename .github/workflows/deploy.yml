@@ -81,6 +81,7 @@ jobs:
             NOREPLY_MAIL_USER=$NOREPLY_MAIL_USER
             NOREPLY_MAIL_PASSWORD=$NOREPLY_MAIL_PASSWORD
             CLIENT_EMAIL=$CLIENT_EMAIL
+            ADMIN_PASSWORD=$ADMIN_PASSWORD
             EOF
 
             docker compose pull

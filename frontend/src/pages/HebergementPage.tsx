@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from '../styles/StaticPage.module.css';
 import bungalowPhoto from '../assets/bungalow.jpg';
 import chambrePhoto from '../assets/chambre.jpg';
+import piqueniquePhoto from '../assets/pique-nique.jpg';
 import { PageSEO } from '@/components/PageSEO';
 
 const HEBERGEMENT_SLIDES = [
@@ -9,8 +10,10 @@ const HEBERGEMENT_SLIDES = [
   { src: chambrePhoto,  alt: 'La chambre' },
 ];
 
+type Lightbox = { src: string; slides: typeof HEBERGEMENT_SLIDES };
+
 export function HebergementPage() {
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<Lightbox | null>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
@@ -19,6 +22,13 @@ export function HebergementPage() {
     }, 3500);
     return () => clearInterval(timer);
   }, []);
+
+  function navigate(dir: 1 | -1) {
+    if (!lightbox) return;
+    const idx = lightbox.slides.findIndex(s => s.src === lightbox.src);
+    const next = (idx + dir + lightbox.slides.length) % lightbox.slides.length;
+    setLightbox({ src: lightbox.slides[next].src, slides: lightbox.slides });
+  }
 
   return (
     <main className={styles.page}>
@@ -40,7 +50,7 @@ export function HebergementPage() {
                   <div
                     key={slide.src}
                     className={`${styles.carouselSlide}${i === activeSlide ? ` ${styles.carouselSlideActive}` : ''}`}
-                    onClick={() => setLightbox(slide.src)}
+                    onClick={() => setLightbox({ src: slide.src, slides: HEBERGEMENT_SLIDES })}
                     aria-hidden={i !== activeSlide}
                   >
                     <img src={slide.src} alt={slide.alt} />
@@ -58,6 +68,10 @@ export function HebergementPage() {
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div className={styles.hebergPiqueNique}>
+              <img src={piqueniquePhoto} alt="Pique-nique au jardin" />
             </div>
 
             {/* ── Sur place ─────────────────────────────────────────────── */}
@@ -112,7 +126,17 @@ export function HebergementPage() {
 
       {lightbox && (
         <div className={styles.lightbox} onClick={() => setLightbox(null)}>
-          <img src={lightbox} alt="" />
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
+            onClick={e => { e.stopPropagation(); navigate(-1); }}
+            aria-label="Photo précédente"
+          >&#8249;</button>
+          <img src={lightbox.src} alt="" />
+          <button
+            className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+            onClick={e => { e.stopPropagation(); navigate(1); }}
+            aria-label="Photo suivante"
+          >&#8250;</button>
         </div>
       )}
     </main>

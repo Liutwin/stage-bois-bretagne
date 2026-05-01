@@ -34,7 +34,8 @@
       "Read(//home/liutwin/stage-bois-bretagne/backend/routes/**)",
       "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/backend/routes/**)",
       "Read(//home/liutwin/stage-bois-bretagne/frontend/src/utils/**)",
-      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/utils/**)"
+      "Read(///wsl.localhost/Ubuntu/home/liutwin/stage-bois-bretagne/frontend/src/utils/**)",
+      "Read(//mnt/c/Users/liutwin/stage-bois-bretagne/frontend/**)"
     ],
     "additionalDirectories": [
       "\\home\\liutwin\\stage-bois-bretagne\\frontend\\src\\pages",
