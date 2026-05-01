@@ -165,13 +165,15 @@ export function ContactPage() {
               </li>
             </ul>
 
-            {/* Carte Google Maps embed placeholder */}
-            <div className={styles.mapPlaceholder} aria-label="Carte — Trébrivan">
-              <p>Carte Google Maps</p>
-              <p className={styles.mapNote}>
-                Intégrer via &lt;iframe&gt; Google Maps une fois la clé API disponible.
-              </p>
-            </div>
+            {/* Carte Google Maps */}
+            <iframe
+              className={styles.map}
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d687421.9081784779!2d-3.930337213659672!3d47.6838770776954!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4811a07a4fd00001%3A0xc93d6c31b8b4ba91!2sStage%20Bois%20Bretagne!5e0!3m2!1sfr!2sfr!4v1777579209378!5m2!1sfr!2sfr"
+              title="Localisation du stage — 3 Kermoal, Trébrivan"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </aside>
         </div>
       </div>
