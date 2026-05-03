@@ -13,6 +13,16 @@
   max-width: 760px;
 }
 
+/* ── Section atelier commun ─────────────────────────────────────────────── */
+.atelierSection {
+  max-width: 760px;
+  background: var(--color-linen);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
 /* ── Carte formule ──────────────────────────────────────────────────────── */
 .formuleCard {
   background: var(--color-white-warm);

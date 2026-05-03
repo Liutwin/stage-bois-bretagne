@@ -474,11 +474,11 @@
     max-height: none;
   }
 
-  /* Ordre mobile formatrice : texte1(1) annick(2) texte2(3) sculpture(4) carousel(5) */
-  .mob2a { order: 1; }
-  .mob1  { order: 2; }
-  .mob2b { order: 3; }
-  .mob3  { order: 4; }
+  /* Ordre mobile formatrice : annick(1) texte1(2) sculpture(3) texte2(4) carousel(5) */
+  .mob1  { order: 1; }
+  .mob2a { order: 2; }
+  .mob3  { order: 3; }
+  .mob2b { order: 4; }
   .mob4  { order: 5; }
 
   /* Hébergement mobile */

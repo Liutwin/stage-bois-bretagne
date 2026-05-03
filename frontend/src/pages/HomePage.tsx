@@ -72,8 +72,8 @@ export function HomePage() {
             en Bretagne
           </h1>
           <p className={styles.heroDesc}>
-            Stages d'initiation au chantournage, dans un environnement champêtre au cœur de la Bretagne,<br />
-            en petits groupes et dans une ambiance conviviale<br /> et chaleureuse.
+            Stages d'initiation et de perfectionnement au chantournage, dans un environnement champêtre au cœur de la Bretagne,
+            en petits groupes et dans une ambiance conviviale et chaleureuse.
           </p>
           <div className={styles.btnRow}>
             <Link to="/inscription" className="btn btn-primary">
@@ -178,7 +178,7 @@ export function HomePage() {
             Artisane d'art reconnue et créatrice pour les harpes celtiques CAMAC, Annick Le Goasteller partage sa passion du chantournage dans son atelier en Bretagne. 
           </p>
           <p>
-            Une initiation accessible à tous, fondée sur la pratique et la transmission, pour progresser à son rythme dans une ambiance chaleureuse et repartir avec ses propres créations.
+            Des formations accessibles à tous, fondées sur la pratique et la transmission, pour progresser à son rythme dans une ambiance chaleureuse et repartir avec ses propres créations.
           </p>
           <Link to="/formatrice" className={styles.moreLink}>
             Découvrir son parcours →

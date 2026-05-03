@@ -31,8 +31,6 @@ export interface RegistrationFormData {
   postalCode: string;
   /** Ville. */
   city: string;
-  /** Niveau de pratique déclaré. */
-  level: 'débutant' | 'intermédiaire' | 'confirmé';
   /** Date de naissance au format `YYYY-MM-DD` (optionnel). */
   dateOfBirth?: string;
   /** Profession (optionnel). */
@@ -55,7 +53,7 @@ export interface RegistrationFormData {
 export async function generateRegistrationPdf(
   session: Session,
   registrant: RegistrationFormData,
-): Promise<void> {
+): Promise<{ filename: string }> {
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
 
   const colorWood   = [122, 100, 80]  as const;
@@ -155,7 +153,7 @@ export async function generateRegistrationPdf(
 
   const conditionParagraphs = [
     "Je vous adresse ci-joint mon acompte de 70 € par chèque à votre ordre, et une enveloppe affranchie à mon adresse (si je n'ai pas d'adresse mail). Je vous règlerai le solde en cours de stage.",
-    "J'ai bien noté que cet acompte restera valable un an à dater de sa réception, en cas d'annulation de ma part pour raison de force majeure, et qu'il me sera restitué intégralement sans autre forme de dédit en cas d'annulation de votre part.",
+    "J'ai bien noté que cet acompte restera valable un an à dater de sa réception, en cas d'annulation de ma part pour raison de force majeure, et qu'il me sera restitué intégralement sans autre forme de dédit en cas d'annulation de votre part, notamment au cas où le nombre minimum de deux inscriptions n'est pas atteint.",
   ];
 
   doc.setFontSize(10.5);
@@ -218,6 +216,7 @@ export async function generateRegistrationPdf(
 
   const filename = `inscription_${registrant.lastName.toLowerCase()}_${session.startDate}.pdf`;
   doc.save(filename);
+  return { filename };
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────────────

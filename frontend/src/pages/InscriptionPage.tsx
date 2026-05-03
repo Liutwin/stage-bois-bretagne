@@ -34,7 +34,6 @@ export function InscriptionPage() {
     address: '',
     postalCode: '',
     city: '',
-    level: 'débutant',
     comment: '',
   });
 
@@ -58,7 +57,12 @@ export function InscriptionPage() {
     }
     setPdfLoading(true);
     try {
-      await generateRegistrationPdf(session, formData);
+      const { filename } = await generateRegistrationPdf(session, formData);
+      fetch('/api/inscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, sessionId: session.id, filename }),
+      }).catch(() => {});
     } finally {
       setPdfLoading(false);
     }
@@ -79,8 +83,8 @@ export function InscriptionPage() {
           <p className={styles.intro}>
             L'atelier organise de 2 à 4 sessions par an, avec un minimum de 2 stagiaires et un maximum de 3 stagiaires.<br />
             (en deçà de 2 inscriptions, la session est annulée et l'acompte remboursé sans autre forme de dédit)<br />
-            Consultez les disponibilités ci-dessous et manifestez votre intérêt
-            via le formulaire — la formatrice vous recontactera rapidement.
+            Consultez les disponibilités ci-dessous et manifestez votre intérêt via le formulaire.<br />
+            Annick vous recontactera rapidement pour confirmer votre place.
           </p>
         </div>
 
@@ -173,7 +177,7 @@ export function InscriptionPage() {
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="dateOfBirth">Date de naissance</label>
+                <label htmlFor="dateOfBirth">Date de naissance *</label>
                 <input
                   id="dateOfBirth"
                   name="dateOfBirth"
@@ -181,11 +185,12 @@ export function InscriptionPage() {
                   value={formData.dateOfBirth}
                   onChange={handleChange}
                   autoComplete="bday"
+                  required
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="profession">Profession</label>
+                <label htmlFor="profession">Profession *</label>
                 <input
                   id="profession"
                   name="profession"
@@ -193,11 +198,12 @@ export function InscriptionPage() {
                   value={formData.profession}
                   onChange={handleChange}
                   autoComplete="organization-title"
+                  required
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email *</label>
                 <input
                   id="email"
                   name="email"
@@ -205,11 +211,12 @@ export function InscriptionPage() {
                   value={formData.email}
                   onChange={handleChange}
                   autoComplete="email"
+                  required
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="phone">Téléphone</label>
+                <label htmlFor="phone">Téléphone *</label>
                 <input
                   id="phone"
                   name="phone"
@@ -217,11 +224,12 @@ export function InscriptionPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   autoComplete="tel"
+                  required
                 />
               </div>
 
               <div className={`${styles.field} ${styles.fullWidth}`}>
-                <label htmlFor="address">Adresse</label>
+                <label htmlFor="address">Adresse *</label>
                 <input
                   id="address"
                   name="address"
@@ -229,11 +237,12 @@ export function InscriptionPage() {
                   value={formData.address}
                   onChange={handleChange}
                   autoComplete="street-address"
+                  required
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="postalCode">Code postal</label>
+                <label htmlFor="postalCode">Code postal *</label>
                 <input
                   id="postalCode"
                   name="postalCode"
@@ -241,11 +250,12 @@ export function InscriptionPage() {
                   value={formData.postalCode}
                   onChange={handleChange}
                   autoComplete="postal-code"
+                  required
                 />
               </div>
 
               <div className={styles.field}>
-                <label htmlFor="city">Ville</label>
+                <label htmlFor="city">Ville *</label>
                 <input
                   id="city"
                   name="city"
@@ -253,6 +263,7 @@ export function InscriptionPage() {
                   value={formData.city}
                   onChange={handleChange}
                   autoComplete="address-level2"
+                  required
                 />
               </div>
 

@@ -10,21 +10,36 @@ import type { ContactFormData } from "../model/interfaces.ts";
 
 await load({ export: true });
 
-const HOSTNAME = Deno.env.get("HOST") ?? "0.0.0.0";
+interface InscriptionEmailData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  dateOfBirth?: string;
+  profession?: string;
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  comment?: string;
+  sessionId?: number;
+  filename: string;
+}
 
 /**
- * Transporteur Nodemailer configuré via les variables d'environnement :
- * `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`.
+ * Crée un transporteur Nodemailer en lisant les variables d'environnement
+ * au moment de l'appel (et non au chargement du module).
  */
-const transporter = nodemailer.createTransport({
-  host: Deno.env.get("SMTP_HOST"),
-  port: parseInt(Deno.env.get("SMTP_PORT") ?? "587"),
-  secure: Deno.env.get("SMTP_SECURE") === "true",
-  auth: {
-    user: Deno.env.get("NOREPLY_MAIL_USER"),
-    pass: Deno.env.get("NOREPLY_MAIL_PASSWORD"),
-  },
-});
+function createTransporter() {
+  return nodemailer.createTransport({
+    host: Deno.env.get("SMTP_HOST"),
+    port: parseInt(Deno.env.get("SMTP_PORT") ?? "587"),
+    secure: Deno.env.get("SMTP_SECURE") === "true",
+    auth: {
+      user: Deno.env.get("NOREPLY_MAIL_USER"),
+      pass: Deno.env.get("NOREPLY_MAIL_PASSWORD"),
+    },
+  });
+}
 
 /**
  * Envoie un email de notification au destinataire configuré (`CONTACT_EMAIL`)
@@ -58,7 +73,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
       : "",
   ].join("");
 
-  await transporter.sendMail({
+  await createTransporter().sendMail({
     from,
     to,
     replyTo: data.email,  // ← Les réponses vont ici
@@ -72,5 +87,47 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
       <p><strong>Message :</strong></p>
       <p>${data.message.replace(/\n/g, "<br>")}</p>
     `.trim(),
+  });
+}
+
+/**
+ * Envoie un email de notification à la formatrice (`CLIENT_EMAIL`) lors de la
+ * génération d'un bulletin d'inscription, avec le PDF en pièce jointe.
+ *
+ * @param data - Données du formulaire et PDF encodé en base64.
+ */
+export async function sendInscriptionEmail(data: InscriptionEmailData): Promise<void> {
+  const from = `Stage Bois Bretagne <${Deno.env.get("NOREPLY_MAIL_USER")}>`;
+  const to = Deno.env.get("CLIENT_EMAIL");
+
+  const rows = [
+    ["Prénom",            data.firstName],
+    ["Nom",               data.lastName],
+    ["Email",             data.email],
+    ["Téléphone",         data.phone],
+    ["Date de naissance", data.dateOfBirth],
+    ["Profession",        data.profession],
+    ["Adresse",           data.address],
+    ["Code postal",       data.postalCode],
+    ["Ville",             data.city],
+  ].filter((r): r is [string, string] => !!r[1]);
+
+  const textLines = rows.map(([k, v]) => `${k} : ${v}`);
+  if (data.comment) textLines.push("", `Commentaire : ${data.comment}`);
+
+  const htmlRows = rows
+    .map(([k, v]) => `<p><strong>${k} :</strong> ${v}</p>`)
+    .join("\n");
+  const htmlComment = data.comment
+    ? `<hr><p><strong>Commentaire :</strong></p><p>${data.comment.replace(/\n/g, "<br>")}</p>`
+    : "";
+
+  await createTransporter().sendMail({
+    from,
+    to,
+    replyTo: data.email,
+    subject: `Nouvelle inscription — ${data.firstName} ${data.lastName}`,
+    text: textLines.join("\n"),
+    html: `${htmlRows}${htmlComment}`,
   });
 }

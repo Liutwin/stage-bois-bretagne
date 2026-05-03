@@ -174,9 +174,9 @@ export function StagePage() {
           <section className={styles.block}>
             <h2>Déroulement</h2>
             <p>
-              Les sessions se déroulent généralement de 9h à 12h15 et de 14h à 17h15 —
-              les horaires restent aménageables selon les souhaits du groupe. Le nombre de
-              stagiaires est volontairement limité à <strong>3 personnes maximum</strong>,
+              Les sessions se déroulent en général de 9h30 à 12h15 et de 13h30 à 16h30,
+              ou de 9h à 12h30 et de 13h30 à 17h selon les formules.
+              Le nombre de stagiaires est volontairement limité à <strong>3 personnes maximum</strong>,
               afin qu'Annick puisse s'adapter au niveau et au rythme de chacun.
             </p>
             <p style={{ marginTop: '.75rem' }}>

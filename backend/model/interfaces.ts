@@ -61,6 +61,29 @@ export interface ContactFormData {
 }
 
 /**
+ * Données envoyées au backend lors de la génération du bulletin d'inscription.
+ * Le PDF est transmis en base64 pour être joint à l'email de notification.
+ */
+export interface InscriptionEmailData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  level?: string;
+  dateOfBirth?: string;
+  profession?: string;
+  comment?: string;
+  sessionId?: number;
+  /** Contenu du PDF encodé en base64 (sans préfixe data URI). */
+  pdfBase64: string;
+  /** Nom de fichier suggéré pour la pièce jointe. */
+  filename: string;
+}
+
+/**
  * Enveloppe générique des réponses JSON de l'API.
  *
  * @template T - Type de la donnée encapsulée dans `data`.

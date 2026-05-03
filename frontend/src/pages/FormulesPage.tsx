@@ -21,14 +21,23 @@ export function FormulesPage() {
           <Link to="/hebergement" className={styles.link}>voir la page Hébergement &amp; Repas</Link>.
         </p>
 
+        {/* ── L'atelier à votre disposition ───────────────────────────────── */}
+        <div className={formulesStyles.atelierSection}>
+          <p className={formulesStyles.programmeLabel}>L'atelier à votre disposition</p>
+          <ul className={styles.list}>
+            <li>Perceuse sur colonne et équipements électroportatifs variés</li>
+            <li>Présentation et explications sur chaque machine : scie à ruban, combinée, défonceuse</li>
+          </ul>
+        </div>
+
         <div className={`${styles.content} ${formulesStyles.content}`}>
 
           {/* ── Stage d'initiation ───────────────────────────────────────── */}
           <div className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
-                <h2 className={formulesStyles.formuleTitle}>Stage d'initiation</h2>
-                <p className={formulesStyles.formuleDuration}>12 heures · week-end</p>
+                <h2 className={formulesStyles.formuleTitle}>Week-end d'initiation</h2>
+                <p className={formulesStyles.formuleDuration}>12 heures</p>
               </div>
               <span className={formulesStyles.formulePrix}>230 €</span>
             </div>
@@ -38,8 +47,6 @@ export function FormulesPage() {
                 <li>Découverte du matériel et prise en main de la scie à chantourner</li>
                 <li>Préparation des gabarits</li>
                 <li>Découpe guidée pas à pas — découpe courbe simple en placage</li>
-                <li>Fabrication d'un mobile sur placage fin, apprentissage de l'équilibre</li>
-                <li>Réalisation d'un puzzle en bois massif, de la conception à la découpe</li>
                 <li>Création d'une pièce décorative ajourée en bois massif</li>
                 <li>Rencontre avec les principales essences de bois de pays</li>
               </ul>
@@ -52,12 +59,36 @@ export function FormulesPage() {
             </div>
           </div>
 
+          {/* ── Stage de jouets ──────────────────────────────────────────── */}
+          <div className={formulesStyles.formuleCard}>
+            <div className={formulesStyles.formuleHeader}>
+              <div>
+                <h2 className={formulesStyles.formuleTitle}>Journée de fabrication d'un jouet </h2>
+                <p className={formulesStyles.formuleDuration}>7 heures</p>
+              </div>
+              <span className={formulesStyles.formulePrix}>140 €</span>
+            </div>
+            <div className={formulesStyles.formuleCardBody}>
+              <p className={formulesStyles.programmeLabel}>Programme</p>
+              <ul className={styles.list}>
+                <li>Fabrication d'un mobile sur placage fin, apprentissage de l'équilibre</li>
+                <li>Réalisation d'un puzzle en bois massif, de la conception à la découpe</li>
+              </ul>
+              <p className={formulesStyles.formuleNote}>
+                <em>Chacun choisit, pour chaque exercice, son modèle parmi plusieurs propositions adaptées à tous les niveaux.</em>
+              </p>
+            </div>
+            <div className={formulesStyles.formuleCardFooter}>
+              <Link to="/inscription" className="btn btn-primary">Manifester mon intérêt →</Link>
+            </div>
+          </div>
+
           {/* ── Journée de perfectionnement ──────────────────────────────── */}
           <div className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
                 <h2 className={formulesStyles.formuleTitle}>Journée de perfectionnement</h2>
-                <p className={formulesStyles.formuleDuration}>7 heures · journée</p>
+                <p className={formulesStyles.formuleDuration}>7 heures</p>
               </div>
               <span className={formulesStyles.formulePrix}>140 €</span>
             </div>
@@ -69,7 +100,7 @@ export function FormulesPage() {
                 <li><strong>Découpe conique</strong> — réalisation d'un petit village en pyramide</li>
               </ul>
               <p className={formulesStyles.formuleNote}>
-                <em>Ces journées sont organisées selon les demandes, à partir de 2 participants. Les thèmes peuvent évoluer.</em>
+                <em>Pré-requis : avoir participé au stage initiation ou maîtriser les bases du chantournage.</em>
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
