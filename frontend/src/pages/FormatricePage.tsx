@@ -94,7 +94,7 @@ export function FormatricePage() {
               </div>
             </div>
 
-            <div className={styles.mob2}>
+            <div className={styles.mob2a}>
               <p className={styles.subtitle}>Le bois, la mer et l'âme celtique</p>
               <section className={styles.block}>
                 <h2>Parcours</h2>
@@ -111,6 +111,11 @@ export function FormatricePage() {
                 <p>
                   Pendant quinze ans, j'ai fabriqué des jouets en bois originaux, des créations durables et intemporelles, très appréciées des enfants. Peu à peu, mon univers s'est orienté vers des objets décoratifs en bois massif de pays — découpé, sculpté — nourris par la Bretagne, l'imaginaire celtique et la mer.
                 </p>
+              </section>
+            </div>
+
+            <div className={styles.mob2b}>
+              <section className={styles.block}>
                 <p>
                   Chaque pièce naît d'un bois choisi avec soin. Je le fais débiter en scierie, le laisse sécher lentement, puis je le débite et le rabote avec une combinée à bois.
                 </p>

@@ -149,4 +149,8 @@
   .layout {
     grid-template-columns: 1fr;
   }
+
+  .map {
+    min-height: 320px;
+  }
 }

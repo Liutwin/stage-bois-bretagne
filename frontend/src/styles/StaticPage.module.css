@@ -474,17 +474,24 @@
     max-height: none;
   }
 
-  /* Ordre mobile : annick(1) parcours(2) carousel(3) références(4) pédagogie(6) */
-  .mob1 { order: 1; }
-  .mob2 { order: 2; }
-  .mob3 { order: 3; }
-  .mob4 { order: 4; }
-  .mob6 { order: 5; }
+  /* Ordre mobile formatrice : texte1(1) annick(2) texte2(3) sculpture(4) carousel(5) */
+  .mob2a { order: 1; }
+  .mob1  { order: 2; }
+  .mob2b { order: 3; }
+  .mob3  { order: 4; }
+  .mob4  { order: 5; }
 
   /* Hébergement mobile */
   .hebergGrid {
     grid-template-columns: 1fr;
   }
+
+  .hebergGrid > :nth-child(1) { order: 3; } /* carrousel → après texte hébergement */
+  .hebergGrid > :nth-child(2) { order: 6; } /* pique-nique → après texte repas */
+  .hebergGrid > :nth-child(3) { order: 1; } /* hébergement sur place */
+  .hebergGrid > :nth-child(4) { order: 2; } /* note confirmation */
+  .hebergGrid > :nth-child(5) { order: 4; } /* hébergements à proximité */
+  .hebergGrid > :nth-child(6) { order: 5; } /* repas */
 
   .hebergPhoto {
     grid-column: 1;

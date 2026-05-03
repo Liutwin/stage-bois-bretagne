@@ -345,7 +345,6 @@
   }
 
   .portrait {
-    aspect-ratio: 3 / 4;
-    max-height: 360px;
+    display: none;
   }
 }
