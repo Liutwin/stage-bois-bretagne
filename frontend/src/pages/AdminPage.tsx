@@ -192,9 +192,8 @@ export function AdminPage() {
           <div className={styles.logo}>Stage Bois Bretagne</div>
           <h1>Mise à jour du prochain stage</h1>
           <p>
-            Modifiez les informations ci-dessous et cliquez sur
-            <strong> Enregistrer</strong>. Les modifications sont visibles
-            immédiatement sur le site.
+            Modifiez les informations ci-dessous et cliquez sur <strong> Enregistrer</strong>.<br />
+            Les modifications sont visibles immédiatement sur le site.
           </p>
         </header>
 

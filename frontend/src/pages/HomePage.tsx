@@ -20,6 +20,7 @@ import chantournagePhoto from '../assets/chantournage1.jpg';
 import creation1Photo from '../assets/creation1.jpg';
 import groupe1Photo from '../assets/groupe1.jpg';
 import atelierEcolePhoto from '../assets/atelier-ecole.jpg';
+import creationsPanelPhoto from '../assets/creations-panel.jpg';
 
 const ATELIER_SLIDES = [
   { src: chantournagePhoto, alt: 'Travail de chantournage à l\'atelier' },
@@ -71,8 +72,7 @@ export function HomePage() {
             en Bretagne
           </h1>
           <p className={styles.heroDesc}>
-            Stages d'initiation au chantournage,
-            dans un environnement champêtre au cœur de la Bretagne,<br />
+            Stages d'initiation au chantournage, dans un environnement champêtre au cœur de la Bretagne,<br />
             en petits groupes et dans une ambiance conviviale<br /> et chaleureuse.
           </p>
           <div className={styles.btnRow}>
@@ -124,14 +124,13 @@ export function HomePage() {
         <div className={styles.pillar}>
           <h3>Organisation</h3>
           <p>
-            Maximum 3 stagiaires par session.
+            De 2 à 3 stagiaires par session (la session est annulée si il n'y a pas au moins 2 inscriptions)
           </p>
         </div>
         <div className={styles.pillar}>
           <h3>Créations</h3>
           <p>
-            Mobiles, puzzles, découpes de précision,
-            et plus selon la vitesse de progression du groupe.
+            Mobiles, puzzles, objet décoratif ajouré, pièce d'échiquier, village en pyramides... et plus selon la vitesse de progression du groupe !
           </p>
         </div>
       </section>
@@ -159,6 +158,11 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Panoramique créations ────────────────────────────────────────── */}
+      <div className={styles.creationsPanel}>
+        <img src={creationsPanelPhoto} alt="Créations des stagiaires" />
+      </div>
 
       {/* ── Formatrice ────────────────────────────────────────────────────── */}
       <section className={styles.formatrice}>

@@ -39,10 +39,10 @@ export function Footer() {
           <ul className={styles.linkList}>
             {[
               ['Le stage', '/stage'],
-              ['Tarifs', '/tarifs'],
+              ['Nos formules', '/tarifs'],
               ['S\'inscrire', '/inscription'],
               ['Hébergement / Repas', '/hebergement'],
-              ['La formatrice', '/formatrice'],
+              ['Votre formatrice', '/formatrice'],
               ['Contact', '/contact'],
             ].map(([label, to]) => (
               <li key={to}>

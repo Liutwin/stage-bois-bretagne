@@ -1,0 +1,81 @@
+.inner {}
+
+.content {
+  max-width: 760px;
+}
+
+.intro {
+  font-size: 14px;
+  color: var(--color-muted);
+  line-height: 1.8;
+  margin-top: 0.25rem;
+  margin-bottom: 1.75rem;
+  max-width: 760px;
+}
+
+/* ── Carte formule ──────────────────────────────────────────────────────── */
+.formuleCard {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.formuleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 0.5px solid var(--color-shadow);
+  background: var(--color-linen);
+}
+
+.formuleTitle {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  margin-bottom: 0.3rem;
+}
+
+.formuleDuration {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.formulePrix {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-amber);
+  white-space: nowrap;
+  padding-left: 1rem;
+}
+
+.formuleCardBody {
+  padding: 1.25rem 1.5rem;
+}
+
+.formuleCardFooter {
+  padding: 0.75rem 1.5rem 1.25rem;
+  border-top: 0.5px solid var(--color-shadow);
+}
+
+.programmeLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-amber);
+  margin-bottom: 0.75rem;
+}
+
+.formuleNote {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.75;
+  margin-top: 1rem;
+}

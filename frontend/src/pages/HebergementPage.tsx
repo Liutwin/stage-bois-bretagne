@@ -6,8 +6,9 @@
 
 import { useState, useEffect } from 'react';
 import styles from '../styles/StaticPage.module.css';
-import bungalowPhoto from '../assets/bungalow.jpg';
-import chambrePhoto from '../assets/chambre.jpg';
+import bungalowPhoto from '../assets/bungalow-exterieur.jpg';
+import chambrePhoto from '../assets/bungalow-chambre.jpg';
+import lavaboPhoto from '../assets/bungalow-lavabo.jpg';
 import piqueniquePhoto from '../assets/pique-nique.jpg';
 import { PageSEO } from '@/components/PageSEO';
 
@@ -15,6 +16,7 @@ import { PageSEO } from '@/components/PageSEO';
 const HEBERGEMENT_SLIDES = [
   { src: bungalowPhoto, alt: 'Le bungalow' },
   { src: chambrePhoto,  alt: 'La chambre' },
+  { src: lavaboPhoto,  alt: 'Le lavabo' },
 ];
 
 /**
@@ -85,6 +87,17 @@ export function HebergementPage() {
                     <img src={slide.src} alt={slide.alt} />
                   </div>
                 ))}
+                <div className={styles.carouselDots}>
+                  {HEBERGEMENT_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`${styles.carouselDot}${i === activeSlide ? ` ${styles.carouselDotActive}` : ''}`}
+                      onClick={e => { e.stopPropagation(); setActiveSlide(i); }}
+                      aria-label={`Photo ${i + 1}`}
+                      aria-current={i === activeSlide}
+                    />
+                  ))}
+                </div>
                 <div className={styles.carouselDots}>
                   {HEBERGEMENT_SLIDES.map((_, i) => (
                     <button

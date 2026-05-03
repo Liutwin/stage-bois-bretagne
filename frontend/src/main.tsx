@@ -21,7 +21,7 @@ import { Footer } from '@/components/Footer';
 import { HomePage } from '@/pages/HomePage';
 import { StagePage } from '@/pages/StagePage';
 import { InscriptionPage } from '@/pages/InscriptionPage';
-import { TarifsPage } from '@/pages/TarifsPage';
+import { FormulesPage } from '@/pages/FormulesPage';
 import { HebergementPage } from '@/pages/HebergementPage';
 import { FormatricePage } from '@/pages/FormatricePage';
 import { ContactPage } from '@/pages/ContactPage';
@@ -42,7 +42,7 @@ createRoot(root).render(
         <Route path="/" element={<HomePage />} />
         <Route path="/stage" element={<StagePage />} />
         <Route path="/inscription" element={<InscriptionPage />} />
-        <Route path="/tarifs" element={<TarifsPage />} />
+        <Route path="/tarifs" element={<FormulesPage />} />
         <Route path="/hebergement" element={<HebergementPage />} />
         <Route path="/formatrice" element={<FormatricePage />} />
         <Route path="/contact" element={<ContactPage />} />

@@ -99,9 +99,8 @@ export function FormatricePage() {
               <section className={styles.block}>
                 <h2>Parcours</h2>
                 <p>
-                  Depuis près de quarante ans, le bois accompagne chacun de mes gestes. Pourtant, rien ne me prédestinait à cette matière vivante. Dès mon plus jeune âge, je me suis passionnée pour les activités manuelles, encouragée par mon père qui m'a transmis le goût du travail manuel et le maniement des outils — et c'est cette curiosité qui m'a conduite à explorer des domaines aussi variés que la peinture sur soie, le rotin, le cuir, les émaux grand feu, le verre ou encore les bijoux. Autant d'explorations qui ont nourri ma sensibilité et affiné mon regard.
+                  Depuis près de quarante ans, le bois accompagne chacun de mes gestes. Pourtant, rien ne me prédestinait à cette matière vivante. Dès mon plus jeune âge, je me suis passionnée pour les activités manuelles, encouragée par mon père qui m'a transmis le goût du travail bien fait et le maniement des outils — et c'est cette curiosité qui m'a conduite à explorer des domaines aussi variés que la peinture sur soie, le rotin, le cuir, les émaux grand feu, le verre ou encore les bijoux. Autant d'explorations qui ont nourri ma sensibilité et affiné mon regard.
                 </p>
-
                 <p>
                   Puis un stage de lutherie dans les Vosges chez{' '}
                   <a href="http://www.nyckelharpa-condi.com" target="_blank" rel="noopener noreferrer" className={styles.link}>Jean-Claude Condi</a>
@@ -109,27 +108,28 @@ export function FormatricePage() {
                   <a href="https://web.archive.org/web/20250331030609/https://bel-if.fr" target="_blank" rel="noopener noreferrer" className={styles.link}>Centre du Bel If</a>
                   , me formant à la menuiserie, à la sculpture, à la marqueterie et au tournage.
                 </p>
-
                 <p>
                   Pendant quinze ans, j'ai fabriqué des jouets en bois originaux, des créations durables et intemporelles, très appréciées des enfants. Peu à peu, mon univers s'est orienté vers des objets décoratifs en bois massif de pays — découpé, sculpté — nourris par la Bretagne, l'imaginaire celtique et la mer.
                 </p>
-
                 <p>
                   Chaque pièce naît d'un bois choisi avec soin. Je le fais débiter en scierie, le laisse sécher lentement, puis je le débite et le rabote avec une combinée à bois.
                 </p>
-
                 <p>
                   Le processus créatif commence par le dessin ; viennent ensuite la découpe, la moulure, la sculpture et le ponçage, jusqu'à la naissance de l'œuvre. L'huile, en dernier, révèle toute la profondeur du veinage. Chaque création devient ainsi une pièce unique, façonnée par le temps, la main et la matière.
                 </p>
-
                 <p>
                   Je crée également des boucles d'oreilles en bois précieux, en pétales recouverts de résine ou en pierres semi-précieuses, montées sur argent et rehaussées de cristaux Swarovski : des fragments de nature à porter sur soi.
                 </p>
-
                 <p>
                   Depuis plus de vingt ans, j'ai le privilège de collaborer avec{' '}
                   <a href="https://www.camac-harps.com" target="_blank" rel="noopener noreferrer" className={styles.link}>CAMAC</a>
-                  , leader mondial de la harpe celtique, pour lequel je réalise les décors des séries Stivell, Aziliz et Janet. Voir mes motifs accompagner la musique reste une émotion toujours renouvelée.
+                  , leader mondial de la harpe celtique, pour lequel je réalise les décors des séries{' '}
+                  <a href="https://nl.camac-harps.com/wp-content/uploads/sites/14/2019/05/photo-2019-05-16-11-39-18.jpg" target="_blank" rel="noopener noreferrer" className={styles.link}>Stivell</a>
+                  ,{' '}
+                  <a href="https://be.camac-harps.com/wp-content/uploads/sites/3/2016/10/Aziliz-emerald-shamrock-finish-.jpg" target="_blank" rel="noopener noreferrer" className={styles.link}>Aziliz</a>
+                  {' '}et{' '}
+                  <a href="https://www.camac-harps.com/fr/harps-fr/lever-fr/janet" target="_blank" rel="noopener noreferrer" className={styles.link}>Janet</a>
+                  . Voir mes motifs accompagner la musique reste une émotion toujours renouvelée.
                 </p>
                 <p>
                   Participer à des salons, exposer en boutiques et galeries, répondre à des commandes de trophées… autant de facettes d'un métier que j'exerce avec le même enthousiasme qu'au premier jour.

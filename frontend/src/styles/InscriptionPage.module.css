@@ -4,12 +4,14 @@
 }
 
 .inner {
-  max-width: 860px;
-  margin-inline: auto;
-  padding: clamp(1.5rem, 3vw, 2.5rem) var(--section-padding-x);
+  padding: clamp(2rem, 5vw, 4rem) var(--section-padding-x);
   display: flex;
   flex-direction: column;
   gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.inner > * {
+  max-width: 760px;
 }
 
 .intro {

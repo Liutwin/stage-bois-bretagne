@@ -140,7 +140,7 @@ npm run dev        # http://localhost:5173
 
 ```bash
 cd backend
-deno run --watch --allow-net --allow-read --allow-write --allow-env main.ts
+deno run dev
 ```
 
 > L'extension Deno VSCode est activée uniquement dans `backend/` via `backend/.vscode/settings.json`, pour éviter tout conflit avec TypeScript côté frontend.

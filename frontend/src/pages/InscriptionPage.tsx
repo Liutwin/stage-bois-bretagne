@@ -74,8 +74,8 @@ export function InscriptionPage() {
       <div className={styles.inner}>
         {/* En-tête */}
         <div className={styles.header}>
-          <p className="section-label">Disponibilités</p>
-          <h1 className="section-title">Inscription</h1>
+          <p className="section-label">S'inscrire</p>
+          <h1 className="section-title">Calendrier &amp; inscription</h1>
           <p className={styles.intro}>
             L'atelier organise de 2 à 4 sessions par an, avec un minimum de 2 stagiaires et un maximum de 3 stagiaires.<br />
             (en deçà de 2 inscriptions, la session est annulée et l'acompte remboursé sans autre forme de dédit)<br />
@@ -139,7 +139,7 @@ export function InscriptionPage() {
 
         {/* Formulaire pré-inscription */}
         {session && session.isVisible && session.spotsAvailable > 0 && (
-          <section className={styles.formSection}>
+          <section id="formulaire" className={styles.formSection}>
             <h2>Préparer mon bulletin d'inscription</h2>
             <p className={styles.formIntro}>
               Renseignez vos coordonnées pour générer votre bulletin pré-rempli en PDF.
