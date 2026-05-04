@@ -109,10 +109,10 @@ export function StagePage() {
               <p>
                 C'est une technique de découpe fine du bois réalisée à la scie à chantourner,
                 cette merveilleuse machine aux étonnantes possibilités ! Elle permet de créer
-                des formes délicates, ajourées et très précises. À vous les puzzles et toutes
-                sortes de jouets, les objets décoratifs, les bijoux, les découpes
-                tridimensionnelles, les pièces artisanales uniques, qui n'auront qu'une seule
-                limite : votre imagination !
+                des formes délicates, ajourées et très précises.
+              </p>
+              <p style={{ marginTop: '.75rem' }}>
+                Créations : Mobile, puzzle, jouet, objet décoratif ajouré, pièce d'échiquier, village en pyramide... et plus selon la vitesse de progression du groupe !
               </p>
               <p style={{ marginTop: '.75rem' }}>
                 Loin des enseignements académiques, l'apprentissage se fait au plus près des
@@ -156,9 +156,11 @@ export function StagePage() {
               </p>
               <p style={{ marginTop: '.75rem' }}>
                 Chaque stagiaire dispose de son propre poste de travail, équipé d'une scie
-                à chantourner <strong>Hegner</strong>, dont la réputation de qualité n'est
-                plus à faire. En commun : perceuse sur colonne, différents équipements
-                électroportatifs, scie à ruban, combinée — avec explications sur chaque machine.
+                à chantourner <strong>Hegner</strong>, dont la réputation de qualité n'est plus à faire.
+              </p>
+              <p style={{ marginTop: '.75rem' }}>
+                En commun : perceuses sur colonne et électroportative, outils manuels de base.
+                Avec explications sur chaque machine de l'atelier : scie à ruban, combinée, défonceuse.
               </p>
             </div>
             <div
@@ -174,7 +176,7 @@ export function StagePage() {
           <section className={styles.block}>
             <h2>Déroulement</h2>
             <p>
-              Les sessions se déroulent en général de 9h30 à 12h15 et de 13h30 à 16h30,
+              Les sessions se déroulent en général de 9h30 à 12h30 et de 13h30 à 16h30,
               ou de 9h à 12h30 et de 13h30 à 17h selon les formules.
               Le nombre de stagiaires est volontairement limité à <strong>3 personnes maximum</strong>,
               afin qu'Annick puisse s'adapter au niveau et au rythme de chacun.
@@ -250,7 +252,7 @@ export function StagePage() {
 
           {/* ── CTA ───────────────────────────────────────────────────────── */}
           <section className={styles.block} style={{ paddingTop: '.5rem' }}>
-            <Link to="/tarifs" className="btn btn-primary">Voir nos formules →</Link>
+            <Link to="/formules" className="btn btn-primary">Voir nos formules →</Link>
           </section>
 
         </div>

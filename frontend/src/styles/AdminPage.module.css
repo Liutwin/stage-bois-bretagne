@@ -203,6 +203,87 @@
   color: var(--color-text);
 }
 
+/* ── Panneau multi-cartes (remplace .card pour la vue admin) ──────────────── */
+.panel {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 760px;
+  box-shadow: 0 4px 32px var(--color-shadow);
+  overflow: hidden;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.loadErrorBanner {
+  padding: 1rem 2rem 0;
+}
+
+/* Grille des 3 cartes */
+.cardsGrid {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Carte individuelle par type de stage */
+.stageCard {
+  border: 1px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.stageCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-linen);
+  border-bottom: 0.5px solid var(--color-shadow);
+}
+
+.stageCardTitle {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+}
+
+.statusBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 99px;
+}
+
+.statusVisible {
+  background: rgba(42, 110, 42, 0.12);
+  color: #2a6e2a;
+}
+
+.statusHidden {
+  background: rgba(122, 100, 80, 0.12);
+  color: var(--color-muted);
+}
+
+/* Formulaire à l'intérieur de chaque carte */
+.stageForm {
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* ── Skeleton ─────────────────────────────────────────────────────────────── */
 /* Skeleton */
 .skeleton {
   width: 100%;

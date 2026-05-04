@@ -42,7 +42,7 @@ createRoot(root).render(
         <Route path="/" element={<HomePage />} />
         <Route path="/stage" element={<StagePage />} />
         <Route path="/inscription" element={<InscriptionPage />} />
-        <Route path="/tarifs" element={<FormulesPage />} />
+        <Route path="/formules" element={<FormulesPage />} />
         <Route path="/hebergement" element={<HebergementPage />} />
         <Route path="/formatrice" element={<FormatricePage />} />
         <Route path="/contact" element={<ContactPage />} />

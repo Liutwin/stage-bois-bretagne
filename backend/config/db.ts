@@ -35,9 +35,12 @@ db.exec(`
   )
 `);
 
-// Migration pour les bases existantes (silencieuse si la colonne existe déjà)
+// Migrations silencieuses pour les bases existantes
 try {
   db.exec(`ALTER TABLE sessions ADD COLUMN description TEXT NOT NULL DEFAULT ''`);
+} catch (_) { /* colonne déjà présente */ }
+try {
+  db.exec(`ALTER TABLE sessions ADD COLUMN type TEXT NOT NULL DEFAULT 'initiation'`);
 } catch (_) { /* colonne déjà présente */ }
 
 console.log(`[DB] SQLite connecté : ${DB_PATH}`);

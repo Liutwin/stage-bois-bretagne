@@ -1,15 +1,32 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/StaticPage.module.css';
 import formulesStyles from '../styles/FormulesPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
+import { fetchPublicSessions } from '@/utils/api';
+import type { StageType } from '@/types/session';
 
 export function FormulesPage() {
+  const [hasSession, setHasSession] = useState<Record<StageType, boolean>>({
+    initiation: false, jouets: false, perfectionnement: false,
+  });
+
+  useEffect(() => {
+    fetchPublicSessions()
+      .then(sessions => setHasSession({
+        initiation:       sessions.some(s => s.type === 'initiation'       && s.isVisible),
+        jouets:           sessions.some(s => s.type === 'jouets'           && s.isVisible),
+        perfectionnement: sessions.some(s => s.type === 'perfectionnement' && s.isVisible),
+      }))
+      .catch(() => {});
+  }, []);
+
   return (
     <main className={styles.page}>
       <PageSEO
         title="Formules & Tarifs — Stage Bois Bretagne"
         description="Formules et tarifs du stage de chantournage à Trébrivan : stage d'initiation (week-end) et stage de perfectionnement (journée)."
-        path="/tarifs"
+        path="/formules"
       />
       <div className={`${styles.inner} ${formulesStyles.inner}`}>
         <p className="section-label">Nos formules</p>
@@ -46,7 +63,8 @@ export function FormulesPage() {
               <ul className={styles.list}>
                 <li>Découverte du matériel et prise en main de la scie à chantourner</li>
                 <li>Préparation des gabarits</li>
-                <li>Découpe guidée pas à pas — découpe courbe simple en placage</li>
+                <li>Fabrication d'un mobile sur placage fin, méthode de l'équilibrage</li>
+                <li>Réalisation d'un puzzle en bois massif, de la conception à la découpe</li>
                 <li>Création d'une pièce décorative ajourée en bois massif</li>
                 <li>Rencontre avec les principales essences de bois de pays</li>
               </ul>
@@ -55,7 +73,9 @@ export function FormulesPage() {
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">Voir les dates &amp; s'inscrire →</Link>
+              <Link to="/inscription" className="btn btn-primary">
+                {hasSession.initiation ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
+              </Link>
             </div>
           </div>
 
@@ -63,7 +83,7 @@ export function FormulesPage() {
           <div className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
-                <h2 className={formulesStyles.formuleTitle}>Journée de fabrication d'un jouet </h2>
+                <h2 className={formulesStyles.formuleTitle}>Journée de fabrication d'un jouet</h2>
                 <p className={formulesStyles.formuleDuration}>7 heures</p>
               </div>
               <span className={formulesStyles.formulePrix}>140 €</span>
@@ -71,15 +91,20 @@ export function FormulesPage() {
             <div className={formulesStyles.formuleCardBody}>
               <p className={formulesStyles.programmeLabel}>Programme</p>
               <ul className={styles.list}>
-                <li>Fabrication d'un mobile sur placage fin, apprentissage de l'équilibre</li>
-                <li>Réalisation d'un puzzle en bois massif, de la conception à la découpe</li>
+                <li>Fabrication d'un jouet à roulettes</li>
+                <li>Mise en œuvre des systèmes d'articulation et de roues</li>
+                <li>Teinture, vernis, peinture</li>
+                <li>Sensibilisation aux normes de sécurité européennes</li>
+                <li>Élaboration d'un cahier des charges</li>
               </ul>
               <p className={formulesStyles.formuleNote}>
                 <em>Chacun choisit, pour chaque exercice, son modèle parmi plusieurs propositions adaptées à tous les niveaux.</em>
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">Manifester mon intérêt →</Link>
+              <Link to="/inscription" className="btn btn-primary">
+                {hasSession.jouets ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
+              </Link>
             </div>
           </div>
 
@@ -93,18 +118,19 @@ export function FormulesPage() {
               <span className={formulesStyles.formulePrix}>140 €</span>
             </div>
             <div className={formulesStyles.formuleCardBody}>
-              <p className={formulesStyles.programmeLabel}>Thèmes proposés</p>
+              <p className={formulesStyles.programmeLabel}>Programme</p>
               <ul className={styles.list}>
-                <li><strong>Jouet à roulettes</strong> — mise en œuvre des systèmes d'articulation et de roues, normes de sécurité européennes, conception d'un cahier des charges</li>
-                <li><strong>Découpe en 3D</strong> — réalisation d'une pièce d'échiquier pour comprendre le principe de la découpe tridimensionnelle</li>
-                <li><strong>Découpe conique</strong> — réalisation d'un petit village en pyramide</li>
+                <li>Découpe en 3D — réalisation d'une pièce d'échiquier pour comprendre le principe de la découpe tridimensionnelle</li>
+                <li>Découpe conique — réalisation d'un petit village en pyramide</li>
               </ul>
               <p className={formulesStyles.formuleNote}>
-                <em>Pré-requis : avoir participé au stage initiation ou maîtriser les bases du chantournage.</em>
+                <em>Pré-requis : avoir participé au week-end d'initiation ou maîtriser les bases du chantournage.</em>
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">Manifester mon intérêt →</Link>
+              <Link to="/inscription" className="btn btn-primary">
+                {hasSession.perfectionnement ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
+              </Link>
             </div>
           </div>
 

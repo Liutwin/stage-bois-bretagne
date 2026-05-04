@@ -21,7 +21,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: 'Accueil', to: '/' },
   { label: 'Le stage', to: '/stage' },
-  { label: 'Nos formules', to: '/tarifs' },
+  { label: 'Nos formules', to: '/formules' },
   { label: 'S\'inscrire', to: '/inscription' },
   { label: 'Pratique', to: '/hebergement' },
   { label: 'Votre formatrice', to: '/formatrice' },

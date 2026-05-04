@@ -3,26 +3,25 @@
  * @description Définitions des types et interfaces partagés entre les routes, services et la couche BDD.
  */
 
+/** Identifiant de type de stage. */
+export type StageType = 'initiation' | 'jouets' | 'perfectionnement';
+
+/** Libellés affichés pour chaque type de stage. */
+export const STAGE_LABELS: Record<StageType, string> = {
+  initiation:       "Week-end d'initiation",
+  jouets:           "Journée de fabrication d'un jouet",
+  perfectionnement: "Journée de perfectionnement",
+};
+
 /**
  * Représente un stage tel qu'exposé par l'API publique.
- *
- * @example
- * ```ts
- * const session: Session = {
- *   id: 1,
- *   theme: "Jouets & Découpes",
- *   startDate: "2025-09-15",
- *   endDate: "2025-09-17",
- *   spotsAvailable: 2,
- *   totalSpots: 4,
- *   isVisible: true,
- * };
- * ```
  */
 export interface Session {
   /** Identifiant unique (clé primaire SQLite). */
   id: number;
-  /** Intitulé court du stage (ex. : "Jouets & Découpes"). */
+  /** Type de stage. */
+  type: StageType;
+  /** Intitulé dérivé automatiquement du type. */
   theme: string;
   /** Date de début au format ISO 8601 (`YYYY-MM-DD`). */
   startDate: string;
@@ -40,9 +39,9 @@ export interface Session {
 
 /**
  * Charge utile envoyée au backend pour créer ou mettre à jour un stage.
- * Identique à {@link Session} sans le champ `id` (attribué par la BDD).
+ * `theme` est exclu : il est dérivé automatiquement du `type` côté backend.
  */
-export type SessionPayload = Omit<Session, "id">;
+export type SessionPayload = Omit<Session, 'id' | 'theme'>;
 
 /**
  * Données du formulaire de contact soumis par un visiteur.
@@ -62,7 +61,6 @@ export interface ContactFormData {
 
 /**
  * Données envoyées au backend lors de la génération du bulletin d'inscription.
- * Le PDF est transmis en base64 pour être joint à l'email de notification.
  */
 export interface InscriptionEmailData {
   firstName: string;
@@ -85,34 +83,21 @@ export interface InscriptionEmailData {
 
 /**
  * Enveloppe générique des réponses JSON de l'API.
- *
  * @template T - Type de la donnée encapsulée dans `data`.
- *
- * @example
- * ```ts
- * // Succès
- * const ok: ApiResponse<Session> = { ok: true, data: session };
- * // Erreur
- * const err: ApiResponse<never> = { ok: false, error: "Non trouvé." };
- * ```
  */
 export interface ApiResponse<T> {
-  /** `true` si la requête s'est terminée avec succès. */
   ok: boolean;
-  /** Données renvoyées par le serveur en cas de succès. */
   data?: T;
-  /** Message d'erreur descriptif en cas d'échec. */
   error?: string;
 }
 
 /**
  * Représentation interne d'une ligne de la table `sessions` (champs en snake_case).
- * Utilisée uniquement par la couche service pour mapper les résultats SQLite.
- *
  * @internal
  */
 export interface SessionRow {
   id: number;
+  type: string;
   theme: string;
   start_date: string;
   end_date: string;

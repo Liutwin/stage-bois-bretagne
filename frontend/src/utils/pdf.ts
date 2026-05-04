@@ -7,6 +7,7 @@
 
 import { jsPDF } from 'jspdf';
 import type { Session } from '@/types/session';
+import { STAGE_LABELS } from '@/types/session';
 
 import datadockeUrl from '@/images/datadocke.jpg';
 import logoChantournageUrl from '@/images/logo-chantournage.jpg';
@@ -95,7 +96,7 @@ export async function generateRegistrationPdf(
   doc.setFontSize(22);
   doc.setFont('times', 'bold');
   doc.setTextColor(...colorDark);
-  doc.text('Stage « jouets et découpes »', margin, y);
+  doc.text(STAGE_LABELS[session.type] ?? session.theme, margin, y);
 
   doc.setFontSize(17);
   doc.setFont('times', 'bolditalic');

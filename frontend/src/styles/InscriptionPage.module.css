@@ -7,27 +7,27 @@
   padding: clamp(2rem, 5vw, 4rem) var(--section-padding-x);
   display: flex;
   flex-direction: column;
-  gap: clamp(1.25rem, 2.5vw, 2rem);
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
 }
 
 .inner > * {
   max-width: 760px;
 }
 
+.header {}
+
 .intro {
-  font-size: 14.5px;
+  font-size: 14px;
   color: var(--color-muted);
   line-height: 1.8;
+  margin-top: 0.25rem;
+  max-width: 580px;
 }
 
-.cardArea {
-  align-self: flex-start;
-}
-
+/* ── Skeleton ─────────────────────────────────────────────────────────────── */
 .skeleton {
-  height: 190px;
+  height: 120px;
   width: 100%;
-  max-width: 480px;
   border-radius: var(--radius-md);
   background: linear-gradient(90deg, var(--color-linen) 25%, var(--color-white-warm) 50%, var(--color-linen) 75%);
   background-size: 200% 100%;
@@ -35,33 +35,129 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
+  0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-/* ── Prochaines dates ─────────────────────────────────────────────────────── */
-.upcomingDates {
+/* ── Sections par type de stage ───────────────────────────────────────────── */
+.typeSection {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.typeSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
   background: var(--color-linen);
-  border-left: 3px solid var(--color-amber);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 1rem 1.25rem;
-  align-self: flex-start;
-  max-width: 560px;
+  border-bottom: 0.5px solid var(--color-shadow);
+  gap: 1rem;
 }
 
-.upcomingLabel {
-  font-size: 11px;
+.typeSectionTitle {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  margin-bottom: 0.2rem;
+}
+
+.typeSectionSub {
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-amber);
-  margin-bottom: 0.35rem;
+  color: var(--color-muted);
 }
 
-.upcomingText {
-  font-size: 14px;
-  color: var(--color-text);
-  line-height: 1.7;
+/* ── Carte session inline ─────────────────────────────────────────────────── */
+.inlineCardBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 0.5px solid var(--color-shadow);
+  gap: 1rem;
+}
+
+.inlineCardDates {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--color-dark-wood);
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.badgeOk {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badgeFull {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.inlineCardBody {
+  padding: 1.25rem 1.5rem;
+}
+
+.inlineCardSpots {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.inlineCardCta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── État d'attente ───────────────────────────────────────────────────────── */
+.waiting {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.5rem;
+}
+
+.waitingIcon {
+  font-size: 28px;
+  color: var(--color-amber);
+  opacity: 0.5;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.waitingTitle {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-dark-wood);
+  margin-bottom: 0.4rem;
+}
+
+.waitingText {
+  font-size: 13.5px;
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.waitingCta {
+  margin-top: 0.875rem;
+  display: inline-flex;
 }
 
 /* ── Procédure ────────────────────────────────────────────────────────────── */
@@ -149,24 +245,25 @@
 }
 
 .field label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-amber);
 }
 
 .field input,
 .field select,
 .field textarea {
-  border: 1px solid rgba(122, 100, 80, 0.3);
+  background: var(--color-cream);
+  border: 0.5px solid var(--color-shadow);
   border-radius: var(--radius-sm);
   padding: 9px 12px;
-  font-size: 14px;
   font-family: var(--font-sans);
+  font-size: 14px;
   color: var(--color-text);
-  background: var(--color-cream);
   transition: border-color var(--transition-fast);
+  width: 100%;
 }
 
 .field input:focus,
@@ -189,6 +286,13 @@
   align-items: flex-start;
 }
 
+.pdfDisabled {
+  font-size: 12.5px;
+  color: var(--color-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
 .pdfNote {
   font-size: 12.5px;
   color: var(--color-muted);
@@ -197,6 +301,13 @@
 }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .typeSectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 @media (max-width: 600px) {
   .formGrid {
     grid-template-columns: 1fr;

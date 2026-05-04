@@ -1,37 +1,33 @@
 /**
  * @file services/session.ts
  * @description Couche d'accès aux données pour la table `sessions`.
- * Toutes les interactions avec SQLite passent par ce module.
  */
 
 import { db } from "../config/db.ts";
-import type { Session, SessionPayload, SessionRow } from "../model/interfaces.ts";
+import type { Session, SessionPayload, SessionRow, StageType } from "../model/interfaces.ts";
+import { STAGE_LABELS } from "../model/interfaces.ts";
 
-/**
- * Convertit une ligne SQLite (snake_case) en objet {@link Session} (camelCase).
- *
- * @param row - Ligne brute issue de la table `sessions`.
- * @returns Session formatée pour l'API.
- */
 function toSession(row: SessionRow): Session {
   return {
-    id: row.id,
-    theme: row.theme,
-    startDate: row.start_date,
-    endDate: row.end_date,
+    id:             row.id,
+    type:           (row.type ?? 'initiation') as StageType,
+    theme:          row.theme,
+    startDate:      row.start_date,
+    endDate:        row.end_date,
     spotsAvailable: row.spots_available,
-    totalSpots: row.total_spots,
-    isVisible: row.is_visible === 1,
-    description: row.description ?? '',
+    totalSpots:     row.total_spots,
+    isVisible:      row.is_visible === 1,
+    description:    row.description ?? '',
   };
 }
 
-/**
- * Récupère la session actuellement visible sur le site public.
- * Si plusieurs sessions sont marquées `is_visible = 1`, la plus récente est retournée.
- *
- * @returns La session visible, ou `null` si aucune n'est publiée.
- */
+/** Retourne toutes les sessions (une par type), triées par id. */
+export function getAllSessions(): Session[] {
+  const rows = db.prepare("SELECT * FROM sessions ORDER BY id ASC").all() as SessionRow[];
+  return rows.map(toSession);
+}
+
+/** Retourne la session visible la plus récente, ou `null` si aucune n'est publiée. */
 export function getVisibleSession(): Session | null {
   const row = db
     .prepare("SELECT * FROM sessions WHERE is_visible = 1 ORDER BY id DESC LIMIT 1")
@@ -39,13 +35,7 @@ export function getVisibleSession(): Session | null {
   return row ? toSession(row) : null;
 }
 
-/**
- * Récupère la session la plus récente quelle que soit sa visibilité.
- * Utilisé pour exposer les informations annexes (prochaines dates potentielles)
- * même quand aucun stage n'est publié.
- *
- * @returns La dernière session, ou `null` si aucune n'existe.
- */
+/** Retourne la session la plus récente quelle que soit sa visibilité. */
 export function getLatestSession(): Session | null {
   const row = db
     .prepare("SELECT * FROM sessions ORDER BY id DESC LIMIT 1")
@@ -54,44 +44,39 @@ export function getLatestSession(): Session | null {
 }
 
 /**
- * Crée ou met à jour la session de stage.
- *
- * - S'il existe déjà une session en base, elle est mise à jour (`UPDATE`).
- * - Sinon, une nouvelle session est insérée (`INSERT`).
- *
- * Ce comportement "upsert" repose sur l'hypothèse qu'un seul stage est géré à la fois.
- *
- * @param payload - Données du stage sans l'`id` (fourni ou généré par SQLite).
- * @returns La session résultante avec son `id`.
+ * Crée ou met à jour la session correspondant au type donné.
+ * Le `theme` est dérivé automatiquement du `type`.
  */
 export function upsertSession(payload: SessionPayload): Session {
+  const theme    = STAGE_LABELS[payload.type];
   const existing = db
-    .prepare("SELECT id FROM sessions ORDER BY id DESC LIMIT 1")
-    .get() as { id: number } | undefined;
+    .prepare("SELECT id FROM sessions WHERE type = ?")
+    .get(payload.type) as { id: number } | undefined;
 
   if (existing) {
     db.prepare(
       `UPDATE sessions
        SET theme=?, start_date=?, end_date=?, spots_available=?, total_spots=?, is_visible=?, description=?
-       WHERE id=?`,
+       WHERE type=?`,
     ).run(
-      payload.theme,
+      theme,
       payload.startDate,
       payload.endDate,
       payload.spotsAvailable,
       payload.totalSpots,
       payload.isVisible ? 1 : 0,
       payload.description ?? '',
-      existing.id,
+      payload.type,
     );
-    return { id: existing.id, ...payload };
+    return { id: existing.id, theme, ...payload };
   }
 
   const result = db.prepare(
-    `INSERT INTO sessions (theme, start_date, end_date, spots_available, total_spots, is_visible, description)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO sessions (type, theme, start_date, end_date, spots_available, total_spots, is_visible, description)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
   ).run(
-    payload.theme,
+    payload.type,
+    theme,
     payload.startDate,
     payload.endDate,
     payload.spotsAvailable,
@@ -99,5 +84,5 @@ export function upsertSession(payload: SessionPayload): Session {
     payload.isVisible ? 1 : 0,
     payload.description ?? '',
   );
-  return { id: Number(result.lastInsertRowid), ...payload };
+  return { id: Number(result.lastInsertRowid), theme, ...payload };
 }

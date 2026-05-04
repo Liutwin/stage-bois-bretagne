@@ -6,6 +6,7 @@
 
 import type { ApiResponse, Session, SessionPayload } from '@/types/session';
 
+
 /** URL de base de l'API. En développement, Vite proxifie vers `http://localhost:8001`. */
 const API_BASE = '/api';
 
@@ -44,6 +45,24 @@ export async function fetchNextSession(): Promise<Session | null> {
   }
   const body: ApiResponse<Session> = await res.json();
   return body.data ?? null;
+}
+
+/** Récupère toutes les sessions visibles pour le site public. */
+export async function fetchPublicSessions(): Promise<Session[]> {
+  const res = await fetch(`${API_BASE}/sessions`);
+  if (!res.ok) throw new Error(`Erreur API : ${res.status} ${res.statusText}`);
+  const body: ApiResponse<Session[]> = await res.json();
+  return body.data ?? [];
+}
+
+/** Récupère toutes les sessions pour le panneau d'administration. */
+export async function fetchAllAdminSessions(): Promise<Session[]> {
+  const res = await fetch(`${API_BASE}/admin/sessions`, {
+    headers: { 'Authorization': `Bearer ${getAdminToken()}` },
+  });
+  if (!res.ok) throw new Error(`Erreur API : ${res.status} ${res.statusText}`);
+  const body: ApiResponse<Session[]> = await res.json();
+  return body.data ?? [];
 }
 
 /**

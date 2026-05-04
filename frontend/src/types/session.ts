@@ -3,26 +3,25 @@
  * @description Définitions des types TypeScript pour le module "prochain stage".
  */
 
+/** Identifiant de type de stage. */
+export type StageType = 'initiation' | 'jouets' | 'perfectionnement';
+
+/** Libellés affichés pour chaque type de stage. */
+export const STAGE_LABELS: Record<StageType, string> = {
+  initiation:       "Week-end d'initiation",
+  jouets:           "Journée de fabrication d'un jouet",
+  perfectionnement: "Journée de perfectionnement",
+};
+
 /**
  * Représente les données d'une session de stage telles que renvoyées par l'API.
- *
- * @example
- * ```ts
- * const session: Session = {
- *   id: 1,
- *   theme: "Jouets & Découpes",
- *   startDate: "2025-09-15",
- *   endDate: "2025-09-17",
- *   spotsAvailable: 2,
- *   totalSpots: 4,
- *   isVisible: true,
- * };
- * ```
  */
 export interface Session {
   /** Identifiant unique de la session (clé primaire SQLite). */
   id: number;
-  /** Thème ou intitulé court du stage. */
+  /** Type de stage. */
+  type: StageType;
+  /** Intitulé dérivé automatiquement du type (lecture seule). */
   theme: string;
   /** Date de début au format ISO 8601 (YYYY-MM-DD). */
   startDate: string;
@@ -40,9 +39,9 @@ export interface Session {
 
 /**
  * Charge utile envoyée au backend pour créer ou mettre à jour une session.
- * Identique à {@link Session} sans le champ `id`.
+ * `theme` est exclu : il est dérivé automatiquement du `type` côté backend.
  */
-export type SessionPayload = Omit<Session, 'id'>;
+export type SessionPayload = Omit<Session, 'id' | 'theme'>;
 
 /**
  * Réponse générique de l'API backend.

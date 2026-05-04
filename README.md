@@ -28,7 +28,7 @@ stage-bois-bretagne/
 │   │   │   ├── HomePage.tsx
 │   │   │   ├── StagePage.tsx
 │   │   │   ├── InscriptionPage.tsx
-│   │   │   ├── TarifsPage.tsx
+│   │   │   ├── FormulesPage.tsx
 │   │   │   ├── HebergementPage.tsx
 │   │   │   ├── FormatricePage.tsx
 │   │   │   ├── ContactPage.tsx
@@ -99,7 +99,7 @@ stage-bois-bretagne/
 | `/` | Accueil, présentation, call-to-action |
 | `/stage` | Description du programme |
 | `/prochain-stage` | Date, places disponibles, procédure d'inscription |
-| `/tarifs` | Grille tarifaire et bulletin d'inscription PDF |
+| `/formules` | Grille tarifaire et bulletin d'inscription PDF |
 | `/hebergement` | Options d'hébergement à proximité |
 | `/formatrice` | Bio d'Annick Le Goasteller |
 | `/contact` | Formulaire, coordonnées, carte |

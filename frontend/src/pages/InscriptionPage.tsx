@@ -1,28 +1,97 @@
-/**
- * @file pages/InscriptionPage.tsx
- * @description Page "Inscription" — affiche la session active avec
- * l'accès au bulletin d'inscription PDF et le formulaire de contact.
- */
-
-import { useState } from 'react';
-import { SessionCard } from '@/components/SessionCard';
-import { useSession } from '@/hooks/useSession';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchPublicSessions } from '@/utils/api';
 import { generateRegistrationPdf, type RegistrationFormData } from '@/utils/pdf';
+import type { Session, StageType } from '@/types/session';
+import { STAGE_LABELS } from '@/types/session';
 import styles from '../styles/InscriptionPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
 
-/**
- * Page publique dédiée au prochain stage.
- *
- * Fonctionnalités :
- * - Affiche la carte de session complète
- * - Formulaire de pré-inscription (envoi par email côté backend)
- * - Téléchargement du bulletin d'inscription en PDF via jsPDF
- *
- * @returns Élément `<main>` de la page prochain stage.
- */
+const STAGE_TYPES: StageType[] = ['initiation', 'jouets', 'perfectionnement'];
+
+const TYPE_META: Record<StageType, {
+  label: string;
+  sub: string;
+  programmeLabel: string;
+  waitingTitle: string;
+}> = {
+  initiation: {
+    label: "Stage d'initiation",
+    sub: "Week-end · 12 heures · 230 €",
+    programmeLabel: "Voir le programme",
+    waitingTitle: "Aucune date programmée pour le moment",
+  },
+  jouets: {
+    label: "Journée de fabrication d'un jouet",
+    sub: "Journée · 12 heures · 230 €",
+    programmeLabel: "Voir le programme",
+    waitingTitle: "Aucune date programmée pour le moment",
+  },
+  perfectionnement: {
+    label: "Journée de perfectionnement",
+    sub: "Journée · 7 heures · 140 €",
+    programmeLabel: "Voir les thèmes",
+    waitingTitle: "Aucune date programmée pour le moment",
+  },
+};
+
+function formatShortDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00`).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'short',
+  });
+}
+
+function InlineSessionCard({ session, onFormClick }: { session: Session; onFormClick: () => void }) {
+  const isFull = session.spotsAvailable === 0;
+  return (
+    <div>
+      <div className={styles.inlineCardBar}>
+        <span className={styles.inlineCardDates}>
+          {formatShortDate(session.startDate)} – {formatShortDate(session.endDate)}
+        </span>
+        <span className={`${styles.badge} ${isFull ? styles.badgeFull : styles.badgeOk}`}>
+          {isFull
+            ? 'Complet'
+            : `${session.spotsAvailable} place${session.spotsAvailable > 1 ? 's' : ''} disponible${session.spotsAvailable > 1 ? 's' : ''}`
+          }
+        </span>
+      </div>
+      <div className={styles.inlineCardBody}>
+        {session.description && (
+          <p className={styles.inlineCardSpots}>{session.description}</p>
+        )}
+        <div className={styles.inlineCardCta}>
+          {!isFull && (
+            <button onClick={onFormClick} className="btn btn-primary">
+              Remplir le formulaire ↓
+            </button>
+          )}
+          <a href="/contact" className="btn btn-outline">Poser une question</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function InscriptionPage() {
-  const { session, loading } = useSession();
+  const [loading, setLoading] = useState(true);
+  const [sessionMap, setSessionMap] = useState<Record<StageType, Session | null>>({
+    initiation: null, jouets: null, perfectionnement: null,
+  });
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const [selectedType, setSelectedType] = useState<StageType>(() => {
+    const t = new URLSearchParams(window.location.search).get('type') as StageType;
+    return STAGE_TYPES.includes(t) ? t : 'initiation';
+  });
+
+  function scrollToForm(type: StageType) {
+    setSelectedType(type);
+    requestAnimationFrame(() => {
+      document.getElementById('formulaire')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
 
   const [formData, setFormData] = useState<RegistrationFormData>({
     firstName: '',
@@ -37,31 +106,47 @@ export function InscriptionPage() {
     comment: '',
   });
 
-  const [pdfLoading, setPdfLoading] = useState(false);
+  useEffect(() => {
+    fetchPublicSessions()
+      .then(sessions => {
+        const map: Record<StageType, Session | null> = {
+          initiation: null, jouets: null, perfectionnement: null,
+        };
+        for (const s of sessions) { map[s.type] = s; }
+        setSessionMap(map);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
-  /** Met à jour un champ du formulaire par son nom. */
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+  const visibleTypes = STAGE_TYPES.filter(t => sessionMap[t]?.isVisible);
+
+  useEffect(() => {
+    if (!loading && visibleTypes.length > 0 && !visibleTypes.includes(selectedType)) {
+      setSelectedType(visibleTypes[0]);
+    }
+  }, [loading]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
-    setFormData((prev: RegistrationFormData) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   }
 
-  /**
-   * Génère et télécharge le bulletin d'inscription au format PDF.
-   * Requiert que la session soit disponible et que les champs essentiels soient remplis.
-   */
+  const sessionForPdf = sessionMap[selectedType];
+
   async function handleDownloadPdf() {
-    if (!session) return;
+    if (!sessionForPdf) return;
     if (!formData.firstName || !formData.lastName) {
       alert('Merci de renseigner au moins votre prénom et votre nom pour générer le bulletin.');
       return;
     }
     setPdfLoading(true);
     try {
-      const { filename } = await generateRegistrationPdf(session, formData);
+      const { filename } = await generateRegistrationPdf(sessionForPdf, formData);
       fetch('/api/inscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, sessionId: session.id, filename }),
+        body: JSON.stringify({ ...formData, sessionId: sessionForPdf.id, filename }),
       }).catch(() => {});
     } finally {
       setPdfLoading(false);
@@ -76,36 +161,63 @@ export function InscriptionPage() {
         path="/inscription"
       />
       <div className={styles.inner}>
+
         {/* En-tête */}
         <div className={styles.header}>
           <p className="section-label">S'inscrire</p>
           <h1 className="section-title">Calendrier &amp; inscription</h1>
           <p className={styles.intro}>
-            L'atelier organise de 2 à 4 sessions par an, avec un minimum de 2 stagiaires et un maximum de 3 stagiaires.<br />
-            (en deçà de 2 inscriptions, la session est annulée et l'acompte remboursé sans autre forme de dédit)<br />
             Consultez les disponibilités ci-dessous et manifestez votre intérêt via le formulaire.<br />
             Annick vous recontactera rapidement pour confirmer votre place.
           </p>
         </div>
 
-        {/* Carte de session */}
-        <div className={styles.cardArea}>
-          {loading ? (
-            <div className={styles.skeleton} aria-busy="true" />
-          ) : (
-            <SessionCard session={session} variant="full" />
-          )}
-        </div>
+        {/* Sections par type de stage */}
+        {loading ? (
+          <>
+            <div className={styles.skeleton} />
+            <div className={styles.skeleton} />
+            <div className={styles.skeleton} />
+          </>
+        ) : (
+          STAGE_TYPES.map(type => {
+            const meta    = TYPE_META[type];
+            const session = sessionMap[type];
+            return (
+              <div key={type} className={styles.typeSection}>
+                <div className={styles.typeSectionHeader}>
+                  <div>
+                    <h2 className={styles.typeSectionTitle}>{meta.label}</h2>
+                    <p className={styles.typeSectionSub}>{meta.sub}</p>
+                  </div>
+                  <Link to="/tarifs" className="btn btn-outline">{meta.programmeLabel}</Link>
+                </div>
 
-        {/* Prochaines dates potentielles */}
-        {!loading && session?.description && (
-          <div className={styles.upcomingDates}>
-            <p className={styles.upcomingLabel}>Prochaines dates envisagées</p>
-            <p className={styles.upcomingText}>{session.description}</p>
-          </div>
+                {session?.isVisible ? (
+                  <InlineSessionCard session={session} onFormClick={() => scrollToForm(type)} />
+                ) : (
+                  <div className={styles.waiting}>
+                    <div className={styles.waitingIcon}>◷</div>
+                    <div>
+                      <p className={styles.waitingTitle}>{meta.waitingTitle}</p>
+                      {session?.description && (
+                        <p className={styles.waitingText}>{session.description}</p>
+                      )}
+                      <button
+                        onClick={() => scrollToForm(type)}
+                        className={`btn btn-primary ${styles.waitingCta}`}
+                      >
+                        Manifester mon intérêt ↓
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })
         )}
 
-        {/* Procédure d'inscription */}
+        {/* Procédure */}
         <section className={styles.procedure}>
           <h2>Modalités d'inscription</h2>
           <ol className={styles.steps}>
@@ -142,159 +254,90 @@ export function InscriptionPage() {
         </section>
 
         {/* Formulaire pré-inscription */}
-        {session && session.isVisible && session.spotsAvailable > 0 && (
-          <section id="formulaire" className={styles.formSection}>
-            <h2>Préparer mon bulletin d'inscription</h2>
-            <p className={styles.formIntro}>
-              Renseignez vos coordonnées pour générer votre bulletin pré-rempli en PDF.
-            </p>
+        <section id="formulaire" className={styles.formSection}>
+          <h2>Préparer mon bulletin d'inscription</h2>
+          <p className={styles.formIntro}>
+            Renseignez vos coordonnées pour générer votre bulletin pré-rempli en PDF.
+          </p>
 
-            <div className={styles.formGrid}>
-              <div className={styles.field}>
-                <label htmlFor="firstName">Prénom *</label>
-                <input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  autoComplete="given-name"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="lastName">Nom *</label>
-                <input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  autoComplete="family-name"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="dateOfBirth">Date de naissance *</label>
-                <input
-                  id="dateOfBirth"
-                  name="dateOfBirth"
-                  type="date"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange}
-                  autoComplete="bday"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="profession">Profession *</label>
-                <input
-                  id="profession"
-                  name="profession"
-                  type="text"
-                  value={formData.profession}
-                  onChange={handleChange}
-                  autoComplete="organization-title"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="email">Email *</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="phone">Téléphone *</label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  autoComplete="tel"
-                  required
-                />
-              </div>
-
+          <div className={styles.formGrid}>
+            {visibleTypes.length > 1 && (
               <div className={`${styles.field} ${styles.fullWidth}`}>
-                <label htmlFor="address">Adresse *</label>
-                <input
-                  id="address"
-                  name="address"
-                  type="text"
-                  value={formData.address}
-                  onChange={handleChange}
-                  autoComplete="street-address"
-                  required
-                />
+                <label htmlFor="stageType">Type de stage *</label>
+                <select
+                  id="stageType"
+                  value={selectedType}
+                  onChange={e => setSelectedType(e.target.value as StageType)}
+                >
+                  {visibleTypes.map(t => (
+                    <option key={t} value={t}>{STAGE_LABELS[t]}</option>
+                  ))}
+                </select>
               </div>
+            )}
 
-              <div className={styles.field}>
-                <label htmlFor="postalCode">Code postal *</label>
-                <input
-                  id="postalCode"
-                  name="postalCode"
-                  type="text"
-                  value={formData.postalCode}
-                  onChange={handleChange}
-                  autoComplete="postal-code"
-                  required
-                />
-              </div>
-
-              <div className={styles.field}>
-                <label htmlFor="city">Ville *</label>
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  value={formData.city}
-                  onChange={handleChange}
-                  autoComplete="address-level2"
-                  required
-                />
-              </div>
-
-              <div className={`${styles.field} ${styles.fullWidth}`}>
-                <label htmlFor="comment">Commentaire / demande particulière</label>
-                <textarea
-                  id="comment"
-                  name="comment"
-                  rows={3}
-                  value={formData.comment}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className={styles.field}>
+              <label htmlFor="firstName">Prénom *</label>
+              <input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleChange} autoComplete="given-name" required />
             </div>
+            <div className={styles.field}>
+              <label htmlFor="lastName">Nom *</label>
+              <input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleChange} autoComplete="family-name" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="dateOfBirth">Date de naissance *</label>
+              <input id="dateOfBirth" name="dateOfBirth" type="date" value={formData.dateOfBirth} onChange={handleChange} autoComplete="bday" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="profession">Profession *</label>
+              <input id="profession" name="profession" type="text" value={formData.profession} onChange={handleChange} autoComplete="organization-title" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="email">Email *</label>
+              <input id="email" name="email" type="email" value={formData.email} onChange={handleChange} autoComplete="email" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="phone">Téléphone *</label>
+              <input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} autoComplete="tel" required />
+            </div>
+            <div className={`${styles.field} ${styles.fullWidth}`}>
+              <label htmlFor="address">Adresse *</label>
+              <input id="address" name="address" type="text" value={formData.address} onChange={handleChange} autoComplete="street-address" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="postalCode">Code postal *</label>
+              <input id="postalCode" name="postalCode" type="text" value={formData.postalCode} onChange={handleChange} autoComplete="postal-code" required />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="city">Ville *</label>
+              <input id="city" name="city" type="text" value={formData.city} onChange={handleChange} autoComplete="address-level2" required />
+            </div>
+            <div className={`${styles.field} ${styles.fullWidth}`}>
+              <label htmlFor="comment">Commentaire / demande particulière</label>
+              <textarea id="comment" name="comment" rows={3} value={formData.comment} onChange={handleChange} />
+            </div>
+          </div>
 
-            <div className={styles.pdfAction}>
-              <button
-                className="btn btn-primary"
-                onClick={handleDownloadPdf}
-                disabled={pdfLoading}
-              >
-                {pdfLoading ? 'Génération…' : '⬇ Télécharger le bulletin PDF'}
-              </button>
-              <p className={styles.pdfNote}>
-                Imprimez ce bulletin, complétez-le et envoyez-le avec votre
-                chèque d'acompte à : <br /> <strong>Annick Le Goasteller, 3 Kermoal,
-                22340 Trébrivan</strong>.
+          <div className={styles.pdfAction}>
+            <button
+              className="btn btn-primary"
+              onClick={handleDownloadPdf}
+              disabled={pdfLoading || !sessionForPdf}
+            >
+              {pdfLoading ? 'Génération…' : '⬇ Télécharger le bulletin PDF'}
+            </button>
+            {!sessionForPdf && !loading && (
+              <p className={styles.pdfDisabled}>
+                Aucune session programmée pour ce type de stage — le bulletin sera disponible dès qu'une date sera fixée.
               </p>
-            </div>
-          </section>
-        )}
+            )}
+            <p className={styles.pdfNote}>
+              Imprimez ce bulletin, complétez-le et envoyez-le avec votre chèque d'acompte à :<br />
+              <strong>Annick Le Goasteller, 3 Kermoal, 22340 Trébrivan</strong>.
+            </p>
+          </div>
+        </section>
+
       </div>
     </main>
   );
