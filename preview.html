@@ -369,6 +369,59 @@
       .profile-grid > :not(.portraits) { grid-column:2; }
     }
 
+    /* ── Avis Google ─────────────────────────────────────────────────────── */
+    .reviews-section {
+      background:var(--color-linen);
+      border-top:.5px solid var(--color-shadow);
+      border-bottom:.5px solid var(--color-shadow);
+      padding:clamp(2.5rem,5vw,4rem) var(--section-padding-x);
+    }
+    .reviews-inner { max-width:var(--content-max-width); margin:0 auto; }
+    .reviews-header {
+      display:flex; justify-content:space-between; align-items:flex-end;
+      gap:1.5rem; margin-bottom:2rem; flex-wrap:wrap;
+    }
+    .reviews-google-badge { text-align:right; }
+    .reviews-stars-global { color:var(--color-amber); font-size:18px; letter-spacing:2px; }
+    .reviews-score {
+      font-family:var(--font-serif); font-size:22px; font-weight:600;
+      color:var(--color-dark-wood);
+    }
+    .reviews-count { font-size:13px; font-weight:400; color:var(--color-muted); }
+    .reviews-google-link {
+      display:block; font-size:12px; color:var(--color-amber);
+      text-decoration:none; margin-top:.2rem;
+    }
+    .reviews-google-link:hover { text-decoration:underline; }
+    .reviews-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;
+    }
+    .review-card {
+      background:var(--color-white-warm);
+      border:.5px solid var(--color-shadow); border-radius:var(--radius-md);
+      padding:1.25rem; display:flex; flex-direction:column; gap:.75rem;
+    }
+    .review-stars { color:var(--color-amber); font-size:14px; letter-spacing:1px; }
+    .review-text {
+      font-size:13.5px; color:var(--color-text); line-height:1.75;
+      font-style:italic; flex:1;
+    }
+    .review-author { display:flex; align-items:center; gap:.6rem; }
+    .review-avatar {
+      width:32px; height:32px; border-radius:50%;
+      background:var(--color-amber); color:var(--color-white-warm);
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; font-weight:700; flex-shrink:0;
+    }
+    .review-name { font-size:13px; font-weight:600; color:var(--color-dark-wood); }
+    .review-date { font-size:11px; color:var(--color-muted); }
+    .reviews-cta { margin-top:1.5rem; text-align:center; }
+    @media (max-width:720px) {
+      .reviews-grid { grid-template-columns:1fr; }
+      .reviews-header { flex-direction:column; align-items:flex-start; }
+      .reviews-google-badge { text-align:left; }
+    }
+
     /* ── Inscription page ────────────────────────────────────────────────── */
     .inscription-page { background:var(--color-cream); }
     .inscription-inner { padding:clamp(2rem,5vw,4rem) var(--section-padding-x); }
@@ -777,7 +830,62 @@
         </div>
       </section>
 
-      <!-- Formatrice -->
+      <!-- Avis Google -->
+      <section class="reviews-section">
+        <div class="reviews-inner">
+          <div class="reviews-header">
+            <div>
+              <p class="section-label">Témoignages</p>
+              <h2 class="section-title" style="margin-bottom:0">Ce qu'ils en disent</h2>
+            </div>
+            <div class="reviews-google-badge">
+              <div class="reviews-stars-global">★★★★★</div>
+              <div class="reviews-score">4,9 <span class="reviews-count">· 27 avis Google</span></div>
+              <a href="#" class="reviews-google-link" target="_blank" rel="noopener">Voir tous les avis →</a>
+            </div>
+          </div>
+          <div class="reviews-grid">
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">« Une formatrice passionnée et pédagogue, qui sait adapter son enseignement à chaque participant. Je suis repartie avec des créations dont je suis fière ! »</p>
+              <div class="review-author">
+                <div class="review-avatar">M</div>
+                <div>
+                  <div class="review-name">Marie L.</div>
+                  <div class="review-date">Mars 2025</div>
+                </div>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">« Cadre magnifique, ambiance chaleureuse, et Annick est une vraie artiste qui transmet sa passion avec générosité. Je recommande vivement ! »</p>
+              <div class="review-author">
+                <div class="review-avatar">P</div>
+                <div>
+                  <div class="review-name">Pierre D.</div>
+                  <div class="review-date">Novembre 2024</div>
+                </div>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">« Week-end inoubliable. On apprend vraiment, on rit beaucoup, et on repart avec de belles réalisations. Déjà inscrite pour la prochaine session ! »</p>
+              <div class="review-author">
+                <div class="review-avatar">S</div>
+                <div>
+                  <div class="review-name">Sophie M.</div>
+                  <div class="review-date">Octobre 2024</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reviews-cta">
+            <a href="#" class="btn btn-outline" target="_blank" rel="noopener">Laisser un avis Google</a>
+          </div>
+        </div>
+      </section>
+
+
       <section class="formatrice-section">
         <div class="portrait">
           <img src="frontend/src/assets/annick.jpg" alt="Portrait d'Annick">
@@ -949,7 +1057,31 @@
 
           </section>
 
-          <!-- CTA -->
+          <!-- Carrousel photos de groupe -->
+          <section class="block">
+            <h2>Ils sont repartis avec leurs créations</h2>
+            <div class="carousel">
+              <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide">
+                  <img src="frontend/src/assets/chantournage1.jpg" alt="Photo de groupe session 1">
+                </div>
+                <div class="carousel-slide">
+                  <img src="frontend/src/assets/chantournage2.jpg" alt="Photo de groupe session 2">
+                </div>
+                <div class="carousel-slide">
+                  <img src="frontend/src/assets/chantournage1.jpg" alt="Photo de groupe session 3">
+                </div>
+                <div class="carousel-slide">
+                  <img src="frontend/src/assets/chantournage2.jpg" alt="Photo de groupe session 4">
+                </div>
+              </div>
+              <button class="carousel-btn carousel-btn-prev" onclick="carouselMove(-1)" aria-label="Photo précédente">‹</button>
+              <button class="carousel-btn carousel-btn-next" onclick="carouselMove(1)" aria-label="Photo suivante">›</button>
+              <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+          </section>
+
+
           <section class="block" style="padding-top:.5rem">
             <button class="btn btn-primary" onclick="showPage('tarifs',null)">Voir nos formules →</button>
           </section>
@@ -1080,7 +1212,7 @@
               <h2 class="inscription-section-title">Journée de perfectionnement</h2>
               <p class="inscription-section-sub">Journée · 7 heures · 140 €</p>
             </div>
-            <button class="btn btn-outline" onclick="showPage('tarifs',null)">Voir les thèmes</button>
+            <button class="btn btn-outline" onclick="showPage('tarifs',null)">Voir le programme</button>
           </div>
 
           <!-- État : en attente de demandes -->

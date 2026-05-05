@@ -1,0 +1,141 @@
+.section {
+  background: var(--color-linen);
+  border-top: 0.5px solid var(--color-shadow);
+  border-bottom: 0.5px solid var(--color-shadow);
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--section-padding-x);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Badge note Google */
+.badge {
+  text-align: right;
+}
+
+.badgeStars {
+  color: var(--color-amber);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.badgeScore {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-dark-wood);
+}
+
+.badgeCount {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.badgeLink {
+  display: block;
+  font-size: 12px;
+  color: var(--color-amber);
+  margin-top: 0.2rem;
+  transition: opacity var(--transition-fast);
+}
+
+.badgeLink:hover {
+  opacity: 0.75;
+}
+
+/* Grille des cartes */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.gridCentered {
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+}
+
+/* Carte individuelle */
+.card {
+  background: var(--color-white-warm);
+  border: 0.5px solid var(--color-shadow);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stars {
+  color: var(--color-amber);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.cardText {
+  font-size: 13.5px;
+  color: var(--color-text);
+  line-height: 1.75;
+  font-style: italic;
+  flex: 1;
+}
+
+.cardAuthor {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-amber);
+  color: var(--color-white-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.authorName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-dark-wood);
+}
+
+.authorDate {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+/* Lien CTA */
+.cta {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .badge {
+    text-align: left;
+  }
+}

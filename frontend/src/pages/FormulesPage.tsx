@@ -73,7 +73,7 @@ export function FormulesPage() {
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">
+              <Link to="/inscription?type=initiation#initiation" className="btn btn-primary">
                 {hasSession.initiation ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
               </Link>
             </div>
@@ -100,9 +100,12 @@ export function FormulesPage() {
               <p className={formulesStyles.formuleNote}>
                 <em>Chacun choisit, pour chaque exercice, son modèle parmi plusieurs propositions adaptées à tous les niveaux.</em>
               </p>
+              <p className={formulesStyles.formuleNote}>
+                <em>Pré-requis : avoir participé au week-end d'initiation ou maîtriser les bases du chantournage.</em>
+              </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">
+              <Link to="/inscription?type=jouets#jouets" className="btn btn-primary">
                 {hasSession.jouets ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
               </Link>
             </div>
@@ -128,7 +131,7 @@ export function FormulesPage() {
               </p>
             </div>
             <div className={formulesStyles.formuleCardFooter}>
-              <Link to="/inscription" className="btn btn-primary">
+              <Link to="/inscription?type=perfectionnement#perfectionnement" className="btn btn-primary">
                 {hasSession.perfectionnement ? "Voir les dates & s'inscrire →" : "Manifester mon intérêt →"}
               </Link>
             </div>

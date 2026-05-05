@@ -18,6 +18,7 @@ import { errorMiddleware } from "./middleware/error.ts";
 import sessionRouter from "./routes/session.ts";
 import contactRouter from "./routes/contact.ts";
 import inscriptionRouter from "./routes/inscription.ts";
+import testimonialRouter from "./routes/testimonial.ts";
 
 await load({ export: true });
 
@@ -32,6 +33,7 @@ app.use(errorMiddleware);
 app.use(sessionRouter.routes(), sessionRouter.allowedMethods());
 app.use(contactRouter.routes(), contactRouter.allowedMethods());
 app.use(inscriptionRouter.routes(), inscriptionRouter.allowedMethods());
+app.use(testimonialRouter.routes(), testimonialRouter.allowedMethods());
 
 app.addEventListener("listen", () =>
   console.log(`[API] Backend démarré sur http://${HOSTNAME}:${PORT}`)

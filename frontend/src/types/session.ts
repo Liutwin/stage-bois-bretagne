@@ -58,6 +58,25 @@ export interface ApiResponse<T> {
 }
 
 /**
+ * Témoignage affiché sur la page d'accueil (slot 1, 2 ou 3).
+ */
+export interface Testimonial {
+  slot: number;
+  text: string;
+  author: string;
+  dateLabel: string;
+  rating: number;
+  isVisible: boolean;
+}
+
+/** Note globale Google Places renvoyée par le backend. */
+export interface PlaceRating {
+  rating: number;
+  userRatingsTotal: number;
+  reviewUrl: string | null;
+}
+
+/**
  * Avis Google Places tel que renvoyé par l'API Google.
  */
 export interface GoogleReview {

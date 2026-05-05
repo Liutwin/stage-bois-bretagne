@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { SessionCard } from '@/components/SessionCard';
 import { useSession } from '@/hooks/useSession';
 import { PageSEO } from '@/components/PageSEO';
+import { ReviewsSection } from '@/components/ReviewsSection';
 import styles from '../styles/HomePage.module.css';
 import annickPhoto from '../assets/annick.jpg';
 import chantournagePhoto from '../assets/chantournage1.jpg';
@@ -67,7 +68,7 @@ export function HomePage() {
         <div className={styles.heroText}>
           <div className={styles.heroAccent} />
           <h1 className={styles.heroTitle}>
-            Stage de<br />
+            Stages de<br />
             <em>chantournage</em><br />
             en Bretagne
           </h1>
@@ -76,8 +77,8 @@ export function HomePage() {
             en petits groupes et dans une ambiance conviviale et chaleureuse.
           </p>
           <div className={styles.btnRow}>
-            <Link to="/inscription" className="btn btn-primary">
-              S'inscrire
+            <Link to="/formules" className="btn btn-primary">
+              Voir les formules
             </Link>
             <Link to="/stage" className="btn btn-outline">
               En savoir plus
@@ -144,9 +145,6 @@ export function HomePage() {
             <p className={styles.nextSessionDesc}>
               Annick organise 2 à 4 sessions par an. Les places sont limitées à 3 personnes — n'attendez pas pour réserver la vôtre.
             </p>
-            <Link to="/inscription" className={styles.moreLink}>
-              S'inscrire →
-            </Link>
           </div>
 
           <div className={styles.cardWrapper}>
@@ -163,6 +161,9 @@ export function HomePage() {
       <div className={styles.creationsPanel}>
         <img src={creationsPanelPhoto} alt="Créations des stagiaires" />
       </div>
+
+      {/* ── Témoignages ──────────────────────────────────────────────────── */}
+      <ReviewsSection />
 
       {/* ── Formatrice ────────────────────────────────────────────────────── */}
       <section className={styles.formatrice}>

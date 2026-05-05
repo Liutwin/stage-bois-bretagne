@@ -43,4 +43,18 @@ try {
   db.exec(`ALTER TABLE sessions ADD COLUMN type TEXT NOT NULL DEFAULT 'initiation'`);
 } catch (_) { /* colonne déjà présente */ }
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS testimonials (
+    slot        INTEGER PRIMARY KEY,
+    text        TEXT    NOT NULL DEFAULT '',
+    author      TEXT    NOT NULL DEFAULT '',
+    date_label  TEXT    NOT NULL DEFAULT '',
+    rating      INTEGER NOT NULL DEFAULT 5
+  )
+`);
+db.exec(`INSERT OR IGNORE INTO testimonials (slot) VALUES (1),(2),(3)`);
+try {
+  db.exec(`ALTER TABLE testimonials ADD COLUMN is_visible INTEGER NOT NULL DEFAULT 0`);
+} catch (_) { /* colonne déjà présente */ }
+
 console.log(`[DB] SQLite connecté : ${DB_PATH}`);

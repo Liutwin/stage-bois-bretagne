@@ -82,6 +82,34 @@ export interface InscriptionEmailData {
 }
 
 /**
+ * Témoignage affiché sur la page d'accueil (un des 3 slots).
+ */
+export interface Testimonial {
+  slot: number;
+  text: string;
+  author: string;
+  dateLabel: string;
+  rating: number;
+  isVisible: boolean;
+}
+
+/** Représentation interne d'une ligne de la table `testimonials`. */
+export interface TestimonialRow {
+  slot: number;
+  text: string;
+  author: string;
+  date_label: string;
+  rating: number;
+  is_visible: number;
+}
+
+/** Note globale récupérée depuis l'API Google Places. */
+export interface PlaceRating {
+  rating: number;
+  userRatingsTotal: number;
+}
+
+/**
  * Enveloppe générique des réponses JSON de l'API.
  * @template T - Type de la donnée encapsulée dans `data`.
  */

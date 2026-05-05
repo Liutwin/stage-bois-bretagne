@@ -27,11 +27,23 @@ export function getAllSessions(): Session[] {
   return rows.map(toSession);
 }
 
-/** Retourne la session visible la plus récente, ou `null` si aucune n'est publiée. */
+/** Masque automatiquement les sessions dont la date de fin est dépassée. */
+export function archivePastSessions(): void {
+  db.prepare(
+    `UPDATE sessions SET is_visible = 0
+     WHERE is_visible = 1 AND end_date != '' AND end_date < date('now')`
+  ).run();
+}
+
+/** Retourne la prochaine session visible (date la plus proche dans le futur), ou la plus récente passée en fallback. */
 export function getVisibleSession(): Session | null {
-  const row = db
-    .prepare("SELECT * FROM sessions WHERE is_visible = 1 ORDER BY id DESC LIMIT 1")
-    .get() as SessionRow | undefined;
+  const row = db.prepare(
+    `SELECT * FROM sessions WHERE is_visible = 1
+     ORDER BY
+       CASE WHEN start_date >= date('now') THEN 0 ELSE 1 END ASC,
+       start_date ASC
+     LIMIT 1`
+  ).get() as SessionRow | undefined;
   return row ? toSession(row) : null;
 }
 

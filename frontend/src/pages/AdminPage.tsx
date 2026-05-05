@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import {
   fetchAllAdminSessions, updateSession, verifyAdminPassword,
   getAdminToken, setAdminToken, clearAdminToken,
+  fetchTestimonials, updateTestimonial,
 } from '@/utils/api';
-import type { Session, SessionPayload, StageType } from '@/types/session';
+import type { Session, SessionPayload, StageType, Testimonial } from '@/types/session';
 import { STAGE_LABELS } from '@/types/session';
 import styles from '../styles/AdminPage.module.css';
 
@@ -78,6 +79,8 @@ interface StageTypeCardProps {
   onUnauthorized: () => void;
 }
 
+const TODAY = new Date().toISOString().split('T')[0];
+
 function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
   const [fields, setFields] = useState<SessionPayload>(initial);
   const [saving, setSaving] = useState(false);
@@ -95,12 +98,19 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
     }));
   }
 
-  async function handleSave() {
+  const startInPast =
+    !!fields.startDate && fields.startDate < TODAY;
+  const endBeforeStart =
+    !!fields.startDate && !!fields.endDate && fields.endDate < fields.startDate;
+  const spotsExceedCapacity = fields.spotsAvailable > fields.totalSpots;
+  const hasValidationErrors = startInPast || endBeforeStart || spotsExceedCapacity;
+
+  async function saveWith(payload: SessionPayload) {
     setSaving(true);
     setSuccess(false);
     setError('');
     try {
-      await updateSession(fields);
+      await updateSession(payload);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 4000);
     } catch (err) {
@@ -113,6 +123,12 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
     } finally {
       setSaving(false);
     }
+  }
+
+  async function handleVisibilityToggle(checked: boolean) {
+    const updated = { ...fields, isVisible: checked };
+    setFields(updated);
+    await saveWith(updated);
   }
 
   return (
@@ -130,7 +146,7 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
             type="checkbox"
             name="isVisible"
             checked={fields.isVisible}
-            onChange={handleChange}
+            onChange={e => handleVisibilityToggle(e.target.checked)}
           />
           <span>Afficher sur le site public</span>
         </label>
@@ -142,8 +158,15 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
               name="startDate"
               type="date"
               value={fields.startDate}
+              min={TODAY}
               onChange={handleChange}
+              className={startInPast || endBeforeStart ? styles.inputInvalid : undefined}
             />
+            {startInPast && (
+              <span className={styles.fieldError}>
+                La date de début ne peut pas être dans le passé.
+              </span>
+            )}
           </div>
           <div className={styles.field}>
             <label>Date de fin</label>
@@ -151,8 +174,15 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
               name="endDate"
               type="date"
               value={fields.endDate}
+              min={fields.startDate || undefined}
               onChange={handleChange}
+              className={endBeforeStart ? styles.inputInvalid : undefined}
             />
+            {endBeforeStart && (
+              <span className={styles.fieldError}>
+                La date de fin ne peut pas être antérieure à la date de début.
+              </span>
+            )}
           </div>
         </div>
 
@@ -166,7 +196,13 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
               max={fields.totalSpots}
               value={fields.spotsAvailable}
               onChange={handleChange}
+              className={spotsExceedCapacity ? styles.inputInvalid : undefined}
             />
+            {spotsExceedCapacity && (
+              <span className={styles.fieldError}>
+                Ne peut pas dépasser la capacité totale ({fields.totalSpots}).
+              </span>
+            )}
           </div>
           <div className={styles.field}>
             <label>Capacité totale</label>
@@ -177,6 +213,7 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
               max={10}
               value={fields.totalSpots}
               onChange={handleChange}
+              className={spotsExceedCapacity ? styles.inputInvalid : undefined}
             />
           </div>
         </div>
@@ -198,7 +235,128 @@ function StageTypeCard({ type, initial, onUnauthorized }: StageTypeCardProps) {
         {error   && <p className={styles.errorMsg}>{error}</p>}
         {success && <p className={styles.successMsg}>✓ Modifications enregistrées.</p>}
 
-        <button className={styles.saveBtn} onClick={handleSave} disabled={saving}>
+        <button className={styles.saveBtn} onClick={() => saveWith(fields)} disabled={saving || hasValidationErrors}>
+          {saving ? 'Enregistrement…' : 'Enregistrer'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Carte témoignage ──────────────────────────────────────────────────────────
+
+interface TestimonialCardProps {
+  initial: Testimonial;
+  onUnauthorized: () => void;
+}
+
+function TestimonialCard({ initial, onUnauthorized }: TestimonialCardProps) {
+  const [fields, setFields] = useState<Testimonial>(initial);
+  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError]     = useState('');
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value, type } = e.target;
+    setFields(prev => ({
+      ...prev,
+      [name]: type === 'checkbox'
+        ? (e.target as HTMLInputElement).checked
+        : type === 'number' ? Number(value)
+        : value,
+    }));
+  }
+
+  async function saveWith(payload: Testimonial) {
+    setSaving(true);
+    setSuccess(false);
+    setError('');
+    try {
+      await updateTestimonial(payload);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 4000);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors de la sauvegarde.';
+      if (msg.includes('401') || msg.toLowerCase().includes('autorisé')) {
+        onUnauthorized();
+        return;
+      }
+      setError(msg);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleVisibilityToggle(checked: boolean) {
+    const updated = { ...fields, isVisible: checked };
+    setFields(updated);
+    await saveWith(updated);
+  }
+
+  return (
+    <div className={styles.stageCard}>
+      <div className={styles.stageCardHeader}>
+        <h2 className={styles.stageCardTitle}>Témoignage {fields.slot}</h2>
+        <span className={`${styles.statusBadge} ${fields.isVisible ? styles.statusVisible : styles.statusHidden}`}>
+          {fields.isVisible ? 'Visible' : 'Masqué'}
+        </span>
+      </div>
+
+      <div className={styles.stageForm}>
+        <label className={styles.checkboxRow}>
+          <input
+            type="checkbox"
+            name="isVisible"
+            checked={fields.isVisible}
+            onChange={e => handleVisibilityToggle(e.target.checked)}
+          />
+          <span>Afficher sur le site public</span>
+        </label>
+
+        <div className={styles.field}>
+          <label>Texte de l'avis</label>
+          <textarea
+            name="text"
+            rows={3}
+            maxLength={400}
+            value={fields.text}
+            onChange={handleChange}
+            className={styles.textarea}
+            placeholder="Saisissez le témoignage ici…"
+          />
+          <span className={styles.charCount}>{fields.text.length} / 400</span>
+        </div>
+
+        <div className={styles.dateRow}>
+          <div className={styles.field}>
+            <label>Auteur</label>
+            <input name="author" type="text" value={fields.author} onChange={handleChange} placeholder="Marie L." />
+          </div>
+          <div className={styles.field}>
+            <label>Date (texte libre)</label>
+            <input name="dateLabel" type="text" value={fields.dateLabel} onChange={handleChange} placeholder="Mars 2025" />
+          </div>
+        </div>
+
+        <div className={styles.field}>
+          <label>Note</label>
+          <select
+            name="rating"
+            value={fields.rating}
+            onChange={e => setFields(prev => ({ ...prev, rating: Number(e.target.value) }))}
+            className={styles.textarea}
+            style={{ minHeight: 'unset', resize: 'none', padding: '9px 12px' }}
+          >
+            {[5, 4, 3, 2, 1].map(n => (
+              <option key={n} value={n}>{'★'.repeat(n)} ({n}/5)</option>
+            ))}
+          </select>
+        </div>
+
+        {error   && <p className={styles.errorMsg}>{error}</p>}
+        {success && <p className={styles.successMsg}>✓ Témoignage enregistré.</p>}
+
+        <button className={styles.saveBtn} onClick={() => saveWith(fields)} disabled={saving}>
           {saving ? 'Enregistrement…' : 'Enregistrer'}
         </button>
       </div>
@@ -219,19 +377,29 @@ export function AdminPage() {
     perfectionnement: defaultPayload('perfectionnement'),
   });
 
+  const defaultTestimonial = (slot: number): Testimonial =>
+    ({ slot, text: '', author: '', dateLabel: '', rating: 5, isVisible: false });
+
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([1, 2, 3].map(defaultTestimonial));
+  const [activeTab, setActiveTab] = useState<'stages' | 'avis'>('stages');
+
   useEffect(() => {
     if (!authenticated) { setLoading(false); return; }
-    fetchAllAdminSessions()
-      .then((data: Session[]) => {
+    Promise.all([
+      fetchAllAdminSessions(),
+      fetchTestimonials(),
+    ])
+      .then(([sessionData, testimonialData]) => {
         setSessions(prev => {
           const next = { ...prev };
-          for (const s of data) {
+          for (const s of sessionData) {
             const { id: _id, theme: _theme, ...payload } = s;
             void _id; void _theme;
             next[s.type] = payload;
           }
           return next;
         });
+        if (testimonialData.length > 0) setTestimonials(testimonialData);
       })
       .catch((err: unknown) => {
         setLoadError(err instanceof Error ? err.message : 'Impossible de charger les données.');
@@ -270,11 +438,7 @@ export function AdminPage() {
           <div className={styles.headerRow}>
             <div>
               <div className={styles.logo}>Stage Bois Bretagne</div>
-              <h1>Programmation des stages</h1>
-              <p>
-                Modifiez les informations de chaque type de stage, puis cliquez sur{' '}
-                <strong>Enregistrer</strong>. Les modifications sont visibles immédiatement.
-              </p>
+              <h1>Administration</h1>
             </div>
             <button className={styles.logoutBtn} onClick={handleLogout} type="button">
               Se déconnecter
@@ -282,22 +446,53 @@ export function AdminPage() {
           </div>
         </header>
 
+        <nav className={styles.tabs} aria-label="Sections de l'administration">
+          <button
+            className={`${styles.tab} ${activeTab === 'stages' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('stages')}
+            type="button"
+          >
+            Stages
+          </button>
+          <button
+            className={`${styles.tab} ${activeTab === 'avis' ? styles.tabActive : ''}`}
+            onClick={() => setActiveTab('avis')}
+            type="button"
+          >
+            Témoignages
+          </button>
+        </nav>
+
         {loadError && (
           <div className={styles.loadErrorBanner}>
             <p className={styles.errorMsg}>{loadError}</p>
           </div>
         )}
 
-        <div className={styles.cardsGrid}>
-          {STAGE_TYPES.map(type => (
-            <StageTypeCard
-              key={type}
-              type={type}
-              initial={sessions[type]}
-              onUnauthorized={handleUnauthorized}
-            />
-          ))}
-        </div>
+        {activeTab === 'stages' && (
+          <div className={styles.cardsGrid}>
+            {STAGE_TYPES.map(type => (
+              <StageTypeCard
+                key={type}
+                type={type}
+                initial={sessions[type]}
+                onUnauthorized={handleUnauthorized}
+              />
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'avis' && (
+          <div className={styles.cardsGrid}>
+            {testimonials.map(t => (
+              <TestimonialCard
+                key={t.slot}
+                initial={t}
+                onUnauthorized={handleUnauthorized}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );

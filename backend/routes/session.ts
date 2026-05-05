@@ -11,7 +11,7 @@
  */
 
 import { Router } from "@oak/oak";
-import { getAllSessions, getVisibleSession, getLatestSession, upsertSession } from "../services/session.ts";
+import { getAllSessions, getVisibleSession, getLatestSession, upsertSession, archivePastSessions } from "../services/session.ts";
 import { adminAuthMiddleware } from "../middleware/auth.ts";
 import type { SessionPayload, StageType } from "../model/interfaces.ts";
 
@@ -21,23 +21,26 @@ const router = new Router({ prefix: "/api" });
 
 /** `GET /api/session` — session visible pour le site public. */
 router.get("/session", (ctx) => {
-  const session      = getVisibleSession();
-  const latest       = getLatestSession();
+  archivePastSessions();
+  const session        = getVisibleSession();
+  const latest         = getLatestSession();
   const potentialDates = latest?.description || null;
   ctx.response.body = {
     ok: true,
-    ...(session        ? { data: session }               : {}),
-    ...(potentialDates ? { potentialDates }              : {}),
+    ...(session        ? { data: session }  : {}),
+    ...(potentialDates ? { potentialDates } : {}),
   };
 });
 
 /** `GET /api/sessions` — toutes les sessions (site public, inclut les non-visibles pour les commentaires). */
 router.get("/sessions", (ctx) => {
+  archivePastSessions();
   ctx.response.body = { ok: true, data: getAllSessions() };
 });
 
 /** `GET /api/admin/sessions` — toutes les sessions pour le panneau d'administration. */
 router.get("/admin/sessions", adminAuthMiddleware, (ctx) => {
+  archivePastSessions();
   ctx.response.body = { ok: true, data: getAllSessions() };
 });
 

@@ -121,11 +121,9 @@ export function SessionCard({ session, variant = 'compact' }: SessionCardProps) 
           <a href="/inscription#formulaire" className="btn btn-primary">
             S'inscrire
           </a>
-          {variant === 'full' && (
-            <a href="/contact" className="btn btn-outline">
-              Poser une question
-            </a>
-          )}
+          <a href="/contact" className="btn btn-outline">
+            Poser une question
+          </a>
         </div>
       )}
     </div>

@@ -4,7 +4,7 @@
  * Toutes les requêtes passent par le préfixe `/api` intercepté par le reverse proxy Nginx.
  */
 
-import type { ApiResponse, Session, SessionPayload } from '@/types/session';
+import type { ApiResponse, Session, SessionPayload, Testimonial, PlaceRating } from '@/types/session';
 
 
 /** URL de base de l'API. En développement, Vite proxifie vers `http://localhost:8001`. */
@@ -102,6 +102,46 @@ export async function updateSession(payload: SessionPayload): Promise<Session> {
   const body: ApiResponse<Session> = await res.json();
   if (!body.data) throw new Error('Réponse inattendue du serveur.');
   return body.data;
+}
+
+/** Récupère les 3 témoignages pour la page d'accueil. */
+export async function fetchTestimonials(): Promise<Testimonial[]> {
+  const res = await fetch(`${API_BASE}/testimonials`);
+  if (!res.ok) throw new Error(`Erreur API : ${res.status}`);
+  const body: ApiResponse<Testimonial[]> = await res.json();
+  return body.data ?? [];
+}
+
+/** Met à jour un témoignage (admin). */
+export async function updateTestimonial(payload: Testimonial): Promise<Testimonial> {
+  const res = await fetch(`${API_BASE}/admin/testimonial`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAdminToken()}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const body: ApiResponse<never> = await res.json().catch(() => ({ ok: false, error: res.statusText }));
+    throw new Error(body.error ?? `Erreur API : ${res.status}`);
+  }
+  const body: ApiResponse<Testimonial> = await res.json();
+  if (!body.data) throw new Error('Réponse inattendue du serveur.');
+  return body.data;
+}
+
+/** Récupère la note globale Google Places (peut renvoyer null si non configuré). */
+export async function fetchPlaceRating(): Promise<PlaceRating | null> {
+  const res = await fetch(`${API_BASE}/place-rating`);
+  if (!res.ok) return null;
+  const body: ApiResponse<PlaceRating> & { reviewUrl?: string | null } = await res.json();
+  if (!body.data && !body.reviewUrl) return null;
+  return {
+    rating: body.data?.rating ?? 0,
+    userRatingsTotal: body.data?.userRatingsTotal ?? 0,
+    reviewUrl: body.reviewUrl ?? null,
+  };
 }
 
 /**

@@ -30,16 +30,24 @@ const TYPE_META: Record<StageType, {
   perfectionnement: {
     label: "Journée de perfectionnement",
     sub: "Journée · 7 heures · 140 €",
-    programmeLabel: "Voir les thèmes",
+    programmeLabel: "Voir le programme",
     waitingTitle: "Aucune date programmée pour le moment",
   },
 };
 
-function formatShortDate(isoDate: string): string {
-  return new Date(`${isoDate}T00:00:00`).toLocaleDateString('fr-FR', {
-    day: 'numeric',
-    month: 'short',
-  });
+function formatSessionDates(startIso: string, endIso: string): string {
+  const start = new Date(`${startIso}T00:00:00`);
+  const end   = new Date(`${endIso}T00:00:00`);
+  const sameDay = startIso === endIso;
+  const sameYear = start.getFullYear() === end.getFullYear();
+
+  if (sameDay) {
+    return start.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  if (sameYear) {
+    return `${start.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })} – ${end.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+  }
+  return `${start.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} – ${end.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
 
 function InlineSessionCard({ session, onFormClick }: { session: Session; onFormClick: () => void }) {
@@ -48,7 +56,7 @@ function InlineSessionCard({ session, onFormClick }: { session: Session; onFormC
     <div>
       <div className={styles.inlineCardBar}>
         <span className={styles.inlineCardDates}>
-          {formatShortDate(session.startDate)} – {formatShortDate(session.endDate)}
+          {formatSessionDates(session.startDate, session.endDate)}
         </span>
         <span className={`${styles.badge} ${isFull ? styles.badgeFull : styles.badgeOk}`}>
           {isFull
@@ -184,7 +192,7 @@ export function InscriptionPage() {
             const meta    = TYPE_META[type];
             const session = sessionMap[type];
             return (
-              <div key={type} className={styles.typeSection}>
+              <div key={type} id={type} className={styles.typeSection}>
                 <div className={styles.typeSectionHeader}>
                   <div>
                     <h2 className={styles.typeSectionTitle}>{meta.label}</h2>
@@ -203,12 +211,12 @@ export function InscriptionPage() {
                       {session?.description && (
                         <p className={styles.waitingText}>{session.description}</p>
                       )}
-                      <button
-                        onClick={() => scrollToForm(type)}
+                      <Link
+                        to="/contact"
                         className={`btn btn-primary ${styles.waitingCta}`}
                       >
-                        Manifester mon intérêt ↓
-                      </button>
+                        Manifester mon intérêt →
+                      </Link>
                     </div>
                   </div>
                 )}
@@ -216,6 +224,9 @@ export function InscriptionPage() {
             );
           })
         )}
+
+        {/* Procédure + formulaire : masqués si aucune session programmée */}
+        {!loading && visibleTypes.length === 0 ? null : (<>
 
         {/* Procédure */}
         <section className={styles.procedure}>
@@ -261,7 +272,7 @@ export function InscriptionPage() {
           </p>
 
           <div className={styles.formGrid}>
-            {visibleTypes.length > 1 && (
+            {visibleTypes.length > 0 && (
               <div className={`${styles.field} ${styles.fullWidth}`}>
                 <label htmlFor="stageType">Type de stage *</label>
                 <select
@@ -337,6 +348,8 @@ export function InscriptionPage() {
             </p>
           </div>
         </section>
+
+        </>)}
 
       </div>
     </main>
