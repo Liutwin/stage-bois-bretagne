@@ -131,15 +131,16 @@ export async function updateTestimonial(payload: Testimonial): Promise<Testimoni
   return body.data;
 }
 
-/** Récupère la note globale Google Places (peut renvoyer null si non configuré). */
+/** Récupère la note globale Google Places et URL pour laisser un avis (peut renvoyer null si rien n'est configuré). */
 export async function fetchPlaceRating(): Promise<PlaceRating | null> {
   const res = await fetch(`${API_BASE}/place-rating`);
   if (!res.ok) return null;
   const body: ApiResponse<PlaceRating> & { reviewUrl?: string | null } = await res.json();
-  if (!body.data && !body.reviewUrl) return null;
+  const hasRating = body.data?.rating != null && body.data?.userRatingsTotal != null;
+  const hasReviewUrl = body.reviewUrl != null;
+  if (!hasRating && !hasReviewUrl) return null;
   return {
-    rating: body.data?.rating ?? 0,
-    userRatingsTotal: body.data?.userRatingsTotal ?? 0,
+    ...(hasRating && { rating: body.data!.rating, userRatingsTotal: body.data!.userRatingsTotal }),
     reviewUrl: body.reviewUrl ?? null,
   };
 }

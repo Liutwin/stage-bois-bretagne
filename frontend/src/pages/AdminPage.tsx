@@ -4,7 +4,7 @@ import {
   getAdminToken, setAdminToken, clearAdminToken,
   fetchTestimonials, updateTestimonial,
 } from '@/utils/api';
-import type { Session, SessionPayload, StageType, Testimonial } from '@/types/session';
+import type { SessionPayload, StageType, Testimonial } from '@/types/session';
 import { STAGE_LABELS } from '@/types/session';
 import styles from '../styles/AdminPage.module.css';
 

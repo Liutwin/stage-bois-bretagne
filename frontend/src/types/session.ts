@@ -71,8 +71,8 @@ export interface Testimonial {
 
 /** Note globale Google Places renvoyée par le backend. */
 export interface PlaceRating {
-  rating: number;
-  userRatingsTotal: number;
+  rating?: number;
+  userRatingsTotal?: number;
   reviewUrl: string | null;
 }
 

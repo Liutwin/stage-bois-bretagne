@@ -2,7 +2,7 @@
   background: var(--color-linen);
   border-top: 0.5px solid var(--color-shadow);
   border-bottom: 0.5px solid var(--color-shadow);
-  padding: clamp(1.5rem, 3vw, 2.5rem) var(--section-padding-x);
+  padding: clamp(0.75rem, 1.5vw, 1.25rem) var(--section-padding-x) clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .header {

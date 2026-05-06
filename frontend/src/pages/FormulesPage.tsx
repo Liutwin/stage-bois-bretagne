@@ -34,8 +34,7 @@ export function FormulesPage() {
 
         <p className={formulesStyles.intro}>
           Le tarif comprend l'encadrement, les matériaux de base et un poste de travail individuel.<br />
-          Les repas et l'hébergement ne sont pas inclus —{' '}
-          <Link to="/hebergement" className={styles.link}>voir la page Hébergement &amp; Repas</Link>.
+          <Link to="/hebergement" className={styles.link}>Les repas et l'hébergement</Link> ne sont pas inclus.
         </p>
 
         {/* ── L'atelier à votre disposition ───────────────────────────────── */}

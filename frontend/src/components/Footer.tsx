@@ -41,7 +41,7 @@ export function Footer() {
               ['Le stage', '/stage'],
               ['Nos formules', '/formules'],
               ['S\'inscrire', '/inscription'],
-              ['Hébergement / Repas', '/hebergement'],
+              ['Pratique', '/hebergement'],
               ['Votre formatrice', '/formatrice'],
               ['Contact', '/contact'],
             ].map(([label, to]) => (

@@ -50,7 +50,7 @@ export function ReviewsSection() {
           <p className="section-label">Témoignages</p>
           <h2 className="section-title" style={{ marginBottom: 0 }}>Ce qu'ils en disent</h2>
         </div>
-        {placeRating && (
+        {placeRating?.rating != null && (
           <div className={styles.badge}>
             <div className={styles.badgeStars}>{'★'.repeat(Math.round(placeRating.rating))}</div>
             <div className={styles.badgeScore}>

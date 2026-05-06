@@ -67,12 +67,14 @@
   color: var(--color-muted);
   padding: 6px 10px;
   border-radius: var(--radius-sm);
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition: color var(--transition-fast), background var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .navLink:hover {
   color: var(--color-amber);
   background: var(--color-amber-light);
+  box-shadow: 0 2px 8px rgba(184, 118, 10, 0.15);
 }
 
 .navLink.active {
@@ -136,13 +138,16 @@
   text-transform: uppercase;
   color: var(--color-muted);
   border-bottom: 0.5px solid var(--color-shadow);
-  transition: color var(--transition-fast), background var(--transition-fast);
+  transition: color var(--transition-fast), background var(--transition-fast),
+    padding-left var(--transition-fast);
+  position: relative;
 }
 
 .mobileLink:hover,
 .mobileLink.active {
   color: var(--color-amber);
   background: var(--color-linen);
+  padding-left: calc(var(--section-padding-x) + 8px);
 }
 
 /* ── Responsive ───────────────────────────────────────────────────────── */

@@ -52,12 +52,33 @@
 .footerLink {
   font-size: 12.5px;
   color: rgba(240, 210, 160, 0.6);
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), text-decoration var(--transition-fast),
+    opacity var(--transition-fast);
   line-height: 1.8;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+.footerLink::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-fast);
 }
 
 .footerLink:hover {
   color: var(--color-amber);
+}
+
+.footerLink:hover::after {
+  transform: scaleX(1);
 }
 
 .social {

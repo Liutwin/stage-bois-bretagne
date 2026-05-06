@@ -56,6 +56,15 @@
   color: var(--color-amber);
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast),
+    text-decoration-thickness var(--transition-fast);
+  text-decoration-thickness: 1px;
+}
+
+.link:hover {
+  color: var(--color-dark-wood);
+  text-decoration-color: var(--color-dark-wood);
+  text-decoration-thickness: 2px;
 }
 
 /* Listes */
