@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
-    allowedHosts: ["localhost", "Liutwin-PC", "Liutwin-Asus"],
+    allowedHosts: ["localhost", "Liutwin-PC", "liutwin-pc", "Liutwin-Asus", "liutwin-asus"],
     proxy: {
       '/api': {
         target: 'http://localhost:8000',

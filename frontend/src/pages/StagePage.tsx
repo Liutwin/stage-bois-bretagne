@@ -49,10 +49,10 @@ const STANDALONE_PHOTOS = [
 
 const GALLERY_PHOTOS = [
   { src: travailGroupePhoto,  alt: 'Le groupe en atelier',      wide: true,    portrait: false },
+  { src: travailAtelierPhoto, alt: 'Travail en atelier',        wide: false,   portrait: false },
   { src: travailEtauPhoto,    alt: "Travail à l'étau",          wide: false,   portrait: true  },
   { src: travailMarteauPhoto, alt: 'Travail au marteau',        wide: false,   portrait: false },
   { src: chantournage3Photo,  alt: 'Scie à chantourner',        wide: false,   portrait: false },
-  { src: travailAtelierPhoto, alt: 'Travail en atelier',        wide: false,   portrait: false },
 ];
 
 const GALLERY_ROWS = [

@@ -147,10 +147,14 @@ export function InscriptionPage() {
       ...prev,
       niveau: selectedType === 'initiation' ? 'débutant' : 'intermédiaire',
     }));
-    setPdfSent(false);
   }, [selectedType]);
 
   const sessionForPdf = sessionMap[selectedType];
+
+  useEffect(() => {
+    if (!sessionForPdf) { setPdfSent(false); return; }
+    setPdfSent(localStorage.getItem(`pdf_sent_${sessionForPdf.id}`) === '1');
+  }, [sessionForPdf?.id]);
 
   async function handleDownloadPdf() {
     if (!sessionForPdf) return;
@@ -173,6 +177,7 @@ export function InscriptionPage() {
     setPdfLoading(true);
     try {
       const { filename } = await generateRegistrationPdf(sessionForPdf, formData);
+      localStorage.setItem(`pdf_sent_${sessionForPdf.id}`, '1');
       setPdfSent(true);
       const sessionDate = formatSessionDates(sessionForPdf.startDate, sessionForPdf.endDate);
       fetch('/api/inscription', {
@@ -375,6 +380,17 @@ export function InscriptionPage() {
             >
               {pdfLoading ? 'Génération…' : pdfSent ? '✓ Bulletin téléchargé' : '⬇ Télécharger le bulletin PDF'}
             </button>
+            {pdfSent && sessionForPdf && (
+              <button
+                className={styles.retryLink}
+                onClick={() => {
+                  localStorage.removeItem(`pdf_sent_${sessionForPdf.id}`);
+                  setPdfSent(false);
+                }}
+              >
+                Une erreur dans le formulaire ? Re-télécharger
+              </button>
+            )}
             {!sessionForPdf && !loading && (
               <p className={styles.pdfDisabled}>
                 Aucune session programmée pour ce type de stage — le bulletin sera disponible dès qu'une date sera fixée.

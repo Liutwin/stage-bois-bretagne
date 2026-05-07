@@ -262,6 +262,5 @@
 }
 
 @media (max-width: 600px) {
-  .galleryRow1              { grid-template-columns: 1fr; }
-  .galleryRow2, .galleryRow3 { grid-template-columns: 1fr 1fr; }
+  .galleryRow1, .galleryRow2, .galleryRow3 { grid-template-columns: 1fr 1fr; }
 }
