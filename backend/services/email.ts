@@ -20,8 +20,11 @@ interface InscriptionEmailData {
   address?: string;
   postalCode?: string;
   city?: string;
+  niveau?: string;
   comment?: string;
   sessionId?: number;
+  stageLabel?: string;
+  sessionDate?: string;
   filename: string;
 }
 
@@ -100,6 +103,11 @@ export async function sendInscriptionEmail(data: InscriptionEmailData): Promise<
   const from = `Stage Bois Bretagne <${Deno.env.get("NOREPLY_MAIL_USER")}>`;
   const to = Deno.env.get("CLIENT_EMAIL");
 
+  const stageRows = [
+    ["Type de stage",     data.stageLabel],
+    ["Date",              data.sessionDate],
+  ].filter((r): r is [string, string] => !!r[1]);
+
   const rows = [
     ["Prénom",            data.firstName],
     ["Nom",               data.lastName],
@@ -107,16 +115,29 @@ export async function sendInscriptionEmail(data: InscriptionEmailData): Promise<
     ["Téléphone",         data.phone],
     ["Date de naissance", data.dateOfBirth],
     ["Profession",        data.profession],
+    ["Niveau",            data.niveau],
     ["Adresse",           data.address],
     ["Code postal",       data.postalCode],
     ["Ville",             data.city],
   ].filter((r): r is [string, string] => !!r[1]);
 
-  const textLines = rows.map(([k, v]) => `${k} : ${v}`);
+  const textLines = [
+    ...stageRows.map(([k, v]) => `${k} : ${v}`),
+    stageRows.length ? "" : null,
+    ...rows.map(([k, v]) => `${k} : ${v}`),
+  ].filter((l): l is string => l !== null);
   if (data.comment) textLines.push("", `Commentaire : ${data.comment}`);
 
+  const htmlStageRows = stageRows.length
+    ? `<div style="background:#f6f1e8;padding:10px 14px;border-radius:4px;margin-bottom:12px">${stageRows.map(([k, v]) => `<p style="margin:4px 0"><strong>${k} :</strong> ${v}</p>`).join("\n")}</div>`
+    : "";
   const htmlRows = rows
-    .map(([k, v]) => `<p><strong>${k} :</strong> ${v}</p>`)
+    .map(([k, v]) => {
+      const display = k === "Email"
+        ? `<a href="mailto:${v}">${v}</a>`
+        : v;
+      return `<p><strong>${k} :</strong> ${display}</p>`;
+    })
     .join("\n");
   const htmlComment = data.comment
     ? `<hr><p><strong>Commentaire :</strong></p><p>${data.comment.replace(/\n/g, "<br>")}</p>`
@@ -126,8 +147,8 @@ export async function sendInscriptionEmail(data: InscriptionEmailData): Promise<
     from,
     to,
     replyTo: data.email,
-    subject: `Nouvelle inscription — ${data.firstName} ${data.lastName}`,
+    subject: `Demande d'inscription — ${data.firstName} ${data.lastName}`,
     text: textLines.join("\n"),
-    html: `${htmlRows}${htmlComment}`,
+    html: `${htmlStageRows}${htmlRows}${htmlComment}`,
   });
 }

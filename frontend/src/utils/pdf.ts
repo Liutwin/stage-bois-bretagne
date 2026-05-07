@@ -36,6 +36,8 @@ export interface RegistrationFormData {
   dateOfBirth?: string;
   /** Profession (optionnel). */
   profession?: string;
+  /** Niveau du stagiaire. */
+  niveau?: 'débutant' | 'intermédiaire' | 'confirmé';
   /** Commentaire libre ou demande particulière (optionnel). */
   comment?: string;
 }
@@ -128,6 +130,7 @@ export async function generateRegistrationPdf(
     ['Profession',        registrant.profession ?? ''],
     ['Email',             registrant.email],
     ['Téléphone',         registrant.phone],
+    ['Niveau',            registrant.niveau ?? ''],
     ['Adresse',           registrant.address],
     ['Code postal',       registrant.postalCode],
     ['Ville',             registrant.city],

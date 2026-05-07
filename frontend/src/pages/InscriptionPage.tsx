@@ -88,6 +88,7 @@ export function InscriptionPage() {
     initiation: null, jouets: null, perfectionnement: null,
   });
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfSent, setPdfSent] = useState(false);
 
   const [selectedType, setSelectedType] = useState<StageType>(() => {
     const t = new URLSearchParams(window.location.search).get('type') as StageType;
@@ -111,6 +112,7 @@ export function InscriptionPage() {
     address: '',
     postalCode: '',
     city: '',
+    niveau: 'débutant',
     comment: '',
   });
 
@@ -135,26 +137,54 @@ export function InscriptionPage() {
     }
   }, [loading]);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }
+
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      niveau: selectedType === 'initiation' ? 'débutant' : 'intermédiaire',
+    }));
+    setPdfSent(false);
+  }, [selectedType]);
 
   const sessionForPdf = sessionMap[selectedType];
 
   async function handleDownloadPdf() {
     if (!sessionForPdf) return;
-    if (!formData.firstName || !formData.lastName) {
-      alert('Merci de renseigner au moins votre prénom et votre nom pour générer le bulletin.');
+    const required: [keyof RegistrationFormData, string][] = [
+      ['firstName',   'Prénom'],
+      ['lastName',    'Nom'],
+      ['dateOfBirth', 'Date de naissance'],
+      ['profession',  'Profession'],
+      ['email',       'Email'],
+      ['phone',       'Téléphone'],
+      ['address',     'Adresse'],
+      ['postalCode',  'Code postal'],
+      ['city',        'Ville'],
+    ];
+    const missing = required.filter(([k]) => !formData[k]).map(([, label]) => label);
+    if (missing.length > 0) {
+      alert(`Merci de renseigner les champs obligatoires : ${missing.join(', ')}.`);
       return;
     }
     setPdfLoading(true);
     try {
       const { filename } = await generateRegistrationPdf(sessionForPdf, formData);
+      setPdfSent(true);
+      const sessionDate = formatSessionDates(sessionForPdf.startDate, sessionForPdf.endDate);
       fetch('/api/inscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, sessionId: sessionForPdf.id, filename }),
+        body: JSON.stringify({
+          ...formData,
+          sessionId: sessionForPdf.id,
+          filename,
+          stageLabel: STAGE_LABELS[selectedType],
+          sessionDate,
+        }),
       }).catch(() => {});
     } finally {
       setPdfLoading(false);
@@ -173,7 +203,7 @@ export function InscriptionPage() {
         {/* En-tête */}
         <div className={styles.header}>
           <p className="section-label">S'inscrire</p>
-          <h1 className="section-title">Calendrier &amp; inscription</h1>
+          <h1 className="section-title">Calendrier et inscription</h1>
           <p className={styles.intro}>
             Consultez les disponibilités ci-dessous et manifestez votre intérêt via le formulaire.<br />
             Annick vous recontactera rapidement pour confirmer votre place.
@@ -198,7 +228,7 @@ export function InscriptionPage() {
                     <h2 className={styles.typeSectionTitle}>{meta.label}</h2>
                     <p className={styles.typeSectionSub}>{meta.sub}</p>
                   </div>
-                  <Link to="/tarifs" className="btn btn-outline">{meta.programmeLabel}</Link>
+                  <Link to={`/formules#${type}`} className="btn btn-outline">{meta.programmeLabel}</Link>
                 </div>
 
                 {session?.isVisible ? (
@@ -273,7 +303,7 @@ export function InscriptionPage() {
 
           <div className={styles.formGrid}>
             {visibleTypes.length > 0 && (
-              <div className={`${styles.field} ${styles.fullWidth}`}>
+              <div className={styles.field}>
                 <label htmlFor="stageType">Type de stage *</label>
                 <select
                   id="stageType"
@@ -286,6 +316,14 @@ export function InscriptionPage() {
                 </select>
               </div>
             )}
+            <div className={styles.field}>
+              <label htmlFor="niveau">Niveau *</label>
+              <select id="niveau" name="niveau" value={formData.niveau} onChange={handleChange}>
+                <option value="débutant">Débutant</option>
+                <option value="intermédiaire">Intermédiaire</option>
+                <option value="confirmé">Confirmé</option>
+              </select>
+            </div>
 
             <div className={styles.field}>
               <label htmlFor="firstName">Prénom *</label>
@@ -333,9 +371,9 @@ export function InscriptionPage() {
             <button
               className="btn btn-primary"
               onClick={handleDownloadPdf}
-              disabled={pdfLoading || !sessionForPdf}
+              disabled={pdfLoading || !sessionForPdf || pdfSent}
             >
-              {pdfLoading ? 'Génération…' : '⬇ Télécharger le bulletin PDF'}
+              {pdfLoading ? 'Génération…' : pdfSent ? '✓ Bulletin téléchargé' : '⬇ Télécharger le bulletin PDF'}
             </button>
             {!sessionForPdf && !loading && (
               <p className={styles.pdfDisabled}>

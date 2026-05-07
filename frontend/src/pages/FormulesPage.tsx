@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from '../styles/StaticPage.module.css';
 import formulesStyles from '../styles/FormulesPage.module.css';
 import { PageSEO } from '@/components/PageSEO';
@@ -7,9 +7,21 @@ import { fetchPublicSessions } from '@/utils/api';
 import type { StageType } from '@/types/session';
 
 export function FormulesPage() {
+  const { hash } = useLocation();
+
   const [hasSession, setHasSession] = useState<Record<StageType, boolean>>({
     initiation: false, jouets: false, perfectionnement: false,
   });
+
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.replace('#', '');
+    // Léger délai pour laisser le DOM se rendre
+    const timer = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [hash]);
 
   useEffect(() => {
     fetchPublicSessions()
@@ -30,7 +42,7 @@ export function FormulesPage() {
       />
       <div className={`${styles.inner} ${formulesStyles.inner}`}>
         <p className="section-label">Nos formules</p>
-        <h1 className="section-title">Programme &amp; tarifs</h1>
+        <h1 className="section-title">Programme et tarifs</h1>
 
         <p className={formulesStyles.intro}>
           Le tarif comprend l'encadrement, les matériaux de base et un poste de travail individuel.<br />
@@ -49,7 +61,7 @@ export function FormulesPage() {
         <div className={`${styles.content} ${formulesStyles.content}`}>
 
           {/* ── Stage d'initiation ───────────────────────────────────────── */}
-          <div className={formulesStyles.formuleCard}>
+          <div id="initiation" className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
                 <h2 className={formulesStyles.formuleTitle}>Week-end d'initiation</h2>
@@ -79,7 +91,7 @@ export function FormulesPage() {
           </div>
 
           {/* ── Stage de jouets ──────────────────────────────────────────── */}
-          <div className={formulesStyles.formuleCard}>
+          <div id="jouets" className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
                 <h2 className={formulesStyles.formuleTitle}>Journée de fabrication d'un jouet</h2>
@@ -111,7 +123,7 @@ export function FormulesPage() {
           </div>
 
           {/* ── Journée de perfectionnement ──────────────────────────────── */}
-          <div className={formulesStyles.formuleCard}>
+          <div id="perfectionnement" className={formulesStyles.formuleCard}>
             <div className={formulesStyles.formuleHeader}>
               <div>
                 <h2 className={formulesStyles.formuleTitle}>Journée de perfectionnement</h2>

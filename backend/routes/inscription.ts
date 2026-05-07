@@ -9,10 +9,12 @@
 
 import { Router } from "@oak/oak";
 import { sendInscriptionEmail } from "../services/email.ts";
+import { rateLimiter } from "../middleware/rateLimiter.ts";
 
 const router = new Router({ prefix: "/api" });
+const limit = rateLimiter(3, 10 * 60 * 1000);
 
-router.post("/inscription", async (ctx) => {
+router.post("/inscription", limit, async (ctx) => {
   let parsed: Record<string, unknown>;
   try {
     parsed = await ctx.request.body.json();
@@ -40,14 +42,17 @@ router.post("/inscription", async (ctx) => {
       lastName,
       email,
       filename,
-      phone:       typeof parsed.phone       === "string" ? parsed.phone       : undefined,
-      address:     typeof parsed.address     === "string" ? parsed.address     : undefined,
-      postalCode:  typeof parsed.postalCode  === "string" ? parsed.postalCode  : undefined,
-      city:        typeof parsed.city        === "string" ? parsed.city        : undefined,
-      dateOfBirth: typeof parsed.dateOfBirth === "string" ? parsed.dateOfBirth : undefined,
-      profession:  typeof parsed.profession  === "string" ? parsed.profession  : undefined,
-      comment:     typeof parsed.comment     === "string" ? parsed.comment     : undefined,
-      sessionId:   typeof parsed.sessionId   === "number" ? parsed.sessionId   : undefined,
+      phone:        typeof parsed.phone        === "string" ? parsed.phone        : undefined,
+      address:      typeof parsed.address      === "string" ? parsed.address      : undefined,
+      postalCode:   typeof parsed.postalCode   === "string" ? parsed.postalCode   : undefined,
+      city:         typeof parsed.city         === "string" ? parsed.city         : undefined,
+      dateOfBirth:  typeof parsed.dateOfBirth  === "string" ? parsed.dateOfBirth  : undefined,
+      profession:   typeof parsed.profession   === "string" ? parsed.profession   : undefined,
+      niveau:       typeof parsed.niveau       === "string" ? parsed.niveau       : undefined,
+      comment:      typeof parsed.comment      === "string" ? parsed.comment      : undefined,
+      sessionId:    typeof parsed.sessionId    === "number" ? parsed.sessionId    : undefined,
+      stageLabel:   typeof parsed.stageLabel   === "string" ? parsed.stageLabel   : undefined,
+      sessionDate:  typeof parsed.sessionDate  === "string" ? parsed.sessionDate  : undefined,
     });
     ctx.response.body = { ok: true };
   } catch (err) {

@@ -9,9 +9,11 @@
 
 import { Router } from "@oak/oak";
 import { sendContactEmail } from "../services/email.ts";
+import { rateLimiter } from "../middleware/rateLimiter.ts";
 import type { ContactFormData } from "../model/interfaces.ts";
 
 const router = new Router({ prefix: "/api" });
+const limit = rateLimiter(3, 10 * 60 * 1000);
 
 /**
  * `POST /api/contact`
@@ -26,7 +28,7 @@ const router = new Router({ prefix: "/api" });
  * - `400` – Corps JSON invalide ou champs obligatoires manquants.
  * - `500` – Échec de l'envoi SMTP (propagé depuis {@link sendContactEmail}).
  */
-router.post("/contact", async (ctx) => {
+router.post("/contact", limit, async (ctx) => {
   let body: Record<string, unknown>;
   try {
     body = await ctx.request.body.json();

@@ -70,7 +70,7 @@ export function HebergementPage() {
       />
       <div className={styles.inner}>
         <p className="section-label">Pratique</p>
-        <h1 className="section-title">Hébergement &amp; Repas</h1>
+        <h1 className="section-title">Hébergement et Repas</h1>
 
         <div className={styles.content}>
           <div className={styles.hebergGrid}>
@@ -141,7 +141,7 @@ export function HebergementPage() {
               <h2>Hébergements à proximité</h2>
               <ul className={styles.list}>
                 <li>
-                  <strong>Chambres &amp; gîtes — Mme Florence Rivoal</strong> (2 km)<br />
+                  <strong>Chambres et gîtes — Mme Florence Rivoal</strong> (2 km)<br />
                   <a href="tel:0296366940">02 96 36 69 40</a>
                   {' · '}
                   <a href="http://chambre-trebrivan.over-blog.com" target="_blank" rel="noopener noreferrer">

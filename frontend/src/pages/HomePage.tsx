@@ -174,7 +174,7 @@ export function HomePage() {
         <div className={styles.bio}>
           <p className="section-label">Votre formatrice</p>
           <h2 className={styles.bioName}>Annick Le Goasteller</h2>
-          <p className={styles.bioTitle}>Artisane &amp; Formatrice</p>
+          <p className={styles.bioTitle}>Artisane et Formatrice</p>
           <p>
             Artisane d'art reconnue et créatrice pour les harpes celtiques CAMAC, Annick Le Goasteller partage sa passion du chantournage dans son atelier en Bretagne. 
           </p>

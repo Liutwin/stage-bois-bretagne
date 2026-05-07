@@ -29,6 +29,7 @@
   border: 0.5px solid var(--color-shadow);
   border-radius: var(--radius-md);
   overflow: hidden;
+  scroll-margin-top: 80px;
 }
 
 .formuleHeader {

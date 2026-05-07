@@ -149,7 +149,7 @@ export function ContactPage() {
             <ul className={styles.contactList}>
               <li>
                 <strong>Annick Le Goasteller</strong><br />
-                Artisane &amp; Formatrice
+                Artisane et Formatrice
               </li>
               <li>
                 3 Kermoal<br />

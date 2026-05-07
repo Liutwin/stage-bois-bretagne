@@ -82,6 +82,7 @@ jobs:
             NOREPLY_MAIL_PASSWORD=${{ secrets.NOREPLY_MAIL_PASSWORD }}
             CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}
             ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}
+            PLACE_API=${{ secrets.PLACE_API }}
             PLACE_ID=${{ secrets.PLACE_ID }}
             EOF
 
