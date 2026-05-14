@@ -334,7 +334,7 @@ function TestimonialCard({ initial, onUnauthorized }: TestimonialCardProps) {
           </div>
           <div className={styles.field}>
             <label>Date (texte libre)</label>
-            <input name="dateLabel" type="text" value={fields.dateLabel} onChange={handleChange} placeholder="Mars 2025" />
+            <input name="dateLabel" type="text" value={fields.dateLabel} onChange={handleChange} placeholder="mai 2026" />
           </div>
         </div>
 
@@ -440,9 +440,14 @@ export function AdminPage() {
               <div className={styles.logo}>Stage Bois Bretagne</div>
               <h1>Administration</h1>
             </div>
-            <button className={styles.logoutBtn} onClick={handleLogout} type="button">
-              Se déconnecter
-            </button>
+            <div className={styles.headerActions}>
+              <a href="/" target="_blank" rel="noopener noreferrer" className={styles.siteLink}>
+                Voir le site →
+              </a>
+              <button className={styles.logoutBtn} onClick={handleLogout} type="button">
+                Se déconnecter
+              </button>
+            </div>
           </div>
         </header>
 

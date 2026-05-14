@@ -221,10 +221,10 @@ export function StagePage() {
                 className={stageStyles.slideTrack}
                 style={{ transform: `translateX(-${carouselIdx * 100}%)` }}
               >
-                {GROUPE_PHOTOS.map((photo) => (
+                {GROUPE_PHOTOS.map((photo, i) => (
                   <div
                     key={photo.src}
-                    className={stageStyles.slideItem}
+                    className={`${stageStyles.slideItem}${i === carouselIdx ? ` ${stageStyles.slideItemActive}` : ''}`}
                     onClick={() => setLightbox({ src: photo.src, slides: GROUPE_PHOTOS })}
                   >
                     <img src={photo.src} alt={photo.alt} />

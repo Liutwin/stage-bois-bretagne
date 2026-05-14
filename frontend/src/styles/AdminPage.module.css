@@ -219,6 +219,20 @@
   color: #a02010;
 }
 
+.siteLink {
+  color: var(--color-amber-light);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: opacity var(--transition-fast);
+  padding: 7px 14px;
+}
+
+.siteLink:hover {
+  opacity: 0.8;
+}
+
 /* ── Panneau multi-cartes (remplace .card pour la vue admin) ──────────────── */
 .panel {
   background: var(--color-white-warm);
@@ -235,6 +249,13 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .loadErrorBanner {

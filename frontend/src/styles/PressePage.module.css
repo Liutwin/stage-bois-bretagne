@@ -132,3 +132,7 @@
 .card:hover .playOverlay {
   background: rgba(0, 0, 0, 0.38);
 }
+
+.grid .card:nth-child(2) img {
+  object-position: center top;
+}

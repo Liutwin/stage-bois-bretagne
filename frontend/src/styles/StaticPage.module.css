@@ -373,6 +373,16 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
+.lightbox iframe {
+  width: calc(100vw - 3rem);
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 675px;
+  border-radius: var(--radius-md);
+  border: none;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
 .lightboxNav {
   position: absolute;
   top: 50%;

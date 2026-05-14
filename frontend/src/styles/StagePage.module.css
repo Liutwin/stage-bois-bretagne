@@ -223,6 +223,15 @@
 
 .slideItem:hover img { transform: scale(1.02); }
 
+@keyframes slideZoomIn {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+.slideItemActive img {
+  animation: slideZoomIn 8s ease-in-out forwards;
+}
+
 
 .slideDots {
   position: absolute;

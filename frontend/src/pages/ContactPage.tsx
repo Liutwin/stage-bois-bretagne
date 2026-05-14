@@ -60,8 +60,8 @@ export function ContactPage() {
       <div className={styles.inner}>
         {/* En-tête */}
         <div className={styles.header}>
-          <p className="section-label">Nous contacter</p>
-          <h1 className="section-title">Contact</h1>
+          <p className="section-label">Contact</p>
+          <h1 className="section-title">Nous contacter</h1>
         </div>
 
         <div className={styles.layout}>
