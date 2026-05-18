@@ -23,7 +23,7 @@ const TYPE_META: Record<StageType, {
   },
   jouets: {
     label: "Journée de fabrication d'un jouet",
-    sub: "Journée · 12 heures · 230 €",
+    sub: "Journée · 7 heures · 140 €",
     programmeLabel: "Voir le programme",
     waitingTitle: "Aucune date programmée pour le moment",
   },
