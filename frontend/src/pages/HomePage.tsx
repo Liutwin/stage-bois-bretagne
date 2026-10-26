@@ -119,7 +119,8 @@ export function HomePage() {
           <h3>Méthodes</h3>
           <p>
             Technicité, trucs et astuces maison délivrés sans restriction,
-            en toute sécurité. Un apprentissage concret, loin des cours académiques.
+            en toute sécurité. Un apprentissage concret, loin des cours académiques,
+            sur scies Hegner dont la réputation n'est plus à faire.
           </p>
         </div>
         <div className={styles.pillar}>
