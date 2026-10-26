@@ -1,0 +1,119 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  PROJECT_PATH: /srv/stage-bois-bretagne
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set image name lowercase
+        run: echo "IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:latest
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Copy docker-compose.yml
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: "docker-compose.yml"
+          target: ${{ env.PROJECT_PATH }}/
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,PROJECT_PATH,SMTP_HOST,SMTP_PORT,SMTP_SECURE,NOREPLY_MAIL_USER,NOREPLY_MAIL_PASSWORD,CLIENT_EMAIL,DB_PATH,PORT
+          script: |
+            echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+            cd $PROJECT_PATH
+
+            # Générer le .env avec les secrets
+            cat > .env <<'EOF'
+            PORT=${{ secrets.PORT }}
+            DB_PATH=${{ secrets.DB_PATH }}
+            SMTP_HOST=${{ secrets.SMTP_HOST }}
+            SMTP_PORT=${{ secrets.SMTP_PORT }}
+            SMTP_SECURE=${{ secrets.SMTP_SECURE }}
+            NOREPLY_MAIL_USER=${{ secrets.NOREPLY_MAIL_USER }}
+            NOREPLY_MAIL_PASSWORD=${{ secrets.NOREPLY_MAIL_PASSWORD }}
+            CLIENT_EMAIL=${{ secrets.CLIENT_EMAIL }}
+            ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}
+            PLACE_API=${{ secrets.PLACE_API }}
+            PLACE_ID=${{ secrets.PLACE_ID }}
+            EOF
+
+            docker compose pull
+            docker compose up -d
+
+      - name: Notify client
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ssl0.ovh.net
+          server_port: 465
+          secure: true
+          username: ${{ secrets.DEPLOY_MAIL_USER }}
+          password: ${{ secrets.DEPLOY_MAIL_PASSWORD }}
+          from: Liutwin (Notification) <${{ secrets.DEPLOY_MAIL_USER }}>
+          reply_to: ${{ secrets.WEBMASTER_EMAIL }}
+          to: ${{ secrets.CLIENT_EMAIL }}
+          subject: "Mise à jour du site déployée ✓"
+          html_body: |
+            <div style="font-family: sans-serif; color: #333; line-height: 1.6;">
+              <p>Bonjour,</p>
+              <p>Une nouvelle version du site <a href="https://preview.stageboisbretagne.com" style="color: #007bff; text-decoration: none; font-weight: bold;">stageboisbretagne.com</a> vient d'être déployée.</p>
+              <div style="background-color: #f8f9fa; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0;">
+                <strong>Note de version :</strong><br>
+                <em>"${{ github.event.head_commit.message }}"</em>
+              </div>
+              <p>Liutwin</p>
+              <hr style="border: 0; border-top: 1px solid #eee; margin-top: 30px;">
+              <p style="font-size: 0.85em; color: #777; font-style: italic;">
+                Ceci est un message automatique généré par le pipeline de déploiement.<br>
+              </p>
+            </div>
