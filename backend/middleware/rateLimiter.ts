@@ -23,10 +23,7 @@ export function rateLimiter(max: number, windowMs: number) {
   }, windowMs);
 
   return async (ctx: Context, next: Next) => {
-    const ip =
-      ctx.request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-      ctx.request.ip ??
-      "unknown";
+    const ip = ctx.request.headers.get("x-real-ip") ?? ctx.request.ip ?? "unknown";
 
     const now = Date.now();
     let bucket = store.get(ip);
